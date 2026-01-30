@@ -11,6 +11,11 @@
   src: url(/DM_Mono.ttf);
 }
 
+@font-face {
+  font-family: "Peaberry";
+  src: url(/Peaberry.ttf);
+}
+
 :root {
   --shadow-color: #000000;
   --shadow-neobrutal: 0.25rem 0.25rem var(--shadow-color);
@@ -30,6 +35,7 @@
 
   --font-sans: "DM Sans", sans-serif;
   --font-mono: "DM Mono", monospace;
+  --font-heading: "Peaberry", sans-serif;
 }
 
 * {
@@ -47,4 +53,12 @@ main {
 
 @utility neobrutal {
   @apply shadow-shadow shadow-neobrutal rounded-lg border-2;
+}
+
+@utility pixel-art {
+  image-rendering: pixelated;
+}
+
+::selection {
+  @apply bg-accent;
 }

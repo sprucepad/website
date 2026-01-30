@@ -8,7 +8,7 @@ My personal website! Shows off my art and projects.
 - [ ] Projects
 - [ ] Copy art here
 - [ ] Gallery
-- [ ] Assets (banner, favicon)
+- [ ] Assets (banner, favicon, (new) profile picture)
 - [ ] English translation
 
 ## License

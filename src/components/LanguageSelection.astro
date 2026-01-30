@@ -1,0 +1,19 @@
+<select id="language-select">
+  <option value="pt" selected={Astro.currentLocale?.startsWith("pt")}
+    >Português</option
+  >
+  <option value="en" selected={Astro.currentLocale?.startsWith("en")}
+    >English</option
+  >
+</select>
+
+<script>
+  import { getPathByLocale } from "astro:i18n";
+  const languageSelect = document.getElementById(
+    "language-select",
+  ) as HTMLSelectElement;
+
+  languageSelect.addEventListener("change", () => {
+    location.href = `/${getPathByLocale(languageSelect.value)}/`;
+  });
+</script>

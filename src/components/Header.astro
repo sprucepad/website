@@ -1,31 +1,69 @@
 ---
-import { getRelativeLocaleUrl } from "astro:i18n";
+import pfp from "@content/assets/pfp.png";
+import MenuIcon from "@/icons/menu.svg";
+import XIcon from "@/icons/x.svg";
+
+import PixelArt from "./ui/PixelArt.astro";
+import { cn } from "@/lib/utils";
 
 import t from "@/i18n";
-import { cn } from "@/lib/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
 const locale = Astro.currentLocale ?? "pt";
 
 const items = [
-  { label: t("nav.home", locale), href: getRelativeLocaleUrl(locale, "/") },
   {
-    label: t("nav.projects", locale),
+    label: t(locale, "nav.home"),
+    href: getRelativeLocaleUrl(locale, "/"),
+  },
+  {
+    label: t(locale, "nav.projects"),
     href: getRelativeLocaleUrl(locale, "/projects"),
   },
-  { label: t("nav.art", locale), href: getRelativeLocaleUrl(locale, "/art") },
   {
-    label: t("nav.posts", locale),
+    label: t(locale, "nav.art"),
+    href: getRelativeLocaleUrl(locale, "/art"),
+  },
+  {
+    label: t(locale, "nav.posts"),
     href: getRelativeLocaleUrl(locale, "/posts"),
+  },
+  {
+    label: t(locale, "nav.contact"),
+    href: getRelativeLocaleUrl(locale, "/contact"),
   },
 ];
 ---
 
-<header class="fixed p-4" transition:name="header">
-  <nav>
-    <menu class="flex gap-1">
+<header
+  class="bg-background fixed inset-0 z-50 flex h-fit w-full items-center justify-between border-b-2 p-2"
+  transition:name="header"
+>
+  <a
+    href={getRelativeLocaleUrl(locale, "/")}
+    class="font-heading flex items-center gap-2 text-xl font-black"
+  >
+    <PixelArt width={48} height={48} src={pfp} alt="Logo" />
+    sprucepad
+  </a>
+
+  <input type="checkbox" class="peer hidden" id="header-toggle" />
+  <label
+    for="header-toggle"
+    class="cursor-pointer sm:hidden peer-checked:[&_.menu]:hidden peer-checked:[&_.x]:block"
+  >
+    <MenuIcon class="menu" />
+    <XIcon class="x hidden" />
+    <span class="sr-only">Menu</span>
+  </label>
+
+  <nav
+    class="bg-background fixed top-16 right-0 h-full translate-x-full transform border-l-2 p-4 transition-transform peer-checked:translate-x-0 sm:static sm:translate-x-0 sm:border-0 sm:p-0"
+  >
+    <menu class="flex flex-col gap-4 sm:flex-row">
       {
         items.map(({ href, label }) => {
           const active =
-            href === "/"
+            href === getRelativeLocaleUrl(locale, "/")
               ? Astro.url.pathname === href
               : Astro.url.pathname.startsWith(href);
           return (

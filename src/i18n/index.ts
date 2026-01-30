@@ -21,7 +21,7 @@ type TranslationKeys<T> = T extends object
 
 export type TranslationKey = TranslationKeys<(typeof translations)["pt"]>;
 
-export default function t(key: TranslationKey, locale: string): string {
+export default function t(locale: string, key: TranslationKey): string {
   return (
     key
       .split(".")

@@ -1,0 +1,20 @@
+---
+import Button from "@/components/ui/Button.astro";
+import Layout from "@/layouts/Layout.astro";
+
+import { getRelativeLocaleUrl } from "astro:i18n";
+import t from "@/i18n";
+const locale = Astro.currentLocale ?? "pt";
+---
+
+<Layout
+  title={t(locale, "notFound.title")}
+  desc={t(locale, "notFound.desc")}
+  class="flex flex-col items-center justify-center"
+>
+  <h1 class="text-4xl font-black">{t(locale, "notFound.title")}</h1>
+  <p>{t(locale, "notFound.desc")}</p>
+  <a href={getRelativeLocaleUrl(locale, "/")}
+    ><Button>{t(locale, "notFound.button")}</Button></a
+  >
+</Layout>

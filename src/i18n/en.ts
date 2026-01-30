@@ -6,4 +6,9 @@ export default {
     art: "Art",
     contact: "Contact",
   },
+  notFound: {
+    title: "404 - Page Not Found",
+    desc: "The page you were looking for does not exist.",
+    button: "Back to home page",
+  },
 };

@@ -2,6 +2,14 @@
 
 ## Notices
 
+### Peaberry
+
+Copyright (c) 2021, Emily Huo (mlyhuo@gmail.com, emuhuo.itch.io, emhuo.com).
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
 ### DM Sans
 
 Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)
