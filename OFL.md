@@ -2,7 +2,21 @@
 
 ## Notices
 
-TODO
+### DM Sans
+
+Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+https://openfontlicense.org
+
+### DM Mono
+
+Copyright 2020 The DM Mono Project Authors (https://www.github.com/googlefonts/dm-mono)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+https://openfontlicense.org
 
 ## Font text
 

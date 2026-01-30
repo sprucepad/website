@@ -14,15 +14,14 @@ export default defineConfig({
   integrations: [sitemap(), mdx(), svelte()],
 
   i18n: {
-    defaultLocale: "pt-BR",
-    locales: ["en-US", "pt-BR"],
+    defaultLocale: "pt",
+    locales: ["en", "pt"],
     routing: {
       prefixDefaultLocale: true,
     },
   },
 
   vite: {
-    // @ts-expect-error this is a bug in tailwind's vite plugin
     plugins: [tailwindcss()],
     resolve: {
       alias: {

@@ -1,11 +1,50 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@font-face {
+  font-family: "DM Sans";
+  src: url(/DM_Sans.ttf);
+}
+
+@font-face {
+  font-family: "DM Mono";
+  src: url(/DM_Mono.ttf);
+}
+
+:root {
+  --shadow-color: #000000;
+  --shadow-neobrutal: 0.25rem 0.25rem var(--shadow-color);
+
+  --background: #eeeeee;
+  --foreground: #111111;
+  --accent: #4ba322;
+}
+
+@theme inline {
+  --shadow-neobrutal: var(--shadow-neobrutal);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-shadow: var(--shadow-color);
+
+  --font-sans: "DM Sans", sans-serif;
+  --font-mono: "DM Mono", monospace;
+}
+
+* {
+  @apply border-foreground;
+}
+
 :root,
 body {
-  @apply h-full;
+  @apply bg-background text-foreground h-full;
 }
 
 main {
   @apply min-h-full;
+}
+
+@utility neobrutal {
+  @apply shadow-shadow shadow-neobrutal rounded-lg border-2;
 }
