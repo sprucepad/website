@@ -1,4 +1,8 @@
 export default {
+  search: {
+    placeholder: "Search...",
+    empty: "Nothing here yet!",
+  },
   nav: {
     home: "Home",
     posts: "Posts",

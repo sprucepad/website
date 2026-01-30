@@ -73,7 +73,11 @@ const items = [
           return (
             <li>
               <Link
-                class={cn("p-2 no-underline", active && "bg-accent neobrutal")}
+                class={cn(
+                  "p-2 no-underline",
+                  active &&
+                    "bg-accent neobrutal transition-shadow hover:shadow-none",
+                )}
                 {href}
               >
                 {label}

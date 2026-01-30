@@ -9,6 +9,8 @@ const { class: className, ...props } = Astro.props;
 
 <button
   {...props}
-  class={cn("neobrutal bg-accent p-4 m-4 cursor-pointer", className)}
-  ><slot /></button
+  class={cn(
+    "neobrutal bg-accent p-4 m-4 cursor-pointer hover:shadow-none transition-shadow",
+    className,
+  )}><slot /></button
 >

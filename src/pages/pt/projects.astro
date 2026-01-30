@@ -2,14 +2,16 @@
 import Layout from "@/layouts/Layout.astro";
 import Cards from "@/components/Cards.svelte";
 
-import { getCollectionWithImage } from "@/lib/collection-w-image";
+import { getCollection } from "@/lib/filtered-collection";
 
-const topics = await getCollectionWithImage("topics", "icon");
-const cards = await getCollectionWithImage("projects", "image");
+const locale = Astro.currentLocale ?? "pt";
+
+const topics = await getCollection(locale, "topics", "icon");
+const cards = await getCollection(locale, "projects", "image");
 ---
 
 <Layout title="projetos por sprucepad" desc="Meus projetos de programação.">
   <h1 class="font-heading text-4xl">Projetos</h1>
 
-  <Cards {cards} {topics} client:load />
+  <Cards {cards} {topics} {locale} client:load />
 </Layout>

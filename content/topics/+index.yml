@@ -1,0 +1,9 @@
+- id: typescript
+  name: TypeScript
+  icon: ./typescript.svg
+- id: compiler
+  name: Compilers
+  icon: ./compiler.svg
+- id: database
+  name: Databases
+  icon: ./database.svg

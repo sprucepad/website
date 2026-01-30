@@ -17,7 +17,7 @@ const art = defineCollection({
 });
 
 const topics = defineCollection({
-  loader: file("./content/topics.yml"),
+  loader: file("./content/topics/+index.yml"),
   schema: ({ image }) =>
     z.object({
       name: z.string(),
