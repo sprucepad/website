@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 
 import { getRelativeLocaleUrl } from "astro:i18n";
 import t from "@/i18n";
+import Link from "@/components/ui/Link.astro";
 const locale = Astro.currentLocale ?? "pt";
 ---
 
@@ -14,7 +15,7 @@ const locale = Astro.currentLocale ?? "pt";
 >
   <h1 class="text-4xl font-black">{t(locale, "notFound.title")}</h1>
   <p>{t(locale, "notFound.desc")}</p>
-  <a href={getRelativeLocaleUrl(locale, "/")}
-    ><Button>{t(locale, "notFound.button")}</Button></a
+  <Link class="no-underline" href={getRelativeLocaleUrl(locale, "/")}
+    ><Button>{t(locale, "notFound.button")}</Button></Link
   >
 </Layout>

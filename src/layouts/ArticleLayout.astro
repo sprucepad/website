@@ -1,0 +1,82 @@
+---
+import Layout from "./Layout.astro";
+import GitHubIcon from "@/icons/github.svg";
+import ItchIoIcon from "@/icons/itchio.svg";
+
+import { Image } from "astro:assets";
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import type { HTMLAttributes } from "astro/types";
+import type { MarkdownLayoutProps } from "astro";
+import Link from "@/components/ui/Link.astro";
+
+interface ArticleProps extends HTMLAttributes<"main"> {
+  page: CollectionEntry<"posts" | "projects">;
+}
+
+type Props = ArticleProps | MarkdownLayoutProps<ArticleProps>;
+
+const { page, ...rest } =
+  "frontmatter" in Astro.props ? Astro.props.frontmatter : Astro.props;
+
+const { Content } = await render(page);
+
+function itchIoURL(link: string) {
+  const [username, entry] = link.split("/");
+  return `https://${username}.itch.io/${entry}`;
+}
+---
+
+<Layout
+  {...rest}
+  title={page.data.title}
+  desc={page.data.desc}
+  banner={page.data.image}
+>
+  <article class="mx-auto max-w-prose space-y-4 pt-12">
+    <header>
+      {page.data.image && <Image src={page.data.image} alt="" />}
+      <h1 class="font-heading text-6xl">{page.data.title}</h1>
+      <p class="mb-4">{page.data.desc}</p>
+
+      <div class="flex gap-4">
+        {
+          "github" in page.data && page.data.github && (
+            <p>
+              <Link
+                href={`https://github.com/${page.data.github}`}
+                class="flex gap-1 no-underline hover:underline"
+              >
+                <GitHubIcon width={24} height={24} />
+                {page.data.github}
+              </Link>
+            </p>
+          )
+        }
+        {
+          "itchio" in page.data && page.data.itchio && (
+            <p>
+              <Link
+                href={itchIoURL(page.data.itchio)}
+                class="flex gap-1 no-underline hover:underline"
+              >
+                <ItchIoIcon width={24} height={24} />
+                {page.data.itchio}
+              </Link>
+            </p>
+          )
+        }
+      </div>
+    </header>
+    <section class="prose lg:prose-lg prose-headings:font-heading">
+      <Content />
+    </section>
+    <footer class="flex gap-4 opacity-50">
+      <p>{page.data.created.toISOString().split("T")[0]}</p>
+      &bull;
+      <p>{page.data.updated.toISOString().split("T")[0]}</p>
+      &bull;
+      <p>{page.data.license}</p>
+    </footer>
+  </article>
+</Layout>

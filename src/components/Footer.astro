@@ -1,5 +1,6 @@
 ---
 import LanguageSelection from "./LanguageSelection.astro";
+import Link from "./ui/Link.astro";
 ---
 
 <footer class="space-y-4 border-t-2 p-4" transition:persist>
@@ -12,28 +13,17 @@ import LanguageSelection from "./LanguageSelection.astro";
     </p>
     <ul class="ml-4 list-disc">
       <li>
-        Code: <a
-          href="https://opensource.org/licenses/mit"
-          rel="noopener noreferrer"
-          target="_blank"
-          class="underline">MIT License</a
+        Code: <Link href="https://opensource.org/licenses/mit">MIT License</Link
         >
       </li>
       <li>
-        Content (assets, images, artwork, audio, text, etc.): <a
+        Content (assets, images, artwork, audio, text, etc.): <Link
           href="https://github.com/sprucepad/website/tree/main/content/LICENSE.txt"
-          rel="noopener noreferrer"
-          target="_blank"
-          class="underline">All Rights Reserved</a
+          >All Rights Reserved</Link
         >, unless stated otherwise
       </li>
       <li>
-        Fonts: <a
-          href="https://openfontlicense.org/"
-          rel="noopener noreferrer"
-          target="_blank"
-          class="underline">SIL Open Font License (OFL) 1.1</a
-        >
+        Fonts: <Link>SIL Open Font License (OFL) 1.1</Link>
       </li>
     </ul>
   </div>

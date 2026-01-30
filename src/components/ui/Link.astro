@@ -1,0 +1,29 @@
+---
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+type Props = HTMLAttributes<"a">;
+
+const { class: className, rel, target, href, ...rest } = Astro.props;
+
+const aTarget =
+  target ?? (href?.toString().startsWith("https://") ? "_blank" : undefined);
+const aRel =
+  !aTarget && aTarget !== "_self" ? cn("noreferrer noopener", target) : rel;
+const aHref =
+  !aTarget || aTarget === "_self"
+    ? getRelativeLocaleUrl(
+        Astro.currentLocale ?? "pt",
+        href instanceof URL ? href.pathname : (href ?? undefined),
+      )
+    : href;
+---
+
+<a
+  {...rest}
+  class={cn("underline", className)}
+  href={aHref}
+  target={aTarget}
+  rel={aRel}><slot /></a
+>

@@ -8,28 +8,29 @@ import { cn } from "@/lib/utils";
 
 import t from "@/i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import Link from "./ui/Link.astro";
 const locale = Astro.currentLocale ?? "pt";
 
 const items = [
   {
     label: t(locale, "nav.home"),
-    href: getRelativeLocaleUrl(locale, "/"),
+    href: "/",
   },
   {
     label: t(locale, "nav.projects"),
-    href: getRelativeLocaleUrl(locale, "/projects"),
+    href: "/projects",
   },
   {
     label: t(locale, "nav.art"),
-    href: getRelativeLocaleUrl(locale, "/art"),
+    href: "/art",
   },
   {
     label: t(locale, "nav.posts"),
-    href: getRelativeLocaleUrl(locale, "/posts"),
+    href: "/posts",
   },
   {
     label: t(locale, "nav.contact"),
-    href: getRelativeLocaleUrl(locale, "/contact"),
+    href: "/contact",
   },
 ];
 ---
@@ -38,13 +39,13 @@ const items = [
   class="bg-background fixed inset-0 z-50 flex h-fit w-full items-center justify-between border-b-2 p-2"
   transition:name="header"
 >
-  <a
-    href={getRelativeLocaleUrl(locale, "/")}
-    class="font-heading flex items-center gap-2 text-xl font-black"
+  <Link
+    href="/"
+    class="font-heading flex items-center gap-2 text-xl font-black no-underline"
   >
     <PixelArt width={48} height={48} src={pfp} alt="Logo" />
     sprucepad
-  </a>
+  </Link>
 
   <input type="checkbox" class="peer hidden" id="header-toggle" />
   <label
@@ -63,14 +64,20 @@ const items = [
       {
         items.map(({ href, label }) => {
           const active =
-            href === getRelativeLocaleUrl(locale, "/")
-              ? Astro.url.pathname === href
-              : Astro.url.pathname.startsWith(href);
+            getRelativeLocaleUrl(locale, href) ===
+            getRelativeLocaleUrl(locale, "/")
+              ? Astro.url.pathname === getRelativeLocaleUrl(locale, href)
+              : Astro.url.pathname.startsWith(
+                  getRelativeLocaleUrl(locale, href),
+                );
           return (
             <li>
-              <a class={cn("p-2", active && "bg-accent neobrutal")} {href}>
+              <Link
+                class={cn("p-2 no-underline", active && "bg-accent neobrutal")}
+                {href}
+              >
                 {label}
-              </a>
+              </Link>
             </li>
           );
         })

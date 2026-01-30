@@ -1,0 +1,18 @@
+---
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection("projects");
+  return pages.map((page) => {
+    const [lang, ...slug] = page.id.split("/");
+    return { params: { lang, slug: slug.join("/") }, props: page };
+  });
+}) satisfies GetStaticPaths;
+
+const page = Astro.props;
+---
+
+<ArticleLayout {page} />

@@ -48,7 +48,7 @@ body {
 }
 
 main {
-  @apply min-h-full;
+  @apply min-h-full p-4 pt-24;
 }
 
 @utility neobrutal {
