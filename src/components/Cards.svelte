@@ -1,14 +1,35 @@
 <script lang="ts">
-  import type { CollectionEntry } from "@/lib/filtered-collection";
-
   import SearchBox from "./SearchBox.svelte";
-  import translate from "@/i18n";
+  import t from "@/i18n";
+
+  interface Topic {
+    id: string;
+    name: Record<string, string>;
+  }
+
+  interface Card {
+    id: string;
+    title: string;
+    desc: string;
+    topics: string[];
+    image: {
+      src: string;
+      width: number;
+      height: number;
+    } | null;
+  }
+
+  interface Props {
+    cards: Card[];
+    topics: Topic[];
+    locale: string;
+  }
 
   import { getRelativeLocaleUrl } from "astro:i18n";
 
   interface Props {
-    cards: CollectionEntry<"posts" | "projects">[];
-    topics: CollectionEntry<"topics">[];
+    cards: Card[];
+    topics: Topic[];
     locale: string;
   }
 
@@ -26,16 +47,16 @@
       }
 
       cards = initCards.filter((card) => {
-        const topics = initTopics.filter((initTopic) =>
-          card.data.topics.some((topic) => topic.id === initTopic.id),
+        const topics = initTopics.filter((t) =>
+          card.topics.some((topic) => topic === t.id),
         );
         for (const keyword of kw) {
           if (
-            card.data.title.toLowerCase().includes(keyword) ||
-            card.data.desc.toLowerCase().includes(keyword) ||
+            card.title.toLowerCase().includes(keyword) ||
+            card.desc.toLowerCase().includes(keyword) ||
             topics.some(
               (topic) =>
-                topic.data.name.toLowerCase().includes(keyword) ||
+                topic.name[locale].toLowerCase().includes(keyword) ||
                 topic.id.toLowerCase().includes(keyword),
             )
           ) {
@@ -54,28 +75,28 @@
     {#each cards as card (card.id)}
       <a
         href={getRelativeLocaleUrl(locale, `/projects/${card.id}`)}
-        class="neobrutal border-2 p-4"
+        class="neobrutal p-4"
       >
         {#if card.image}
           <img
             src={card.image.src}
-            width={card.image.options.width}
-            height={card.image.options.height}
+            width={card.image.width}
+            height={card.image.height}
             alt=""
           />
         {/if}
-        <p class="text-2xl font-black">{card.data.title}</p>
-        <p>{card.data.desc}</p>
+        <p class="text-2xl font-black">{card.title}</p>
+        <p class="mb-4">{card.desc}</p>
 
-        <div class="flex gap-4">
-          {#each card.data.topics as topicId (topicId.id)}
-            {@const topic = initTopics.find((topic) => topic.id === topicId.id)}
-            <div>{topic?.data.name}</div>
+        <div class="flex gap-2">
+          {#each card.topics as topicId (topicId)}
+            {@const topic = initTopics.find((topic) => topic.id === topicId)}
+            <div class="bg-accent p-1">{topic?.name[locale]}</div>
           {/each}
         </div>
       </a>
     {:else}
-      <p>{translate(locale, "search.empty")}</p>
+      <p>{t(locale, "search.empty")}</p>
     {/each}
   </div>
 </div>

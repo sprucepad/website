@@ -2,16 +2,36 @@
 import Layout from "@/layouts/Layout.astro";
 import Cards from "@/components/Cards.svelte";
 
-import { getCollection } from "@/lib/filtered-collection";
+import { getCollection } from "@/lib/custom-collection";
 
 const locale = Astro.currentLocale ?? "pt";
 
-const topics = await getCollection(locale, "topics", "icon");
-const cards = await getCollection(locale, "projects", "image");
+const topics = await getCollection("topics", { imageKey: "icon" });
+const cards = await getCollection("projects", { locale, imageKey: "image" });
 ---
 
 <Layout title="projetos por sprucepad" desc="Meus projetos de programação.">
   <h1 class="font-heading text-4xl">Projetos</h1>
 
-  <Cards {cards} {topics} {locale} client:load />
+  <Cards
+    cards={cards.map((c) => ({
+      id: c.id,
+      title: c.data.title,
+      desc: c.data.desc,
+      topics: c.data.topics.map((t) => t.id),
+      image: c.image
+        ? {
+            src: c.image.src,
+            width: c.image.options.width!,
+            height: c.image.options.height!,
+          }
+        : null,
+    }))}
+    topics={topics.map((t) => ({
+      id: t.id,
+      name: t.data.name, // keep all locales
+    }))}
+    {locale}
+    client:load
+  />
 </Layout>

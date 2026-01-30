@@ -10,7 +10,7 @@
   const { onFilter, locale }: Props = $props();
 </script>
 
-<label class="neobrutal flex items-center gap-1 border-2 px-2">
+<label class="neobrutal flex items-center gap-1 px-2">
   <SearchIcon />
   <input
     class="w-full py-2 outline-none"

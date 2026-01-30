@@ -1,9 +1,15 @@
 - id: typescript
-  name: TypeScript
+  name:
+    en: TypeScript
+    pt: TypeScript
   icon: ./typescript.svg
 - id: compiler
-  name: Compilers
+  name:
+    en: Compilers
+    pt: Compiladores
   icon: ./compiler.svg
 - id: database
-  name: Databases
+  name:
+    en: Databases
+    pt: Bancos de dados
   icon: ./database.svg

@@ -25,27 +25,31 @@ export async function getCollection<
   C extends keyof DataEntryMap,
   K extends keyof DataEntryMap[C][string]["data"],
 >(
-  locale: string,
   collection: C,
-  imageKey?: K,
-  opts?: Omit<UnresolvedImageTransform, "src">,
+  opts?: {
+    locale?: string;
+    imageKey?: K | (Omit<UnresolvedImageTransform, "src"> & { key?: K });
+  },
 ) {
+  const { locale, imageKey } = opts ?? {};
   const entries = await getAstroCollection(collection);
 
   return Promise.all(
     entries
-      .filter((entry) => entry.id.split("/")[0] === locale)
+      .filter((entry) => (locale ? entry.id.split("/")[0] === locale : true))
       .map(async (entry) => {
         const data = entry.data as unknown as Record<K, ImageMetadata>;
+        const resolvedKey =
+          typeof imageKey === "object" ? imageKey.key : undefined;
 
         return {
           ...entry,
-          id: entry.id.split("/").slice(1).join("/"),
+          id: locale ? entry.id.split("/").slice(1).join("/") : entry.id,
           image:
-            imageKey && data[imageKey]
+            imageKey && resolvedKey && data[resolvedKey]
               ? await getImage({
-                  ...opts,
-                  src: data[imageKey],
+                  ...(typeof imageKey === "object" ? imageKey : {}),
+                  src: data[resolvedKey],
                 })
               : undefined,
         };

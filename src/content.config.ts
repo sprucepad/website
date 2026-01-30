@@ -17,10 +17,10 @@ const art = defineCollection({
 });
 
 const topics = defineCollection({
-  loader: file("./content/topics/+index.yml"),
+  loader: file("./content/topics/+index.yml"), // can i translate this without using `glob()` and putting each topic on a separate file, just the separate languages?
   schema: ({ image }) =>
     z.object({
-      name: z.string(),
+      name: z.record(z.string()),
       icon: image(),
     }),
 });
