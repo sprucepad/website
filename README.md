@@ -1,0 +1,18 @@
+# sprucepad.net
+
+My personal website! Shows off my art and projects.
+
+## TODO
+
+- [ ] Blog
+- [ ] Projects
+- [ ] Copy art here
+- [ ] Gallery
+- [ ] Assets (banner, favicon)
+- [ ] English translation
+
+## License
+
+- **Content**: All files under the `content/` directory are **All Rights Reserved** unless otherwise stated. See [the license file.](./content/LICENSE.txt)
+- **Fonts**: All font files included in this repository are licensed under the **SIL Open Font License (OFL) 1.1**. See [the license file.](./OFL.md)
+- **Code**: All remaining files (including source code, build scripts, and configuration) are licensed under the **MIT License**. See [the license file.](./LICENSE)

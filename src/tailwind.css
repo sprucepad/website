@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root,
+body {
+  @apply h-full;
+}
+
+main {
+  @apply min-h-full;
+}

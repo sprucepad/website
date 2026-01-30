@@ -1,0 +1,40 @@
+All Rights Reserved
+
+Copyright (c) 2026 sprucepad
+
+All files contained within the `content/` directory of this repository—including but not limited to
+written blog posts, articles, artwork, images, illustrations, audio, video, and other creative
+assets (collectively, the “Content”)—are protected by copyright law.
+
+Except as expressly stated below, no part of the Content may be reproduced, distributed,
+modified, adapted, publicly displayed, publicly performed, sublicensed, or otherwise used,
+whether for commercial or non-commercial purposes, without the prior explicit written
+permission of the copyright holder.
+
+Limited Quotation with Attribution
+
+You may quote excerpts of the Content for purposes such as commentary, criticism,
+or discussion, provided that:
+- The excerpt is reasonably limited in length,
+- Proper attribution is given to the author and source, and
+- The use does not imply endorsement by the copyright holder.
+
+Any use beyond quotation requires prior written permission.
+
+Artificial Intelligence / Machine Learning Prohibition
+
+The Content may not be used, in whole or in part, for the purpose of training, fine-tuning,
+or improving machine learning models, artificial intelligence systems, or similar technologies.
+This prohibition includes, but is not limited to, dataset creation, web scraping, crawling,
+indexing for training purposes, or inclusion in AI-generated outputs.
+
+Any automated access to the Content for such purposes is expressly disallowed without
+prior written permission.
+
+Code Within Content
+
+Any source code snippets appearing within blog posts or articles are provided solely for
+educational or illustrative purposes and do not grant any license beyond what is explicitly
+stated elsewhere in this repository.
+
+For permissions or licensing inquiries, please contact: sprucepadhq@gmail.com
