@@ -64,8 +64,29 @@
           }
         }
 
-        for (const [key, value] of kv) {
-          // TODO
+        for (const [key, values] of kv) {
+          for (const value of values) {
+            switch (key) {
+              case "topic":
+                if (
+                  topics.some(
+                    (topic) =>
+                      topic.name[locale].toLowerCase().includes(value) ||
+                      topic.id.toLowerCase().includes(value),
+                  )
+                )
+                  return true;
+                break;
+              case "id":
+                if (card.id.toLowerCase().includes(value)) return true;
+                break;
+              case "title":
+                if (card.title.toLowerCase().includes(value)) return true;
+                break;
+              case "desc":
+                if (card.desc.toLowerCase().includes(value)) return true;
+            }
+          }
         }
       });
     }}
@@ -91,7 +112,7 @@
         <div class="flex gap-2">
           {#each card.topics as topicId (topicId)}
             {@const topic = initTopics.find((topic) => topic.id === topicId)}
-            <div class="bg-accent p-1">{topic?.name[locale]}</div>
+            <div class="bg-accent flex gap-1 p-1">{topic?.name[locale]}</div>
           {/each}
         </div>
       </a>

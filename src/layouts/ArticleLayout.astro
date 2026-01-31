@@ -3,12 +3,13 @@ import Layout from "./Layout.astro";
 import GitHubIcon from "@/icons/github.svg";
 import ItchIoIcon from "@/icons/itchio.svg";
 
+import Link from "@/components/ui/Link.astro";
+
 import { Image } from "astro:assets";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import type { HTMLAttributes } from "astro/types";
 import type { MarkdownLayoutProps } from "astro";
-import Link from "@/components/ui/Link.astro";
 
 interface ArticleProps extends HTMLAttributes<"main"> {
   page: CollectionEntry<"posts" | "projects">;

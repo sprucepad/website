@@ -6,6 +6,7 @@ import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
+import rehypeExternalLinks from "rehype-external-links";
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,6 +20,12 @@ export default defineConfig({
     routing: {
       prefixDefaultLocale: true,
     },
+  },
+
+  markdown: {
+    rehypePlugins: [
+      [rehypeExternalLinks, { target: "_blank", rel: "noopener noreferrer" }],
+    ],
   },
 
   vite: {
