@@ -7,7 +7,7 @@ import { getCollection } from "@/lib/custom-collection";
 const locale = Astro.currentLocale ?? "pt";
 
 const topics = await getCollection("topics", { imageKey: "icon" });
-const cards = await getCollection("projects", { locale, imageKey: "image" });
+const cards = await getCollection("posts", { locale, imageKey: "image" });
 ---
 
 <Layout title="projetos por sprucepad" desc="Meus projetos de programação.">
@@ -27,11 +27,11 @@ const cards = await getCollection("projects", { locale, imageKey: "image" });
           }
         : null,
     }))}
+    href="/posts"
     topics={topics.map((t) => ({
       id: t.id,
       ...t.data,
     }))}
-    href="/projects"
     {locale}
     client:load
   />

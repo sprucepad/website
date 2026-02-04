@@ -1,0 +1,21 @@
+- id: typescript
+  en: TypeScript
+  pt: TypeScript
+- id: compiler
+  en: Compilers
+  pt: Compiladores
+- id: database
+  en: Databases
+  pt: Bancos de dados
+- id: game
+  en: Games
+  pt: Jogos
+- id: site
+  en: Websites
+  pt: Sites
+- id: app
+  en: Apps
+  pt: Apps
+- id: astro
+  en: Astro
+  pt: Astro

@@ -6,6 +6,8 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import t from "@/i18n";
 import Link from "@/components/ui/Link.astro";
 const locale = Astro.currentLocale ?? "pt";
+
+export const prerender = false;
 ---
 
 <Layout

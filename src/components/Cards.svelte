@@ -1,10 +1,11 @@
 <script lang="ts">
   import SearchBox from "./SearchBox.svelte";
+  import { getRelativeLocaleUrl } from "astro:i18n";
   import t from "@/i18n";
 
   interface Topic {
     id: string;
-    name: Record<string, string>;
+    [x: string]: string;
   }
 
   interface Card {
@@ -23,17 +24,15 @@
     cards: Card[];
     topics: Topic[];
     locale: string;
+    href: string;
   }
 
-  import { getRelativeLocaleUrl } from "astro:i18n";
-
-  interface Props {
-    cards: Card[];
-    topics: Topic[];
-    locale: string;
-  }
-
-  const { cards: initCards, topics: initTopics, locale }: Props = $props();
+  const {
+    cards: initCards,
+    topics: initTopics,
+    locale,
+    href,
+  }: Props = $props();
   let cards = $state((() => initCards)());
 </script>
 
@@ -56,7 +55,7 @@
             card.desc.toLowerCase().includes(keyword) ||
             topics.some(
               (topic) =>
-                topic.name[locale].toLowerCase().includes(keyword) ||
+                topic[locale].toLowerCase().includes(keyword) ||
                 topic.id.toLowerCase().includes(keyword),
             )
           ) {
@@ -71,7 +70,7 @@
                 if (
                   topics.some(
                     (topic) =>
-                      topic.name[locale].toLowerCase().includes(value) ||
+                      topic[locale].toLowerCase().includes(value) ||
                       topic.id.toLowerCase().includes(value),
                   )
                 )
@@ -95,8 +94,8 @@
   <div class="flex flex-wrap gap-4">
     {#each cards as card (card.id)}
       <a
-        href={getRelativeLocaleUrl(locale, `/projects/${card.id}`)}
-        class="neobrutal p-4"
+        href={getRelativeLocaleUrl(locale, `${href}/${card.id}`)}
+        class="neobrutal max-w-sm p-4"
       >
         {#if card.image}
           <img
@@ -109,10 +108,14 @@
         <p class="text-2xl font-black">{card.title}</p>
         <p class="mb-4">{card.desc}</p>
 
-        <div class="flex gap-2">
+        <div class="flex items-start gap-2">
           {#each card.topics as topicId (topicId)}
             {@const topic = initTopics.find((topic) => topic.id === topicId)}
-            <div class="bg-accent flex gap-1 p-1">{topic?.name[locale]}</div>
+            {#if topic}
+              <div class="bg-accent flex gap-1 p-1">
+                {topic[locale]}
+              </div>
+            {/if}
           {/each}
         </div>
       </a>
