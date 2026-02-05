@@ -1,0 +1,10 @@
+title:
+  en: Icons
+  pt: Ícones
+images:
+  - img: ./newt.png
+    alt: A newt in a coffee cup.
+  - img: ./dragon.png
+    alt: A red dragon flying to the right.
+  - img: ./sparrow.png
+    alt: A sparrow in front of an autumn tree.

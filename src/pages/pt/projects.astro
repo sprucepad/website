@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import Cards from "@/components/Cards.svelte";
 
 import { getCollection } from "@/lib/custom-collection";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 const locale = Astro.currentLocale ?? "pt";
 
@@ -29,10 +30,11 @@ const cards = await getCollection("projects", { locale, imageKey: "image" });
     }))}
     topics={topics.map((t) => ({
       id: t.id,
-      ...t.data,
+      name: t.data[locale],
     }))}
-    href="/projects"
-    {locale}
+    href={getRelativeLocaleUrl(locale, "/projects")}
+    placeholder="Pesquisar projetos..."
+    empty="Nada aqui ainda!"
     client:load
   />
 </Layout>

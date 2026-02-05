@@ -1,0 +1,8 @@
+title:
+  en: Mascots
+  pt: Mascotes
+images:
+  - img: ./mon.png
+    alt: A fennec fox mascot
+  - img: ./lyra.png
+    alt: A red panda mascot.

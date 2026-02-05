@@ -1,0 +1,12 @@
+title:
+  en: Characters
+  pt: Personagens
+images:
+  - img: ./antler-fox.png
+    alt: A fox with antlers walking through a forest.
+  - img: ./masked.png
+    alt: A humanoid fox with a digital mask.
+  - img: ./space-fox.png
+    alt: A fox in an astronaut suit in space.
+  - img: ./split-proto.png
+    alt: A split-view protogen.

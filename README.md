@@ -4,11 +4,12 @@ My personal website! Shows off my art and projects.
 
 ## TODO
 
-- [ ] Blog
-- [ ] Projects
+- [x] Blog
+- [x] Projects
 - [ ] Copy art here
 - [ ] Gallery
 - [ ] Assets (banner, favicon, (new) profile picture)
+- [ ] Home page
 - [ ] English translation
 
 ## License

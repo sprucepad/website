@@ -1,13 +1,12 @@
 <script lang="ts">
   import SearchIcon from "@/icons/search.svelte";
-  import t from "@/i18n";
 
   interface Props {
     onFilter(kw: string[], kv: Map<string, string[]>): void;
-    locale: string;
+    placeholder: string;
   }
 
-  const { onFilter, locale }: Props = $props();
+  const { onFilter, placeholder }: Props = $props();
 </script>
 
 <label class="neobrutal flex items-center gap-1 px-2">
@@ -15,7 +14,7 @@
   <input
     class="w-full py-2 outline-none"
     type="search"
-    placeholder={t(locale, "search.placeholder")}
+    {placeholder}
     oninput={(e) => {
       const val = (e.target as HTMLInputElement).value;
 

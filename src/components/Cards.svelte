@@ -5,7 +5,7 @@
 
   interface Topic {
     id: string;
-    [x: string]: string;
+    name: string;
   }
 
   interface Card {
@@ -23,22 +23,24 @@
   interface Props {
     cards: Card[];
     topics: Topic[];
-    locale: string;
     href: string;
+    placeholder: string;
+    empty: string;
   }
 
   const {
     cards: initCards,
     topics: initTopics,
-    locale,
     href,
+    empty,
+    placeholder,
   }: Props = $props();
   let cards = $state((() => initCards)());
 </script>
 
 <div class="space-y-4">
   <SearchBox
-    {locale}
+    {placeholder}
     onFilter={(kw, kv) => {
       if (!kw.length && !kv.size) {
         cards = initCards;
@@ -55,7 +57,7 @@
             card.desc.toLowerCase().includes(keyword) ||
             topics.some(
               (topic) =>
-                topic[locale].toLowerCase().includes(keyword) ||
+                topic.name.toLowerCase().includes(keyword) ||
                 topic.id.toLowerCase().includes(keyword),
             )
           ) {
@@ -70,7 +72,7 @@
                 if (
                   topics.some(
                     (topic) =>
-                      topic[locale].toLowerCase().includes(value) ||
+                      topic.name.toLowerCase().includes(value) ||
                       topic.id.toLowerCase().includes(value),
                   )
                 )
@@ -93,10 +95,7 @@
 
   <div class="flex flex-wrap gap-4">
     {#each cards as card (card.id)}
-      <a
-        href={getRelativeLocaleUrl(locale, `${href}/${card.id}`)}
-        class="neobrutal max-w-sm p-4"
-      >
+      <a href={`${href}/${card.id}`} class="neobrutal max-w-sm p-4">
         {#if card.image}
           <img
             src={card.image.src}
@@ -113,14 +112,14 @@
             {@const topic = initTopics.find((topic) => topic.id === topicId)}
             {#if topic}
               <div class="bg-accent flex gap-1 p-1">
-                {topic[locale]}
+                {topic.name}
               </div>
             {/if}
           {/each}
         </div>
       </a>
     {:else}
-      <p>{t(locale, "search.empty")}</p>
+      <p>{empty}</p>
     {/each}
   </div>
 </div>

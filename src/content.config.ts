@@ -5,7 +5,7 @@ const art = defineCollection({
   loader: glob({ pattern: "**/*.{yml,yaml,json,toml}", base: "./content/art" }),
   schema: ({ image }) =>
     z.object({
-      cover: z.string(),
+      title: z.record(z.string()),
       images: z.array(
         z.object({
           img: image(),
