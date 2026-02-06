@@ -1,14 +1,12 @@
 <script lang="ts">
   import SearchBox from "./SearchBox.svelte";
-  import { getRelativeLocaleUrl } from "astro:i18n";
-  import t from "@/i18n";
 
-  interface Topic {
+  export interface Topic {
     id: string;
     name: string;
   }
 
-  interface Card {
+  export interface Card {
     id: string;
     title: string;
     desc: string;

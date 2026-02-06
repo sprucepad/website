@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import Cards from "@/components/Cards.svelte";
 
 import { getCollection } from "@/lib/custom-collection";
+import { card, topic } from "@/lib/mappers";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 const locale = Astro.currentLocale ?? "pt";
@@ -12,26 +13,11 @@ const cards = await getCollection("posts", { locale, imageKey: "image" });
 ---
 
 <Layout title="projetos por sprucepad" desc="Meus projetos de programação.">
-  <h1 class="font-heading text-4xl">Projetos</h1>
+  <h1 class="font-heading text-4xl">Posts</h1>
 
   <Cards
-    cards={cards.map((c) => ({
-      id: c.id,
-      title: c.data.title,
-      desc: c.data.desc,
-      topics: c.data.topics.map((t) => t.id),
-      image: c.image
-        ? {
-            src: c.image.src,
-            width: c.image.options.width!,
-            height: c.image.options.height!,
-          }
-        : null,
-    }))}
-    topics={topics.map((t) => ({
-      id: t.id,
-      name: t.data[locale],
-    }))}
+    cards={cards.map(card())}
+    topics={topics.map(topic(locale))}
     href={getRelativeLocaleUrl(locale, "/posts")}
     placeholder="Pesquisar posts..."
     empty="Nada aqui ainda!"

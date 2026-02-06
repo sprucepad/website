@@ -4,6 +4,7 @@ import Cards from "@/components/Cards.svelte";
 
 import { getCollection } from "@/lib/custom-collection";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { card, topic } from "@/lib/mappers";
 
 const locale = Astro.currentLocale ?? "pt";
 
@@ -15,23 +16,8 @@ const cards = await getCollection("projects", { locale, imageKey: "image" });
   <h1 class="font-heading text-4xl">Projetos</h1>
 
   <Cards
-    cards={cards.map((c) => ({
-      id: c.id,
-      title: c.data.title,
-      desc: c.data.desc,
-      topics: c.data.topics.map((t) => t.id),
-      image: c.image
-        ? {
-            src: c.image.src,
-            width: c.image.options.width!,
-            height: c.image.options.height!,
-          }
-        : null,
-    }))}
-    topics={topics.map((t) => ({
-      id: t.id,
-      name: t.data[locale],
-    }))}
+    cards={cards.map(card())}
+    topics={topics.map(topic(locale))}
     href={getRelativeLocaleUrl(locale, "/projects")}
     placeholder="Pesquisar projetos..."
     empty="Nada aqui ainda!"

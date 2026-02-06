@@ -1,0 +1,20 @@
+---
+import Gallery from "@/components/Gallery.svelte";
+import Layout from "@/layouts/Layout.astro";
+
+import { getCollection } from "@/lib/custom-collection";
+import { art } from "@/lib/mappers";
+
+const locale = Astro.currentLocale ?? "pt";
+
+const albums = await getCollection("art");
+---
+
+<Layout title="Galeria | sprucepad" desc="Minha galeria de pixel art.">
+  <Gallery
+    images={albums.flatMap(art(locale))}
+    empty="Nada aqui ainda!"
+    placeholder="Pesquisar galeria..."
+    client:load
+  />
+</Layout>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import SearchBox from "./SearchBox.svelte";
 
-  interface Image {
+  export interface Image {
     album: string;
     albumId: string;
     src: string;
