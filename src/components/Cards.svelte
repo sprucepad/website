@@ -95,7 +95,10 @@
 
   <div class="flex flex-wrap gap-4">
     {#each cards as card (card.id)}
-      <a href={`${href}/${card.id}`} class="neobrutal max-w-sm p-4">
+      <a
+        href={`${href.endsWith("/") ? href : href + "/"}${card.id}`}
+        class="neobrutal max-w-sm p-4"
+      >
         {#if card.image}
           <img
             src={card.image.src}

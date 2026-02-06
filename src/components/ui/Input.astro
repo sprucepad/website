@@ -2,15 +2,15 @@
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"button">;
+type Props = HTMLAttributes<"input">;
 
 const { class: className, ...props } = Astro.props;
 ---
 
-<button
+<input
   {...props}
   class={cn(
-    "neobrutal bg-accent p-2 cursor-pointer hover:shadow-none transition-shadow",
+    "neobrutal p-2 outline-none focus:shadow-none transition-shadow",
     className,
-  )}><slot /></button
->
+  )}
+/>

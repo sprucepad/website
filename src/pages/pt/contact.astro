@@ -1,0 +1,73 @@
+---
+import GitHubIcon from "@/icons/github.svg";
+import ItchIoIcon from "@/icons/itchio.svg";
+import YouTubeIcon from "@/icons/youtube.svg";
+import RedditIcon from "@/icons/reddit.svg";
+
+import Button from "@/components/ui/Button.astro";
+import Input from "@/components/ui/Input.astro";
+import Link from "@/components/ui/Link.astro";
+import TextArea from "@/components/ui/TextArea.astro";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+  title="contatos de sprucepad"
+  desc="Minhas rede sociais e meu e-mail."
+  class="mx-auto max-w-prose space-y-4"
+>
+  <h1 class="font-heading text-6xl">Contato</h1>
+
+  <div class="flex flex-wrap gap-4">
+    <Link href="https://github.com/sprucepad" class="no-underline">
+      <Button class="bg-background flex gap-1">
+        <GitHubIcon width={24} height={24} />
+        sprucepad
+      </Button>
+    </Link>
+
+    <Link href="https://github.com/sprucepad" class="no-underline">
+      <Button class="bg-background flex gap-1">
+        <ItchIoIcon width={24} height={24} />
+        sprucepad.itch.io
+      </Button>
+    </Link>
+
+    <Link href="https://www.youtube.com/@sprucepad" class="no-underline">
+      <Button class="bg-background flex gap-1">
+        <YouTubeIcon width={24} height={24} />
+        @sprucepad
+      </Button>
+    </Link>
+
+    <Link href="https://www.reddit.com/user/sprucepad" class="no-underline">
+      <Button class="bg-background flex gap-1">
+        <RedditIcon width={24} height={24} />
+        u/sprucepad
+      </Button>
+    </Link>
+  </div>
+
+  <form action="mailto:sprucepadhq@gmail.com" class="flex flex-col gap-4">
+    <label for="contact-form-subject" class="flex flex-col">
+      Sujeito
+      <Input
+        name="subject"
+        id="contact-form-subject"
+        type="text"
+        placeholder="Sobre o quê você quer me falar?"
+      />
+    </label>
+
+    <label for="contact-form-body" class="flex flex-col">
+      Corpo
+      <TextArea
+        name="body"
+        id="contact-form-body"
+        placeholder="O quê você quer me falar?"
+      />
+    </label>
+
+    <Button type="submit">Send</Button>
+  </form>
+</Layout>
