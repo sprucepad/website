@@ -1,0 +1,23 @@
+---
+import GalleryLayout from "@/layouts/GalleryLayout.astro";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const albums = await getCollection("art");
+  return albums.map((album) => ({
+    params: { slug: album.id },
+    props: album,
+  }));
+}) satisfies GetStaticPaths;
+
+const album = Astro.props;
+---
+
+<GalleryLayout
+  title={`Galeria - ${album.data.title} | sprucepad`}
+  desc={`O album ${album.data.title} da minha galeria de pixel art.`}
+  placeholder="Pesquisar galeria..."
+  empty="Nada aqui ainda!"
+  albums={[album]}
+/>

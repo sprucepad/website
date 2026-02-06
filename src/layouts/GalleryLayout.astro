@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Layout, { type Props as LayoutProps } from "./Layout.astro";
+import Gallery from "@/components/Gallery.svelte";
+
+interface Props extends LayoutProps {
+  albums: CollectionEntry<"art">[];
+  placeholder: string;
+  empty: string;
+}
+
+const locale = Astro.currentLocale ?? "pt";
+
+const { albums, placeholder, empty, ...rest } = Astro.props;
+---
+
+<Layout {...rest}>
+  <Gallery
+    {placeholder}
+    {empty}
+    images={albums.flatMap((a) =>
+      a.data.images.map((i) => ({
+        album: a.data.title[locale],
+        albumId: a.id,
+        src: i.img.src,
+        alt: i.alt,
+        license: i.license,
+      })),
+    )}
+    client:load
+  />
+</Layout>

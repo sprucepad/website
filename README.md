@@ -6,8 +6,8 @@ My personal website! Shows off my art and projects.
 
 - [x] Blog
 - [x] Projects
-- [ ] Copy art here
-- [ ] Gallery
+- [x] Copy art here
+- [x] Gallery
 - [ ] Assets (banner, favicon, (new) profile picture)
 - [ ] Home page
 - [ ] English translation
