@@ -12,11 +12,11 @@ import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout
-  title="contatos de sprucepad"
-  desc="Minhas rede sociais e meu e-mail."
+  title="sprucepad's contacts"
+  desc="My social media and my e-mail."
   class="mx-auto max-w-prose space-y-4"
 >
-  <h1 class="font-heading text-6xl">Contato</h1>
+  <h1 class="font-heading text-6xl">Contact</h1>
 
   <div class="flex flex-wrap gap-4">
     <Link href="https://github.com/sprucepad" class="no-underline">
@@ -50,24 +50,24 @@ import Layout from "@/layouts/Layout.astro";
 
   <form action="mailto:sprucepadhq@gmail.com" class="flex flex-col gap-4">
     <label for="contact-form-subject" class="flex flex-col">
-      Sujeito
+      Subject
       <Input
         name="subject"
         id="contact-form-subject"
         type="text"
-        placeholder="Sobre o quê você quer me falar?"
+        placeholder="What do you want to tell me about?"
       />
     </label>
 
     <label for="contact-form-body" class="flex flex-col">
-      Corpo
+      Body
       <TextArea
         name="body"
         id="contact-form-body"
-        placeholder="O quê você quer me falar?"
+        placeholder="What do you want to tell me?"
       />
     </label>
 
-    <Button type="submit">Enviar</Button>
+    <Button type="submit">Send</Button>
   </form>
 </Layout>

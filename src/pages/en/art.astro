@@ -5,16 +5,16 @@ import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "@/lib/custom-collection";
 import { art } from "@/lib/mappers";
 
-const locale = Astro.currentLocale ?? "pt";
+const locale = Astro.currentLocale ?? "en";
 
 const albums = await getCollection("art");
 ---
 
-<Layout title="galeria de sprucepad" desc="Minha galeria de pixel art.">
+<Layout title="sprucepad's gallery" desc="My pixel art gallery.">
   <Gallery
     images={albums.flatMap(art(locale))}
-    empty="Nada aqui ainda!"
-    placeholder="Pesquisar galeria..."
+    empty="Nothing here yet!"
+    placeholder="Search gallery..."
     client:load
   />
 </Layout>

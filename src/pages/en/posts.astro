@@ -12,15 +12,15 @@ const topics = await getCollection("topics", { imageKey: "icon" });
 const cards = await getCollection("posts", { locale, imageKey: "image" });
 ---
 
-<Layout title="posts por sprucepad" desc="Meus posts no meu blog.">
+<Layout title="sprucepad's posts" desc="My blog posts.">
   <h1 class="font-heading text-4xl">Posts</h1>
 
   <Cards
     cards={cards.map(card())}
     topics={topics.map(topic(locale))}
     href={getRelativeLocaleUrl(locale, "/posts")}
-    placeholder="Pesquisar posts..."
-    empty="Nada aqui ainda!"
+    placeholder="Search posts..."
+    empty="Nothing here yet!"
     client:load
   />
 </Layout>

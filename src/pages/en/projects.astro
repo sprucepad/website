@@ -1,0 +1,26 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Cards from "@/components/Cards.svelte";
+
+import { getCollection } from "@/lib/custom-collection";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { card, topic } from "@/lib/mappers";
+
+const locale = Astro.currentLocale ?? "en";
+
+const topics = await getCollection("topics", { imageKey: "icon" });
+const cards = await getCollection("projects", { locale, imageKey: "image" });
+---
+
+<Layout title="sprucepad's projects" desc="My programming projects.">
+  <h1 class="font-heading text-4xl">Projects</h1>
+
+  <Cards
+    cards={cards.map(card())}
+    topics={topics.map(topic(locale))}
+    href={getRelativeLocaleUrl(locale, "/projects")}
+    placeholder="Search projects..."
+    empty="Nothing here yet!"
+    client:load
+  />
+</Layout>
