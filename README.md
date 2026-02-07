@@ -8,10 +8,10 @@ My personal website! Shows off my art and projects.
 - [x] Projects
 - [x] Copy art here
 - [x] Gallery
-- [ ] Translate current pages to English
-- [ ] Assets (banner, favicon, (new) profile picture)
+- [x] Translate current pages to English
+- [x] Assets (banner, favicon, profile picture)
 - [ ] Home page
-- [ ] Translate blog posts and projects
+- [ ] Rewrite/translate blog posts and projects
 
 ## License
 

@@ -14,5 +14,5 @@ const image = src instanceof Promise ? (await src).default : src;
   src={image.src}
   width={width ?? image.width}
   height={height ?? image.height}
-  class={cn("pixel", className)}
+  class={cn("pixel-art", className)}
 />
