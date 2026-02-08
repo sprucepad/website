@@ -95,7 +95,7 @@
     {#each cards as card (card.id)}
       <a
         href={`${href.endsWith("/") ? href : href + "/"}${card.id}`}
-        class="neobrutal max-w-sm p-4"
+        class="neobrutal bg-background max-w-sm p-4"
       >
         {#if card.image}
           <img
@@ -112,7 +112,7 @@
           {#each card.topics as topicId (topicId)}
             {@const topic = initTopics.find((topic) => topic.id === topicId)}
             {#if topic}
-              <div class="bg-accent flex gap-1 p-1">
+              <div class="bg-accent neobrutal flex gap-1 p-1">
                 {topic.name}
               </div>
             {/if}

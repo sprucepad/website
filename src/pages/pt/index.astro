@@ -1,11 +1,82 @@
 ---
+import { Content as AboutMe } from "./_about.mdx";
+
 import Layout from "@/layouts/Layout.astro";
+import Link from "@/components/ui/Link.astro";
+import Typewriter from "@/components/Typewriter.svelte";
+import Cards from "@/components/Cards.svelte";
+import { getCollection } from "@/lib/custom-collection";
+import { art, card, topic } from "@/lib/mappers";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Gallery from "@/components/Gallery.svelte";
+import Prose from "@/components/ui/Prose.astro";
+
+const locale = Astro.currentLocale ?? "pt";
+const gallery = await getCollection("art");
+const posts = await getCollection("posts", { locale, imageKey: "image" });
+const topics = await getCollection("topics", { locale });
 ---
 
 <Layout
   title="site do sprucepad"
   desc="Meu site pessoal, mostrando meus projetos e minha arte."
-  class="grid place-content-center"
+  style="padding: 0 !important"
 >
-  <h1 class="font-heading text-6xl font-black">Olá, Mundo!</h1>
+  <section class="grid h-[calc(100vh-10rem)] place-content-center p-4">
+    <h1 class="font-heading text-6xl">Bem-vindo(a) ao meu site!</h1>
+    <h2 class="font-heading text-center text-3xl">
+      Eu sou um <Typewriter
+        words={[
+          "desenvolvedor de jogos",
+          "desenvolvedor web full-stack",
+          "artista de pixel",
+        ]}
+        client:load
+      />, do Brasil.
+    </h2>
+  </section>
+
+  <section class="mx-auto flex max-w-prose flex-col gap-4 p-4 pb-16">
+    <article class="space-y-4">
+      <header>
+        <h1 class="font-heading text-4xl">Sobre Mim</h1>
+      </header>
+
+      <Prose>
+        <AboutMe />
+      </Prose>
+    </article>
+  </section>
+
+  <section class="bg-accent flex h-[calc(100vh-10rem)] flex-col gap-4 p-16">
+    <h1 class="font-heading text-center text-4xl">Meu Blog</h1>
+
+    <div class="min-h-0 flex-1 mask-b-to-transparent">
+      <Cards
+        cards={posts.map(card()).slice(0, 3)}
+        topics={topics.map(topic(locale))}
+        href={getRelativeLocaleUrl(locale, "/posts")}
+        placeholder="Pesquisar posts..."
+        empty="Nada aqui ainda!"
+        client:load
+      />
+    </div>
+
+    <p class="text-center"><Link href="/posts">Mais posts...</Link></p>
+  </section>
+
+  <section class="flex h-[calc(100vh-10rem)] flex-col gap-4 p-16">
+    <h1 class="font-heading text-center text-4xl">Minha Arte</h1>
+
+    <div class="min-h-0 flex-1 mask-b-to-transparent">
+      <Gallery
+        images={gallery.flatMap(art(locale)).slice(0, 4)}
+        placeholder="Pesquisar posts..."
+        empty="Nada aqui ainda!"
+        client:load
+      />
+    </div>
+
+    <p class="text-center"><Link href="/art">Mais arte...</Link></p>
+  </section>
 </Layout>
