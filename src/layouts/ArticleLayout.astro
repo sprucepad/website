@@ -8,18 +8,12 @@ import Link from "@/components/ui/Link.astro";
 import { Image } from "astro:assets";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import type { HTMLAttributes } from "astro/types";
-import type { MarkdownLayoutProps } from "astro";
 
-interface ArticleProps extends HTMLAttributes<"main"> {
+interface Props {
   page: CollectionEntry<"posts" | "projects">;
 }
 
-type Props = ArticleProps | MarkdownLayoutProps<ArticleProps>;
-
-const { page, ...rest } =
-  "frontmatter" in Astro.props ? Astro.props.frontmatter : Astro.props;
-
+const { page, ...rest } = Astro.props;
 const { Content } = await render(page);
 
 function itchIoURL(link: string) {

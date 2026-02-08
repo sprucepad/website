@@ -1,0 +1,39 @@
+---
+import GitHubIcon from "@/icons/github.svg";
+import ItchIoIcon from "@/icons/itchio.svg";
+import YouTubeIcon from "@/icons/youtube.svg";
+import RedditIcon from "@/icons/reddit.svg";
+
+import Button from "./ui/Button.astro";
+import Link from "@/components/ui/Link.astro";
+---
+
+<div class="flex flex-wrap gap-4">
+  <Link href="https://github.com/sprucepad" class="no-underline">
+    <Button class="bg-background flex gap-1">
+      <GitHubIcon width={24} height={24} />
+      sprucepad
+    </Button>
+  </Link>
+
+  <Link href="https://github.com/sprucepad" class="no-underline">
+    <Button class="bg-background flex gap-1">
+      <ItchIoIcon width={24} height={24} />
+      sprucepad.itch.io
+    </Button>
+  </Link>
+
+  <Link href="https://www.youtube.com/@sprucepad" class="no-underline">
+    <Button class="bg-background flex gap-1">
+      <YouTubeIcon width={24} height={24} />
+      @sprucepad
+    </Button>
+  </Link>
+
+  <Link href="https://www.reddit.com/user/sprucepad" class="no-underline">
+    <Button class="bg-background flex gap-1">
+      <RedditIcon width={24} height={24} />
+      u/sprucepad
+    </Button>
+  </Link>
+</div>

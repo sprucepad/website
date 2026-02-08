@@ -1,6 +1,4 @@
 ---
-import { Content as AboutMe } from "./_about.mdx";
-
 import Layout from "@/layouts/Layout.astro";
 import Link from "@/components/ui/Link.astro";
 import Typewriter from "@/components/Typewriter.svelte";
@@ -10,6 +8,9 @@ import { art, card, topic } from "@/lib/mappers";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Gallery from "@/components/Gallery.svelte";
 import Prose from "@/components/ui/Prose.astro";
+import Socials from "@/components/Socials.astro";
+import ContactForm from "@/components/ContactForm.astro";
+import Button from "@/components/ui/Button.astro";
 
 const locale = Astro.currentLocale ?? "pt";
 const gallery = await getCollection("art");
@@ -43,7 +44,20 @@ const topics = await getCollection("topics", { locale });
       </header>
 
       <Prose>
-        <AboutMe />
+        <p>
+          Eu sou Forest, um programador e artista baseado no Brasil. Eu crio
+          todo tipo de coisa&mdash;aplicativos, bibliotecas, websites, pixel
+          art, jogos, e mais.
+        </p>
+
+        <p>
+          Meus maiores projetos são <Link href="/projects/kineo">Kineo</Link>,
+          um ORM/OGM para TypeScript, e <Link href="/projects/convoker"
+            >Convoker</Link
+          >, um framework TypeScript para criar aplicativos de terminal.
+        </p>
+
+        <Link href="/about"><Button>Ler Mais</Button></Link>
       </Prose>
     </article>
   </section>
@@ -78,5 +92,12 @@ const topics = await getCollection("topics", { locale });
     </div>
 
     <p class="text-center"><Link href="/art">Mais arte...</Link></p>
+  </section>
+
+  <section class="bg-accent h-[calc(100vh-10rem)] space-y-4 p-16">
+    <h1 class="font-heading text-4xl">Fale comigo!</h1>
+
+    <Socials />
+    <ContactForm />
   </section>
 </Layout>

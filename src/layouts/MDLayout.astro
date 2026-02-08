@@ -1,0 +1,20 @@
+---
+import Prose from "@/components/ui/Prose.astro";
+import Layout, { type Props as LayoutProps } from "./Layout.astro";
+import type { MarkdownLayoutProps } from "astro";
+
+type Props = LayoutProps | MarkdownLayoutProps<LayoutProps>;
+
+const props =
+  "frontmatter" in Astro.props ? Astro.props.frontmatter : Astro.props;
+---
+
+<Layout {...props}>
+  <article class="mx-auto max-w-prose pt-12">
+    <slot name="header" />
+    <Prose>
+      <slot />
+    </Prose>
+    <slot name="footer" />
+  </article>
+</Layout>
