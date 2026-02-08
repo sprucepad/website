@@ -9,7 +9,6 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import Gallery from "@/components/Gallery.svelte";
 import Prose from "@/components/ui/Prose.astro";
 import Socials from "@/components/Socials.astro";
-import ContactForm from "@/components/ContactForm.astro";
 import Button from "@/components/ui/Button.astro";
 
 const locale = Astro.currentLocale ?? "pt";
@@ -36,6 +35,10 @@ const topics = await getCollection("topics", { locale });
       />, do Brasil.
     </h2>
   </section>
+
+  <div class="bg-accent mb6 neobrutal m-4 grid place-content-center p-4">
+    <Socials />
+  </div>
 
   <section class="mx-auto flex max-w-prose flex-col gap-4 p-4 pb-16">
     <article class="space-y-4">
@@ -92,12 +95,5 @@ const topics = await getCollection("topics", { locale });
     </div>
 
     <p class="text-center"><Link href="/art">Mais arte...</Link></p>
-  </section>
-
-  <section class="bg-accent h-[calc(100vh-10rem)] space-y-4 p-16">
-    <h1 class="font-heading text-4xl">Fale comigo!</h1>
-
-    <Socials />
-    <ContactForm />
   </section>
 </Layout>

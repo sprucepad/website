@@ -30,7 +30,7 @@ _Agora eu não uso C# muito, mas eu planejo voltar a usar para jogos maiores no 
 
 #### GDScript
 
-[Certas coisas aconteceram](https://unity.com/blog/unity-is-canceling-the-runtime-fee), e eu troquei do Unity para o Godot. Eu aprendi GDScript, e [fiz](https://github.com/shiftfox/scaleshot) [vários](https://github.com/shiftfox/turbulence) [jogos](https://github.com/shiftfox/box-of-death) [pequenos](https://github.com/shiftfox/feathered-frenzy) para game jams, de novo.
+[Certas coisas aconteceram](https://unity.com/pt/blog/unity-is-canceling-the-runtime-fee), e eu troquei do Unity para o Godot. Eu aprendi GDScript, e [fiz](https://github.com/shiftfox/scaleshot) [vários](https://github.com/shiftfox/turbulence) [jogos](https://github.com/shiftfox/box-of-death) [pequenos](https://github.com/shiftfox/feathered-frenzy) para game jams, de novo.
 
 _Agora, GDScript é minha linguagem principal para jogos._
 
@@ -41,3 +41,7 @@ Eu um ponto nessa linha do tempo, eu me perguntei como _sites_ eram feitos. Eu a
 Depois, eu aprendi da existência do Next.js, e depois, o Astro (além de outros _metaframeworks_ como SvelteKit e SolidStart). Eu refiz o site do grupo escoteiro em Astro, e tive uma experiência muito melhor, e começei a fazer projetos mais pessoais (como esse site, que também é feito em Astro!)
 
 _Agora, TypeScript é minha linguagem mais usada, já que é o que você usa no navegador, e é conveniente ter a mesma linguagem no back e frontend._
+
+### Desenvolvimento _low-level_
+
+Eu aprendi sobre as linguagens de programação Rust e Go, e começei a aprendê-las. Os projetos que decidi usar para aprender essas linguagens ainda não estão prontos, mas eu irei publicá-los quando conseguir!

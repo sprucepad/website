@@ -10,7 +10,7 @@ My personal website! Shows off my art and projects.
 - [x] Gallery
 - [x] Translate current pages to English
 - [x] Assets (banner, favicon, profile picture)
-- [ ] Home page
+- [x] Home page
 - [ ] Rewrite/translate blog posts and projects
 
 ## License

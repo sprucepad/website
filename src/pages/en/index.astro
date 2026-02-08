@@ -1,11 +1,98 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import Link from "@/components/ui/Link.astro";
+import Typewriter from "@/components/Typewriter.svelte";
+import Cards from "@/components/Cards.svelte";
+import { getCollection } from "@/lib/custom-collection";
+import { art, card, topic } from "@/lib/mappers";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Gallery from "@/components/Gallery.svelte";
+import Prose from "@/components/ui/Prose.astro";
+import Socials from "@/components/Socials.astro";
+import Button from "@/components/ui/Button.astro";
+
+const locale = Astro.currentLocale ?? "en";
+const gallery = await getCollection("art");
+const posts = await getCollection("posts", { locale, imageKey: "image" });
+const topics = await getCollection("topics", { locale });
 ---
 
 <Layout
   title="sprucepad's website"
-  desc="My personal website, showing my projects e my art."
-  class="grid place-content-center"
+  desc="My personal website, showing my projects and art."
+  style="padding: 0 !important"
 >
-  <h1 class="font-heading text-6xl font-black">Hello, World!</h1>
+  <section class="grid h-[calc(100vh-10rem)] place-content-center p-4">
+    <h1 class="font-heading text-6xl">Welcome to my website!</h1>
+    <h2 class="font-heading text-center text-3xl">
+      I am <Typewriter
+        words={[
+          "a game developer",
+          "a full-stack web developer",
+          "pixel artist",
+        ]}
+        client:load
+      />, from Brazil.
+    </h2>
+  </section>
+
+  <div class="bg-accent neobrutal m-4 grid place-content-center p-4">
+    <Socials />
+  </div>
+
+  <section class="mx-auto flex max-w-prose flex-col gap-4 p-4 pb-16">
+    <article class="space-y-4">
+      <header>
+        <h1 class="font-heading text-4xl">About Me</h1>
+      </header>
+
+      <Prose>
+        <p>
+          I'm Forest, a programmer and artist based in Brazil. I create all
+          kinds of things&mdash;apps, libraries, websites, pixel art, games, and
+          more.
+        </p>
+
+        <p>
+          My biggest projects are <Link href="/projects/kineo">Kineo</Link>, a
+          TypeScript ORM/OGM, and <Link href="/projects/convoker">Convoker</Link
+          >, a TypeScript framework for creating CLIs.
+        </p>
+
+        <Link href="/about"><Button>Read More</Button></Link>
+      </Prose>
+    </article>
+  </section>
+
+  <section class="bg-accent flex h-[calc(100vh-10rem)] flex-col gap-4 p-16">
+    <h1 class="font-heading text-center text-4xl">My Blog</h1>
+
+    <div class="min-h-0 flex-1 mask-b-to-transparent">
+      <Cards
+        cards={posts.map(card()).slice(0, 3)}
+        topics={topics.map(topic(locale))}
+        href={getRelativeLocaleUrl(locale, "/posts")}
+        placeholder="Search posts..."
+        empty="Nothing here yet!"
+        client:load
+      />
+    </div>
+
+    <p class="text-center"><Link href="/posts">More posts...</Link></p>
+  </section>
+
+  <section class="flex h-[calc(100vh-10rem)] flex-col gap-4 p-16">
+    <h1 class="font-heading text-center text-4xl">My Art</h1>
+
+    <div class="min-h-0 flex-1 mask-b-to-transparent">
+      <Gallery
+        images={gallery.flatMap(art(locale)).slice(0, 4)}
+        placeholder="Search gallery..."
+        empty="Nothing here yet!"
+        client:load
+      />
+    </div>
+
+    <p class="text-center"><Link href="/art">More art...</Link></p>
+  </section>
 </Layout>

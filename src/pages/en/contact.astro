@@ -1,7 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Socials from "@/components/Socials.astro";
-import ContactForm from "@/components/ContactForm.astro";
+import Button from "@/components/ui/Button.astro";
+import Input from "@/components/ui/Input.astro";
+import TextArea from "@/components/ui/TextArea.astro";
 ---
 
 <Layout
@@ -12,5 +14,27 @@ import ContactForm from "@/components/ContactForm.astro";
   <h1 class="font-heading text-6xl">Contact</h1>
 
   <Socials />
-  <ContactForm />
+
+  <form action="mailto:sprucepadhq@gmail.com" class="flex flex-col gap-4">
+    <label for="contact-form-subject" class="flex flex-col">
+      Subject
+      <Input
+        name="subject"
+        id="contact-form-subject"
+        type="text"
+        placeholder="What do you want to tell me about?"
+      />
+    </label>
+
+    <label for="contact-form-body" class="flex flex-col">
+      Body
+      <TextArea
+        name="body"
+        id="contact-form-body"
+        placeholder="What do you want to tell me?"
+      />
+    </label>
+
+    <Button type="submit">Send</Button>
+  </form>
 </Layout>
