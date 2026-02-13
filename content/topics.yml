@@ -1,3 +1,6 @@
+- id: multilingual
+  en: Multi-lingual
+  pt: Multi-linguagem
 - id: typescript
   en: TypeScript
   pt: TypeScript
@@ -13,6 +16,9 @@
 - id: site
   en: Websites
   pt: Sites
+- id: cli
+  en: CLI
+  pt: Terminal
 - id: app
   en: Apps
   pt: Apps
