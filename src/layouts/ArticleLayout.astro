@@ -29,10 +29,10 @@ function itchIoURL(link: string) {
   banner={page.data.image}
 >
   <article class="mx-auto max-w-prose space-y-4 pt-12">
-    <header>
+    <header class="space-y-4">
       {page.data.image && <Image src={page.data.image} alt="" />}
       <h1 class="font-heading text-6xl">{page.data.title}</h1>
-      <p class="mb-4">{page.data.desc}</p>
+      <p>{page.data.desc}</p>
 
       <div class="flex gap-4">
         {

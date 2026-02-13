@@ -23,6 +23,7 @@ export default defineConfig({
   },
 
   markdown: {
+    shikiConfig: { theme: "catppuccin-mocha" },
     rehypePlugins: [
       [rehypeExternalLinks, { target: "_blank", rel: "noopener noreferrer" }],
     ],

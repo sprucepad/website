@@ -11,7 +11,8 @@ My personal website! Shows off my art and projects.
 - [x] Translate current pages to English
 - [x] Assets (banner, favicon, profile picture)
 - [x] Home page
-- [ ] Rewrite/translate blog posts and projects
+- [x] Rewrite/translate projects
+- [ ] Write and translate experience making this website
 
 ## License
 
