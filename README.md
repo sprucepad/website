@@ -12,7 +12,7 @@ My personal website! Shows off my art and projects.
 - [x] Assets (banner, favicon, profile picture)
 - [x] Home page
 - [x] Rewrite/translate projects
-- [ ] Write and translate experience making this website
+- [x] Write and translate experience making this website
 
 ## License
 

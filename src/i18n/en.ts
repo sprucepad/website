@@ -12,15 +12,4 @@ export default {
     desc: "The page you were looking for does not exist.",
     button: "Back to home page",
   },
-  contact: {
-    subject: {
-      text: "Subject",
-      placeholder: "What do you want to tell me about?",
-    },
-    body: {
-      text: "Body",
-      placeholder: "What do you want to tell me?",
-    },
-    submit: "Send",
-  },
 };

@@ -19,3 +19,6 @@
 - id: astro
   en: Astro
   pt: Astro
+- id: svelte
+  en: Svelte
+  pt: Svelte

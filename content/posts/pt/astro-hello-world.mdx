@@ -1,0 +1,72 @@
+---
+title: Minha experiência usando Astro
+desc: Meu primeiro post, detalhanho minha experiência criando esse site usando Astro.
+topics:
+  - astro
+  - svelte
+created: 2026-02-04
+updated: 2026-02-04
+---
+
+[Astro](https://astro.build/) é um framework web para sites focados em conteúdo, como blogs ou lojas de e-commerce. Ele gera HTML estático, ou no momento de compilação ou no momento da requisição, sem JavaScript por padrão. O que o torna diferente é que você _pode_ usar qualquer framework de JS se você quiser.
+
+Para esse site, eu decidi usá-lo junto com Svelte para as partes mais interativas, como as barras de pesquisa.
+
+## Estilos
+
+Para criar CSS, eu decidi usar o TailwindCSS. Essa decisão foi praticamente cara ou coroa, já que a experiência usando CSS vanilla no Astro é muito boa, já que os estilos só aplicam no componente que é usado.
+
+Para o design, recentemente, eu descobri o tema [Neobrutalism](https://www.neobrutalism.dev/) para ShadCN e gostei bastante, e decidi segui-lo, já que combina bastante com pixel art.
+
+## Componentes
+
+Meu maior problema com HTML vanilla é a repetição. Por exemplo, se você tem um `<header>` no seu site, você tem que copiar e colar ele em todas as páginas que você quer. O Astro tem _componentes_, que é um pedaço re-utilizável de HTML, CSS, e JS no servidor e navegador.
+
+O "HTML" em um componente Astro é JSX, e você pode usar variáveis. Por exemplo, eu tenho um componente com o nome de `<Button />`:
+
+import Button from "@/components/ui/Button.astro";
+
+<Button class="bg-white text-black">Clique!</Button>
+```astro
+<Button class="bg-white text-black">Clique!</Button>
+```
+
+Que é um botão reutilizável; se eu quiser um botão com os mesmos estilos, eu simplesmente importo esse componente e uso.
+
+## Internacionalização
+
+O Astro tem internacionalização com uma configuração. Eu adicionei o _adapter_ para Vercel e configurei:
+
+```ts
+i18n: {
+  defaultLocale: "pt",
+  locales: ["en", "pt"],
+  routing: {
+    prefixDefaultLocale: true,
+  },
+},
+```
+
+Isso cria um redirect da página inicial para `/pt/` automaticamente, e a partir daí você pode duplicar as páginas em outras línguas.
+
+## Integração com Svelte
+
+Eu acho incrível como você pode ter um site completamente estático, com um pouquinho de JavaScript onde necessário, em qualquer framework. Como a interatividade desse site é pequena, eu decidir usar Svelte, pois ele é um compilador e teria muito menos JS do que SolidJS ou React, por exemplo.
+
+Eu usei Svelte 5 no efeito de digitadora na [página inicial](/) e em todas as barras de pesquisa (que são o mesmo componente).
+
+## &lt;ClientRouter /&gt;
+
+O `<ClientRouter />` é um componente do Astro que adiciona Client-Side Routing ao seu site, resultando em navegações mais rápidas e permitindo transições entre cada página, com View Transitions.
+
+A única coisa que fiz para adicioná-lo foi colocar ele na `<head>` do meu layout.
+
+## Conteúdo
+
+O Astro deixa você escrever páginas em Markdown, sem precisar de usar HTML para escrever uma página de sobre, por exemplo. Ele também tem a _Content Layer_, que são coleções de dados e/ou Markdown que podem ser usados para coisas como um blog ou galeria, e te dá a habilidade de usar Zod para validar esses dados.
+
+## Conclusão
+
+Astro é um ótimo framework para sites focados em conteúdo. Ele lida com todas as frustrações que tenho com sites baseados no Next.js, com gerenciamento de conteúdo menos que ideal.
+
+Eu certamente usaria de novo. Mas, para coisas mais interativas, eu ainda prefiro a conveniência do Next e a habilidade de colocar vários componentes em um arquivo, que o Astro não tem.
