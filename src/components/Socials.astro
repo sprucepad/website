@@ -3,6 +3,7 @@ import GitHubIcon from "@/icons/github.svg";
 import ItchIoIcon from "@/icons/itchio.svg";
 import YouTubeIcon from "@/icons/youtube.svg";
 import RedditIcon from "@/icons/reddit.svg";
+import BskyIcon from "@/icons/bsky.svg";
 
 import Button from "./ui/Button.astro";
 import Link from "@/components/ui/Link.astro";
@@ -16,7 +17,7 @@ import Link from "@/components/ui/Link.astro";
     </Button>
   </Link>
 
-  <Link href="https://github.com/sprucepad" class="no-underline">
+  <Link href="https://sprucepad.itch.io/" class="no-underline">
     <Button class="bg-background flex gap-1">
       <ItchIoIcon width={24} height={24} />
       sprucepad.itch.io
@@ -34,6 +35,13 @@ import Link from "@/components/ui/Link.astro";
     <Button class="bg-background flex gap-1">
       <RedditIcon width={24} height={24} />
       u/sprucepad
+    </Button>
+  </Link>
+
+  <Link href="https://bsky.app/profile/sprucepad.net" class="no-underline">
+    <Button class="bg-background flex gap-1">
+      <BskyIcon width={24} height={24} />
+      @sprucepad.net
     </Button>
   </Link>
 </div>
