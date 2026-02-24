@@ -4,6 +4,7 @@ import Socials from "@/components/Socials.astro";
 import Button from "@/components/ui/Button.astro";
 import Input from "@/components/ui/Input.astro";
 import TextArea from "@/components/ui/TextArea.astro";
+import Mail from "@/components/Mail.astro";
 ---
 
 <Layout
@@ -13,7 +14,10 @@ import TextArea from "@/components/ui/TextArea.astro";
 >
   <h1 class="font-heading text-6xl">Contato</h1>
 
-  <Socials />
+  <div class="space-y-5">
+    <Socials />
+    <Mail />
+  </div>
 
   <form action="mailto:sprucepadhq@gmail.com" class="flex flex-col gap-4">
     <label for="contact-form-subject" class="flex flex-col">
