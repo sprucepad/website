@@ -10,6 +10,7 @@ import Gallery from "@/components/Gallery.svelte";
 import Prose from "@/components/ui/Prose.astro";
 import Socials from "@/components/Socials.astro";
 import Button from "@/components/ui/Button.astro";
+import MouseSketches from "@/components/MouseSketches.astro";
 
 const locale = Astro.currentLocale ?? "en";
 const gallery = await getCollection("art");
@@ -22,18 +23,24 @@ const topics = await getCollection("topics", { locale });
   desc="My personal website, showing my projects and art."
   style="padding: 0 !important"
 >
-  <section class="grid h-[calc(100vh-10rem)] place-content-center p-4">
-    <h1 class="font-heading text-6xl">Welcome to my website!</h1>
-    <h2 class="font-heading text-center text-3xl">
-      I am <Typewriter
-        words={[
-          "a game developer",
-          "a full-stack web developer",
-          "pixel artist",
-        ]}
-        client:load
-      />, from Brazil.
-    </h2>
+  <section class="h-[calc(100vh-10rem)] p-4">
+    <MouseSketches />
+
+    <div
+      class="absolute inset-0 grid h-[calc(100vh-10rem)] w-full place-content-center"
+    >
+      <h1 class="font-heading text-6xl">Welcome to my website!</h1>
+      <h2 class="font-heading text-center text-3xl">
+        I am <Typewriter
+          words={[
+            "a game developer",
+            "a full-stack web developer",
+            "pixel artist",
+          ]}
+          client:load
+        />, from Brazil.
+      </h2>
+    </div>
   </section>
 
   <div class="bg-accent neobrutal m-4 grid place-content-center p-4">

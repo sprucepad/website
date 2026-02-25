@@ -1,0 +1,41 @@
+---
+import sketches from "@content/assets/sketches.png";
+import PixelArt from "@/components/ui/PixelArt.astro";
+---
+
+<div id="sketches" class="wrapper relative h-full w-full">
+  <div class="sketches h-full w-full">
+    <PixelArt src={sketches} alt="" class="h-full w-full object-cover" />
+  </div>
+</div>
+
+<script>
+  const sketches = document.getElementById("sketches") as HTMLDivElement;
+
+  window.addEventListener("mousemove", (e) => {
+    sketches.style.setProperty("--x", `${e.clientX}px`);
+    sketches.style.setProperty("--y", `${e.clientY}px`);
+  });
+</script>
+
+<style>
+  .wrapper {
+    --r: 120px;
+    --x: 300px;
+    --y: 200px;
+    --color: rgb(0 0 0 / 25%);
+  }
+
+  .sketches {
+    mask-image: radial-gradient(
+      circle var(--r) at var(--x) var(--y),
+      black 100%,
+      var(--color) 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      circle var(--r) at var(--x) var(--y),
+      black 100%,
+      var(--color) 100%
+    );
+  }
+</style>
