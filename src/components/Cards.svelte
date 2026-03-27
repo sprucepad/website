@@ -105,7 +105,7 @@
             alt=""
           />
         {/if}
-        <p class="text-2xl font-black">{card.title}</p>
+        <p class="font-heading text-2xl font-black">{card.title}</p>
         <p class="mb-4">{card.desc}</p>
 
         <div class="flex items-start gap-2">

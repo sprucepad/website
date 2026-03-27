@@ -2,7 +2,7 @@
 
 ## Notices
 
-### Peaberry
+### [Peaberry](https://emhuo.itch.io/peaberry-pixel-font)
 
 Copyright (c) 2021, Emily Huo (mlyhuo@gmail.com, emuhuo.itch.io, emhuo.com).
 
@@ -10,7 +10,7 @@ This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 http://scripts.sil.org/OFL
 
-### DM Sans
+### [DM Sans](https://fonts.google.com/specimen/DM+Sans)
 
 Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)
 
@@ -18,7 +18,7 @@ This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 https://openfontlicense.org
 
-### DM Mono
+### [DM Mono](https://fonts.google.com/specimen/DM+Mono)
 
 Copyright 2020 The DM Mono Project Authors (https://www.github.com/googlefonts/dm-mono)
 
