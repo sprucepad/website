@@ -4,10 +4,10 @@ desc: Um framework CLI.
 image: ../_images/convoker.jpg
 created: 2026-02-13
 updated: 2026-02-13
-github: convoker/convoker.js
+github: sprucepad/convoker
 
 topics:
-  - multilingual
+  - typescript
   - cli
 ---
 

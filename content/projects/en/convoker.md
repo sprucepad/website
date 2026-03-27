@@ -4,10 +4,10 @@ desc: A CLI framework.
 image: ../_images/convoker.jpg
 created: 2026-02-13
 updated: 2026-02-13
-github: convoker/convoker.js
+github: sprucepad/convoker
 
 topics:
-  - multilingual
+  - typescript
   - cli
 ---
 
@@ -15,7 +15,7 @@ topics:
 
 ## Why?
 
-I noticed a lack of simple TypeScript CLI frameworks, that are type-safe and could be embedded in other libraries. So I built Convoker, and I'm expanding it for other languages as well.
+I noticed a lack of simple TypeScript CLI frameworks, that are type-safe and could be embedded in other libraries. So I built Convoker. Currently, it's JS/TS-only, but I do plan on changing that in the near future.
 
 ## Example
 

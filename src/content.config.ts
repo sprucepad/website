@@ -1,11 +1,12 @@
 import { file, glob } from "astro/loaders";
-import { defineCollection, reference, z } from "astro:content";
+import { defineCollection, reference } from "astro:content";
+import { z } from "astro/zod";
 
 const art = defineCollection({
   loader: glob({ pattern: "**/*.{yml,yaml,json,toml}", base: "./content/art" }),
   schema: ({ image }) =>
     z.object({
-      title: z.record(z.string()),
+      title: z.record(z.string(), z.string()),
       images: z.array(
         z.object({
           img: image(),
@@ -18,7 +19,7 @@ const art = defineCollection({
 
 const topics = defineCollection({
   loader: file("./content/topics.yml"),
-  schema: z.record(z.string()),
+  schema: z.record(z.string(), z.string()),
 });
 
 const posts = defineCollection({

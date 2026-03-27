@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 
 import vercel from "@astrojs/vercel";
 import sitemap from "@astrojs/sitemap";
@@ -14,11 +14,37 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [sitemap(), mdx(), svelte()],
 
+  fonts: [
+    {
+      name: "DM Sans",
+      cssVariable: "--font-dm-sans",
+      provider: fontProviders.google(),
+    },
+    {
+      name: "DM Mono",
+      cssVariable: "--font-dm-mono",
+      provider: fontProviders.google(),
+    },
+    {
+      name: "Peaberry",
+      cssVariable: "--font-peaberry",
+      provider: fontProviders.local(),
+      options: {
+        variants: [
+          {
+            src: ["./content/fonts/Peaberry.ttf"],
+          },
+        ],
+      },
+    },
+  ],
+
   i18n: {
     defaultLocale: "pt",
     locales: ["en", "pt"],
     routing: {
       prefixDefaultLocale: true,
+      redirectToDefaultLocale: true,
     },
   },
 
