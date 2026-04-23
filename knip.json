@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": ["-lintignore"],
+  "ignoreDependencies": ["@typescript-eslint/parser", "eslint-plugin-jsx-a11y"],
+
+  "entry": [
+    "*.config.{ts,mts,mjs,js}",
+    "**/*.{astro,md,mdx}",
+    "src/pages/**/*.ts"
+  ],
+
+  "astro": true,
+  "svelte": true,
+  "mdx": true
+}

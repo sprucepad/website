@@ -3,7 +3,7 @@ import pt from "./pt";
 
 const translations = { en, pt } as const;
 
-export type Locale = keyof typeof translations;
+type Locale = keyof typeof translations;
 
 type Join<K, P> = K extends string | number
   ? P extends string | number
@@ -19,7 +19,7 @@ type TranslationKeys<T> = T extends object
     }[keyof T & (string | number)]
   : never;
 
-export type TranslationKey = TranslationKeys<(typeof translations)["pt"]>;
+type TranslationKey = TranslationKeys<(typeof translations)["pt"]>;
 
 export default function t(locale: string, key: TranslationKey): string {
   return (
