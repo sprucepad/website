@@ -2,6 +2,8 @@ title:
   en: Characters
   pt: Personagens
 images:
+  - img: ./calico-fox.png
+    alt: A calico-colored fox.
   - img: ./antler-fox.png
     alt: A fox with antlers walking through a forest.
   - img: ./masked.png
