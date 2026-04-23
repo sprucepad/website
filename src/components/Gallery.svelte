@@ -56,7 +56,7 @@
   />
 
   <div class="columns-1 p-4 sm:columns-2 md:columns-3 lg:columns-4">
-    {#each images as image}
+    {#each images as image (image.src)}
       <div class="group relative w-fit">
         <img class="pixel-art min-w-64" src={image.src} alt={image.alt} />
         <p

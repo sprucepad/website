@@ -1,5 +1,6 @@
 <script lang="ts">
   import SearchIcon from "@/icons/search.svelte";
+  import { SvelteMap } from "svelte/reactivity";
 
   interface Props {
     onFilter(kw: string[], kv: Map<string, string[]>): void;
@@ -18,7 +19,7 @@
     oninput={(e) => {
       const val = (e.target as HTMLInputElement).value;
 
-      const kv = new Map<string, string[]>();
+      const kv = new SvelteMap<string, string[]>();
       const kw = val
         .trim()
         .toLowerCase()
