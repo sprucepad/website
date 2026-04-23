@@ -29,6 +29,12 @@ const image = new URL(optimizedBanner.src, Astro.site);
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="sprucepad"
+      href={`/${Astro.currentLocale}/feed.xml`}
+    />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 

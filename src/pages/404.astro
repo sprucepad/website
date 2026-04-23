@@ -15,7 +15,9 @@ export const prerender = false;
   desc={t(locale, "notFound.desc")}
   class="flex flex-col items-center justify-center gap-4"
 >
-  <h1 class="text-4xl font-black">{t(locale, "notFound.title")}</h1>
+  <h1 class="font-heading text-4xl font-black">
+    {t(locale, "notFound.title")}
+  </h1>
   <p>{t(locale, "notFound.desc")}</p>
   <Link class="no-underline" href={getRelativeLocaleUrl(locale, "/")}
     ><Button>{t(locale, "notFound.button")}</Button></Link

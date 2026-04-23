@@ -1,7 +1,7 @@
 import type {
-  UnresolvedImageTransform,
   ImageMetadata,
   GetImageResult,
+  UnresolvedImageTransform,
 } from "astro";
 import { getImage } from "astro:assets";
 import {
@@ -13,7 +13,9 @@ import {
 type Image<
   C extends keyof DataEntryMap,
   K extends keyof DataEntryMap[C][string]["data"],
-> = undefined extends K ? GetImageResult | undefined : GetImageResult;
+> = undefined extends DataEntryMap[C][string]["data"][K]
+  ? GetImageResult | undefined
+  : GetImageResult;
 
 export type CollectionEntry<
   C extends keyof DataEntryMap,
@@ -28,10 +30,11 @@ export async function getCollection<
   collection: C,
   opts?: {
     locale?: string;
-    imageKey?: K | (Omit<UnresolvedImageTransform, "src"> & { key?: K });
+    imageKey?: K;
+    imageProps?: Omit<UnresolvedImageTransform, "src">;
   },
 ) {
-  const { locale, imageKey } = opts ?? {};
+  const { locale, imageKey, imageProps } = opts ?? {};
   const entries = await getAstroCollection(collection);
 
   return Promise.all(
@@ -39,17 +42,14 @@ export async function getCollection<
       .filter((entry) => (locale ? entry.id.split("/")[0] === locale : true))
       .map(async (entry) => {
         const data = entry.data as unknown as Record<K, ImageMetadata>;
-        const resolvedKey =
-          typeof imageKey === "object" ? imageKey.key : undefined;
-
         return {
           ...entry,
           id: locale ? entry.id.split("/").slice(1).join("/") : entry.id,
           image:
-            imageKey && resolvedKey && data[resolvedKey]
+            imageKey && data[imageKey as keyof typeof data]
               ? await getImage({
-                  ...(typeof imageKey === "object" ? imageKey : {}),
-                  src: data[resolvedKey],
+                  ...(imageProps ?? {}),
+                  src: data[imageKey as keyof typeof data],
                 })
               : undefined,
         };
