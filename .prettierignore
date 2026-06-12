@@ -1,8 +1,7 @@
-# pnpm stuff
+# dependencies
 .pnpm-store/
 pnpm-lock.yaml
 
 # build output
 dist/
 .vercel/
-.astro/

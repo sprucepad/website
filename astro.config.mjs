@@ -1,43 +1,22 @@
 // @ts-check
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig } from "astro/config";
 
 import vercel from "@astrojs/vercel";
+
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import svelte from "@astrojs/svelte";
+
 import tailwindcss from "@tailwindcss/vite";
+
 import rehypeExternalLinks from "rehype-external-links";
+import { unified } from "@astrojs/markdown-remark";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://sprucepad.net/",
   adapter: vercel(),
   integrations: [sitemap(), mdx(), svelte()],
-
-  fonts: [
-    {
-      name: "DM Sans",
-      cssVariable: "--font-dm-sans",
-      provider: fontProviders.google(),
-    },
-    {
-      name: "DM Mono",
-      cssVariable: "--font-dm-mono",
-      provider: fontProviders.google(),
-    },
-    {
-      name: "Peaberry",
-      cssVariable: "--font-peaberry",
-      provider: fontProviders.local(),
-      options: {
-        variants: [
-          {
-            src: ["./content/fonts/Peaberry.ttf"],
-          },
-        ],
-      },
-    },
-  ],
 
   i18n: {
     defaultLocale: "pt",
@@ -49,10 +28,12 @@ export default defineConfig({
   },
 
   markdown: {
-    shikiConfig: { theme: "catppuccin-mocha" },
-    rehypePlugins: [
-      [rehypeExternalLinks, { target: "_blank", rel: "noopener noreferrer" }],
-    ],
+    shikiConfig: { theme: "horizon" },
+    processor: unified({
+      rehypePlugins: [
+        [rehypeExternalLinks, { target: "_blank", rel: "noopener noreferrer" }],
+      ],
+    }),
   },
 
   vite: {

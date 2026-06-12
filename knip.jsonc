@@ -1,0 +1,10 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
+  "tags": ["-lintignore"],
+
+  "ignoreDependencies": [
+    // Used by eslint-plugin-astro
+    "@typescript-eslint/parser",
+    "eslint-plugin-jsx-a11y",
+  ],
+}
