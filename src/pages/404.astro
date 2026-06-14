@@ -1,25 +1,47 @@
 ---
-import Button from "@/components/ui/Button.astro";
 import Layout from "@/layouts/Layout.astro";
-
+import { buttonStyles } from "@/components/ui/Button.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import t from "@/i18n";
-import Link from "@/components/ui/Link.astro";
-const locale = Astro.currentLocale ?? "pt";
 
 export const prerender = false;
+
+const table = {
+  pt: {
+    title: "404 Não Encontrada",
+    desc: "Essa página não existe!",
+    button: "Página inicial",
+  },
+  en: {
+    title: "404 Not Found",
+    desc: "This page doesn't exist!",
+    button: "Home page",
+  },
+} as const;
+const t = (key: keyof (typeof table)[keyof typeof table]) =>
+  table[Astro.currentLocale as keyof typeof table][key]!;
 ---
 
-<Layout
-  title={t(locale, "notFound.title")}
-  desc={t(locale, "notFound.desc")}
-  class="flex flex-col items-center justify-center gap-4"
->
-  <h1 class="font-heading text-4xl font-black">
-    {t(locale, "notFound.title")}
-  </h1>
-  <p>{t(locale, "notFound.desc")}</p>
-  <Link class="no-underline" href={getRelativeLocaleUrl(locale, "/")}
-    ><Button>{t(locale, "notFound.button")}</Button></Link
-  >
+<Layout title={t("title")} desc={t("desc")}>
+  <div class="grid h-full grid-cols-2">
+    <div
+      class="absolute top-1/2 left-1/2 grid -translate-1/2 transform place-content-center gap-4"
+    >
+      <h1
+        class="mixed-text from-art-foreground to-code-foreground font-heading text-4xl font-black"
+      >
+        {t("desc")}
+      </h1>
+      <a
+        class={buttonStyles({ variant: "mixed" })}
+        href={getRelativeLocaleUrl(Astro.currentLocale!, "/")}
+        ><span
+          class="mixed-text from-art-accent-foreground to-code-accent-foreground"
+          >{t("button")}</span
+        ></a
+      >
+    </div>
+
+    <div class="h-full w-full bg-art-background"></div>
+    <div class="h-full w-full bg-code-background"></div>
+  </div>
 </Layout>
