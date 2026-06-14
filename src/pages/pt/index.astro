@@ -1,7 +1,9 @@
 ---
 import Mixed from "@/components/Mixed.astro";
 import Typewriter from "@/components/Typewriter.svelte";
+import { buttonStyles } from "@/components/ui/Button.astro";
 import Layout from "@/layouts/Layout.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 ---
 
 <Layout
@@ -9,6 +11,34 @@ import Layout from "@/layouts/Layout.astro";
   desc="Meu site pessoal, mostrando meus projetos e minha arte."
 >
   <Mixed class="gap-4 p-4">
+    <div
+      slot="art"
+      class="flex h-full flex-col items-center justify-center gap-4 p-4"
+    >
+      <h1 class="font-heading text-4xl font-black">Bem-vindo(a) ao site!</h1>
+      <h2 class="font-heading text-3xl font-black">
+        Esse lado contém meus trabalhos criativos.
+      </h2>
+      <a
+        href={getRelativeLocaleUrl(Astro.currentLocale!, "/art")}
+        class={buttonStyles({ variant: "art", size: "lg" })}>O Lado Criativo</a
+      >
+    </div>
+
+    <div
+      slot="code"
+      class="flex h-full flex-col items-center justify-center gap-4 p-4"
+    >
+      <h1 class="font-heading text-4xl font-black">Bem-vindo(a) ao site!</h1>
+      <h2 class="font-heading text-3xl font-black">
+        Esse lado contém meus trabalhos técnicos.
+      </h2>
+      <a
+        href={getRelativeLocaleUrl(Astro.currentLocale!, "/code")}
+        class={buttonStyles({ variant: "code", size: "lg" })}>O Lado Técnico</a
+      >
+    </div>
+
     <h1
       class="mixed-text from-art-foreground to-code-foreground font-heading text-6xl"
     >
@@ -26,7 +56,5 @@ import Layout from "@/layouts/Layout.astro";
         client:load
       />, do Brasil.
     </h2>
-    <div slot="art"></div>
-    <div slot="code"></div>
   </Mixed>
 </Layout>

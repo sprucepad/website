@@ -20,8 +20,8 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
 
-  --shadow-neobrutal: 0.5rem 0.5rem 0 var(--foreground);
-  --shadow-mixed-neobrutal: 0 0.5rem 0 var(--art-foreground);
+  --shadow-neobrutal: 0.25rem 0.25rem 0 var(--foreground);
+  --shadow-mixed-neobrutal: 0 0.25rem 0 var(--art-foreground);
 }
 
 :root {
@@ -60,11 +60,11 @@
   @apply bg-linear-to-r from-50% to-50% bg-clip-text text-transparent;
 }
 
-@layer base {
-  html {
-    @apply bg-background text-foreground;
-  }
+@utility pixel-art {
+  image-rendering: pixelated;
+}
 
+@layer base {
   html,
   body {
     @apply h-full;
