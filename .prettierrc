@@ -1,5 +1,11 @@
 {
-  "plugins": ["prettier-plugin-astro", "prettier-plugin-svelte"],
+  "plugins": [
+    "prettier-plugin-astro",
+    "prettier-plugin-svelte",
+    "prettier-plugin-tailwindcss"
+  ],
+  "tailwindFunctions": ["cn", "cva", "clsx", "twMerge"],
+  "tailwindStylesheet": "./src/styles/global.css",
   "overrides": [
     {
       "files": "**/*.astro",

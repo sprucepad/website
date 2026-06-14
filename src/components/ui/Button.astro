@@ -1,0 +1,31 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+
+export const buttonStyles = cva(
+  "bg-accent p-2 px-4 text-center text-accent-foreground",
+  {
+    variants: {
+      variant: {
+        mixed:
+          "relative rounded-l-full before:absolute before:top-0 before:left-0 before:-z-10 before:h-full before:w-1/2 before:rounded-l-full before:border-2 before:border-r-0 before:bg-art-accent before:shadow-mixed-neobrutal before:content-[''] after:absolute after:top-0 after:left-1/2 after:-z-10 after:h-full after:w-1/2 after:border-1 after:border-l-0 after:bg-code-accent after:text-code-accent-foreground after:content-['']",
+        art: "art-side neobrutal",
+        code: "",
+      },
+    },
+    defaultVariants: {
+      variant: "art",
+    },
+  },
+);
+
+interface Props
+  extends HTMLAttributes<"button">, VariantProps<typeof buttonStyles> {}
+
+const { class: className, variant, ...rest } = Astro.props;
+---
+
+<button class={cn(buttonStyles({ variant }), className)} {...rest}
+  ><slot /></button
+>

@@ -1,19 +1,23 @@
 ---
 import "@/styles/global.css";
 import defaultBanner from "@content/assets/banner.png";
-import { getImage } from "astro/assets";
+import { getImage } from "astro:assets";
+import type { HTMLAttributes } from "astro/types";
+import { ClientRouter } from "astro:transitions";
+import { Font } from "astro:assets";
 
-interface Props {
+interface Props extends HTMLAttributes<"body"> {
   title: string;
   desc: string;
   banner?: ImageMetadata;
 }
 
-const { title, desc, banner = defaultBanner } = Astro.props;
-const optimizedBanner = await getImage(
-  { src: banner },
-  { width: 1280, height: 628 },
-);
+const { title, desc, banner = defaultBanner, ...rest } = Astro.props;
+const optimizedBanner = await getImage({
+  src: banner,
+  width: 1280,
+  height: 628,
+});
 const image = new URL(optimizedBanner.src, Astro.site);
 ---
 
@@ -23,6 +27,11 @@ const image = new URL(optimizedBanner.src, Astro.site);
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+
+    <ClientRouter />
+    <Font cssVariable="--font-peaberry" />
+    <Font cssVariable="--font-dm-sans" />
+    <Font cssVariable="--font-dm-mono" />
 
     {/* primary */}
     <title>{title}</title>
@@ -37,7 +46,7 @@ const image = new URL(optimizedBanner.src, Astro.site);
     <meta property="og:image" content={image} />
     <meta property="twitter:card" content="summary_large_image" />
   </head>
-  <body>
+  <body {...rest}>
     <slot />
   </body>
 </html>
