@@ -41,6 +41,7 @@
   --foreground: var(--art-foreground);
   --accent: var(--art-accent);
   --accent-foreground: var(--art-accent-foreground);
+  @apply bg-background text-foreground;
 }
 
 .code-side {
@@ -48,6 +49,7 @@
   --foreground: var(--code-foreground);
   --accent: var(--code-accent);
   --accent-foreground: var(--code-accent-foreground);
+  @apply bg-background text-foreground;
 }
 
 @utility neobrutal {

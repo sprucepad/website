@@ -1,0 +1,31 @@
+---
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+
+type Props = Omit<HTMLAttributes<"div">, "id">;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<main class="grid min-h-full grid-cols-2 grid-rows-1 place-content-center">
+  <div
+    class={cn(
+      "absolute inset-0 flex flex-col items-center justify-center",
+      className,
+    )}
+    id="center"
+    {...rest}
+  >
+    <slot />
+  </div>
+  <div class="art-side p-4" id="art-side"><slot name="art" /></div>
+  <div class="code-side p-4" id="code-side"><slot name="code" /></div>
+</main>
+
+<script>
+  const $artSide = document.getElementById("art-side") as HTMLDivElement;
+  const $codeSide = document.getElementById("code-side") as HTMLDivElement;
+  const $center = document.getElementById("center") as HTMLDivElement;
+
+  // TODO expand sides on hover, show content using view transitions (maybe)
+</script>

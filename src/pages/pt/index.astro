@@ -1,0 +1,32 @@
+---
+import Mixed from "@/components/Mixed.astro";
+import Typewriter from "@/components/Typewriter.svelte";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+  title="site do sprucepad"
+  desc="Meu site pessoal, mostrando meus projetos e minha arte."
+>
+  <Mixed class="gap-4 p-4">
+    <h1
+      class="mixed-text from-art-foreground to-code-foreground font-heading text-6xl"
+    >
+      Bem-vindo(a) ao meu site!
+    </h1>
+    <h2
+      class="mixed-text from-art-foreground to-code-foreground text-center font-heading text-3xl"
+    >
+      Eu sou um <Typewriter
+        words={[
+          "desenvolvedor de jogos",
+          "desenvolvedor web full-stack",
+          "artista de pixel",
+        ]}
+        client:load
+      />, do Brasil.
+    </h2>
+    <div slot="art"></div>
+    <div slot="code"></div>
+  </Mixed>
+</Layout>

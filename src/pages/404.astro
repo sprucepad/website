@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { buttonStyles } from "@/components/ui/Button.astro";
+import Mixed from "@/components/Mixed.astro";
 
 export const prerender = false;
 
@@ -21,26 +22,19 @@ const t = (key: keyof (typeof table)[keyof typeof table]) =>
 ---
 
 <Layout title={t("title")} desc={t("desc")}>
-  <main class="grid min-h-full grid-cols-2 grid-rows-1 place-content-center">
-    <div
-      class="absolute top-1/2 left-1/2 grid -translate-1/2 transform place-content-center gap-4"
+  <Mixed class="gap-4 p-4">
+    <h1
+      class="mixed-text from-art-foreground to-code-foreground font-heading text-4xl font-black"
     >
-      <h1
-        class="mixed-text from-art-foreground to-code-foreground font-heading text-4xl font-black"
-      >
-        {t("desc")}
-      </h1>
-      <a
-        class={buttonStyles({ variant: "mixed" })}
-        href={`/${Astro.currentLocale}`}
-        ><span
-          class="mixed-text from-art-accent-foreground to-code-accent-foreground"
-          >{t("button")}</span
-        ></a
-      >
-    </div>
-
-    <div class="bg-art-background"></div>
-    <div class="bg-code-background"></div>
-  </main>
+      {t("desc")}
+    </h1>
+    <a
+      class={buttonStyles({ variant: "mixed" })}
+      href={`/${Astro.currentLocale}`}
+      ><span
+        class="mixed-text from-art-accent-foreground to-code-accent-foreground"
+        >{t("button")}</span
+      ></a
+    >
+  </Mixed>
 </Layout>
