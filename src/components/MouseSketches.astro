@@ -11,11 +11,11 @@ import PixelArt from "./ui/PixelArt.astro";
 </div>
 
 <script>
-  const sketches = document.getElementById("sketches") as HTMLDivElement;
+  const $sketches = document.getElementById("sketches") as HTMLDivElement;
 
   window.addEventListener("mousemove", (e) => {
-    sketches.style.setProperty("--x", `${e.clientX}px`);
-    sketches.style.setProperty("--y", `${e.clientY}px`);
+    $sketches.style.setProperty("--x", `${e.clientX}px`);
+    $sketches.style.setProperty("--y", `${e.clientY}px`);
   });
 </script>
 
