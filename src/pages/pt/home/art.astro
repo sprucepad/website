@@ -1,0 +1,23 @@
+---
+import MouseSketches from "@/components/MouseSketches.astro";
+import Typewriter from "@/components/Typewriter.svelte";
+import ArtLayout from "@/layouts/ArtLayout.astro";
+---
+
+<ArtLayout title="sprucepad (arte)" desc="o lado criativo de sprucepad!">
+  <div class="relative grid h-svh place-content-center gap-4 p-4">
+    <div class="absolute inset-0 -z-50">
+      <MouseSketches />
+    </div>
+
+    <h1 class="font-heading text-5xl font-black">Bem-vindo(a) ao meu site!</h1>
+    <h2 class="text-center text-3xl font-black">
+      Eu sou um
+      <Typewriter
+        class="font-heading"
+        words={["artista de pixel", "desenvolvedor de jogos"]}
+        client:load
+      />, do Brasil.
+    </h2>
+  </div>
+</ArtLayout>

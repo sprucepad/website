@@ -2,8 +2,8 @@
 import Mixed from "@/components/Mixed.astro";
 import Typewriter from "@/components/Typewriter.svelte";
 import { buttonStyles } from "@/components/ui/Button.astro";
+import Link from "@/components/ui/Link.astro";
 import Layout from "@/layouts/Layout.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
 ---
 
 <Layout
@@ -19,9 +19,10 @@ import { getRelativeLocaleUrl } from "astro:i18n";
       <h2 class="font-heading text-3xl font-black">
         Esse lado contém meus trabalhos criativos.
       </h2>
-      <a
-        href={getRelativeLocaleUrl(Astro.currentLocale!, "/art")}
-        class={buttonStyles({ variant: "art", size: "lg" })}>O Lado Criativo</a
+      <Link
+        href="/art/home"
+        class={buttonStyles({ variant: "art", size: "lg" })}
+        >O Lado Criativo</Link
       >
     </div>
 
@@ -33,9 +34,10 @@ import { getRelativeLocaleUrl } from "astro:i18n";
       <h2 class="font-heading text-3xl font-black">
         Esse lado contém meus trabalhos técnicos.
       </h2>
-      <a
-        href={getRelativeLocaleUrl(Astro.currentLocale!, "/code")}
-        class={buttonStyles({ variant: "code", size: "lg" })}>O Lado Técnico</a
+      <Link
+        href="/code/home"
+        class={buttonStyles({ variant: "code", size: "lg" })}
+        >O Lado Técnico</Link
       >
     </div>
 

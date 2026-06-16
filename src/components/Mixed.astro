@@ -9,7 +9,11 @@ type Props = HTMLAttributes<"div">;
 const { class: className, ...rest } = Astro.props;
 ---
 
-<main class="grid min-h-full grid-cols-2 grid-rows-1 place-content-center">
+<main
+  class="grid min-h-full grid-cols-2 grid-rows-1 place-content-center"
+  transition:name="main"
+  transition:animate="slide"
+>
   <div
     class="art-side peer group absolute top-0 left-0 h-full w-1/2 bg-art-background transition-[width,z-index] hover:z-30 hover:w-[75%] data-active:z-30 data-active:w-[75%]"
     id="art-side"

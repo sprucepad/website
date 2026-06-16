@@ -12,6 +12,8 @@ interface Props extends HTMLAttributes<"body"> {
   banner?: ImageMetadata;
 }
 
+export type { Props as LayoutProps };
+
 const { title, desc, banner = defaultBanner, ...rest } = Astro.props;
 const optimizedBanner = await getImage({
   src: banner,
@@ -21,7 +23,7 @@ const optimizedBanner = await getImage({
 const image = new URL(optimizedBanner.src, Astro.site);
 ---
 
-<html lang="en">
+<html lang="en" transition:name="root" transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />

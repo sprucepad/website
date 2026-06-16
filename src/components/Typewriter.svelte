@@ -1,5 +1,8 @@
 <script lang="ts">
-  interface Props {
+  import { cn } from "@/lib/utils";
+  import type { HTMLAttributes } from "svelte/elements";
+
+  interface Props extends HTMLAttributes<HTMLSpanElement> {
     words: string[];
     charDelay?: number;
     deleteDelay?: number;
@@ -11,6 +14,7 @@
     charDelay = 50,
     deleteDelay = 100,
     wordDelay = 3000,
+    class: className,
   }: Props = $props();
 
   let content = $state("");
@@ -44,4 +48,6 @@
   typeLoop();
 </script>
 
-<span class="after:animate-pulse after:content-['|']">{content}</span>
+<span class={cn("after:animate-pulse after:content-['|']", className)}
+  >{content}</span
+>

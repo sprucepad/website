@@ -1,0 +1,141 @@
+---
+import pfp from "@content/assets/pfp.png";
+
+import MenuIcon from "@lucide/astro/icons/menu";
+import XIcon from "@lucide/astro/icons/x";
+
+import PixelArt from "./ui/PixelArt.astro";
+import Link from "./ui/Link.astro";
+import { cn } from "@/lib/utils";
+import { buttonStyles } from "./ui/Button.astro";
+import { cva, type VariantProps } from "class-variance-authority";
+
+const headerStyles = cva(
+  "fixed inset-2 z-50 flex h-16 items-center justify-between bg-transparent p-4 before:absolute before:inset-0 before:-z-50 before:bg-background/50 before:backdrop-blur-lg before:content-['']",
+  {
+    variants: {
+      variant: {
+        art: "before:rounded-full before:neobrutal",
+      },
+    },
+  },
+);
+
+const navStyles = cva(
+  "fixed top-20 right-2 translate-x-[calc(100%+1.5rem)] transform bg-background/50 p-4 backdrop-blur-lg transition-transform peer-data-open:translate-x-0 md:static md:translate-none md:bg-transparent md:p-0 md:backdrop-blur-none",
+  {
+    variants: {
+      variant: {
+        art: "max-md:rounded-lg max-md:neobrutal",
+      },
+    },
+  },
+);
+
+type Props = VariantProps<typeof headerStyles>;
+type Items = { label: string; href: string }[];
+
+const { variant } = Astro.props;
+
+const table = {
+  pt: {
+    chooseASide: "Escolha um Lado",
+    art: "Arte",
+    artBlog: "Blog de Arte",
+    about: "Sobre",
+    contact: "Contato",
+  },
+  en: {
+    chooseASide: "Choose a Side",
+    art: "Art",
+    artBlog: "Art Blog",
+    about: "About",
+    contact: "Contact",
+  },
+} as const;
+const t = (key: keyof (typeof table)[keyof typeof table]) =>
+  table[Astro.currentLocale as keyof typeof table][key]!;
+
+const ART_ITEMS: Items = [
+  { label: t("art"), href: "/art/gallery" },
+  { label: t("artBlog"), href: "/art/blog" },
+  { label: t("about"), href: "/art/about" },
+  { label: t("contact"), href: "/art/contact" },
+];
+
+const CODE_ITEMS: Items = [
+  // TODO
+];
+---
+
+<header
+  transition:persist="art-header"
+  transition:animate="slide"
+  class={headerStyles({ variant })}
+  id="header"
+>
+  <Link
+    href="/"
+    class="flex items-center gap-2 font-heading text-2xl font-black"
+  >
+    <PixelArt src={pfp} alt="" width={48} height={48} />
+    sprucepad
+  </Link>
+
+  <button type="button" class="peer group cursor-pointer md:hidden">
+    <MenuIcon class="group-data-open:hidden" />
+    <XIcon class="hidden group-data-open:block" />
+  </button>
+
+  <nav class={navStyles({ variant })}>
+    <ul class="flex flex-col gap-2 md:flex-row">
+      {
+        (variant === "art" ? ART_ITEMS : CODE_ITEMS).map((item) => {
+          const pathname = Astro.url.pathname.replace(
+            `/${Astro.currentLocale}`,
+            "",
+          );
+          return (
+            <li class="text-end">
+              <Link
+                href={item.href}
+                class={cn(
+                  "rounded-full p-2",
+                  pathname.startsWith(item.href) &&
+                    "neobrutal bg-accent text-accent-foreground",
+                )}
+              >
+                {item.label}
+              </Link>
+            </li>
+          );
+        })
+      }
+
+      <div
+        class="mb-2 border-t border-foreground/50 md:mb-0 md:border-t-0 md:border-r"
+      >
+      </div>
+
+      <li>
+        <Link
+          class={cn(
+            buttonStyles({ variant: variant === "art" ? "code" : "art" }),
+            "border-2 border-foreground bg-orange-600",
+          )}>{t("chooseASide")}</Link
+        >
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const $header = document.getElementById("header") as HTMLDivElement;
+    const $button = $header.querySelector("button")!;
+
+    $button.addEventListener("click", () =>
+      $button.toggleAttribute("data-open"),
+    );
+  });
+</script>

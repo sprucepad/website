@@ -1,7 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { buttonStyles } from "@/components/ui/Button.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
+import MouseSketches from "@/components/MouseSketches.astro";
+import AsciiArt from "@/components/AsciiArt.astro";
+import Link from "@/components/ui/Link.astro";
 
 export const prerender = false;
 
@@ -22,7 +24,18 @@ const t = (key: keyof (typeof table)[keyof typeof table]) =>
 ---
 
 <Layout title={t("title")} desc={t("desc")}>
-  <div class="grid h-full grid-cols-2">
+  <main
+    class="grid h-full grid-cols-2"
+    transition:name="main"
+    transition:animate="slide"
+  >
+    <div class="h-full w-full overflow-hidden bg-art-background">
+      <MouseSketches />
+    </div>
+    <div class="h-full w-full overflow-hidden bg-code-background">
+      <AsciiArt />
+    </div>
+
     <div
       class="absolute top-1/2 left-1/2 grid -translate-1/2 transform place-content-center gap-4"
     >
@@ -31,17 +44,12 @@ const t = (key: keyof (typeof table)[keyof typeof table]) =>
       >
         {t("desc")}
       </h1>
-      <a
-        class={buttonStyles({ variant: "mixed" })}
-        href={getRelativeLocaleUrl(Astro.currentLocale!, "/")}
+      <Link class={buttonStyles({ variant: "mixed" })} href="/"
         ><span
           class="mixed-text from-art-accent-foreground to-code-accent-foreground"
           >{t("button")}</span
-        ></a
+        ></Link
       >
     </div>
-
-    <div class="h-full w-full bg-art-background"></div>
-    <div class="h-full w-full bg-code-background"></div>
-  </div>
+  </main>
 </Layout>
