@@ -31,7 +31,7 @@ const { class: className, ...rest } = Astro.props;
     class="code-side peer group absolute top-0 right-0 h-full w-1/2 bg-code-background transition-[width,z-index] hover:not-peer-data-active:z-30 hover:not-peer-data-active:w-[75%] data-active:z-30 data-active:w-[75%]"
     id="code-side"
   >
-    <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute inset-0 grid place-content-center overflow-hidden">
       <AsciiArt />
     </div>
     <div
@@ -54,16 +54,18 @@ const { class: className, ...rest } = Astro.props;
 </main>
 
 <script>
-  const $artSide = document.getElementById("art-side") as HTMLDivElement;
-  const $codeSide = document.getElementById("code-side") as HTMLDivElement;
+  document.addEventListener("astro:page-load", () => {
+    const $artSide = document.getElementById("art-side") as HTMLDivElement;
+    const $codeSide = document.getElementById("code-side") as HTMLDivElement;
 
-  $artSide.addEventListener("click", () => {
-    $codeSide.removeAttribute("data-active");
-    $artSide.toggleAttribute("data-active");
-  });
+    $artSide.addEventListener("click", () => {
+      $codeSide.removeAttribute("data-active");
+      $artSide.toggleAttribute("data-active");
+    });
 
-  $codeSide.addEventListener("click", () => {
-    $artSide.removeAttribute("data-active");
-    $codeSide.toggleAttribute("data-active");
+    $codeSide.addEventListener("click", () => {
+      $artSide.removeAttribute("data-active");
+      $codeSide.toggleAttribute("data-active");
+    });
   });
 </script>

@@ -16,6 +16,7 @@ const headerStyles = cva(
     variants: {
       variant: {
         art: "before:rounded-full before:neobrutal",
+        code: "before:border-1 before:border-foreground",
       },
     },
   },
@@ -27,6 +28,19 @@ const navStyles = cva(
     variants: {
       variant: {
         art: "max-md:rounded-lg max-md:neobrutal",
+        code: "max-md:border-1 max-md:border-foreground",
+      },
+    },
+  },
+);
+
+const linkStyles = cva(
+  "p-2 data-selected:bg-accent data-selected:text-accent-foreground",
+  {
+    variants: {
+      variant: {
+        art: "data-selected:rounded-full data-selected:neobrutal",
+        code: "data-selected:border-1",
       },
     },
   },
@@ -41,7 +55,9 @@ const table = {
   pt: {
     chooseASide: "Escolha um Lado",
     art: "Arte",
-    artBlog: "Blog de Arte",
+    artBlog: "Art Blog",
+    projects: "Projetos",
+    blog: "Blog",
     about: "Sobre",
     contact: "Contato",
   },
@@ -49,6 +65,8 @@ const table = {
     chooseASide: "Choose a Side",
     art: "Art",
     artBlog: "Art Blog",
+    projects: "Projects",
+    blog: "Blog",
     about: "About",
     contact: "Contact",
   },
@@ -64,18 +82,21 @@ const ART_ITEMS: Items = [
 ];
 
 const CODE_ITEMS: Items = [
-  // TODO
+  { label: t("projects"), href: "/code/projects" },
+  { label: t("blog"), href: "/code/blog" },
+  { label: t("about"), href: "/code/about" },
+  { label: t("contact"), href: "/code/contact" },
 ];
 ---
 
 <header
-  transition:persist="art-header"
+  transition:persist="header"
   transition:animate="slide"
   class={headerStyles({ variant })}
   id="header"
 >
   <Link
-    href="/"
+    href={`/${variant}`}
     class="flex items-center gap-2 font-heading text-2xl font-black"
   >
     <PixelArt src={pfp} alt="" width={48} height={48} />
@@ -99,11 +120,12 @@ const CODE_ITEMS: Items = [
             <li class="text-end">
               <Link
                 href={item.href}
-                class={cn(
-                  "rounded-full p-2",
-                  pathname.startsWith(item.href) &&
-                    "neobrutal bg-accent text-accent-foreground",
-                )}
+                class={linkStyles({ variant })}
+                data-selected={
+                  (pathname === `/${variant}`
+                    ? pathname === item.href
+                    : pathname.startsWith(item.href)) || undefined
+                }
               >
                 {item.label}
               </Link>
@@ -121,7 +143,7 @@ const CODE_ITEMS: Items = [
         <Link
           class={cn(
             buttonStyles({ variant: variant === "art" ? "code" : "art" }),
-            "border-2 border-foreground bg-orange-600",
+            "border-foreground bg-orange-600",
           )}>{t("chooseASide")}</Link
         >
       </li>

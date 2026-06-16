@@ -1,0 +1,27 @@
+---
+import AsciiArt from "@/components/AsciiArt.astro";
+import Typewriter from "@/components/Typewriter.svelte";
+import CodeLayout from "@/layouts/CodeLayout.astro";
+---
+
+<CodeLayout title="sprucepad (código)" desc="o lado técnico de sprucepad.net!">
+  <div class="relative grid h-svh place-content-center gap-4 p-4">
+    <div
+      class="absolute inset-0 -z-50 grid place-content-center overflow-hidden"
+    >
+      <AsciiArt />
+    </div>
+
+    <h1 class="text-center font-heading text-5xl font-black">
+      Bem-vindo(a) ao meu site!
+    </h1>
+    <h2 class="text-center text-3xl font-black">
+      Eu sou um
+      <Typewriter
+        class="font-heading"
+        words={["desenvolvedor web full-stack", "desenvolvedor de jogos"]}
+        client:load
+      />, do Brasil.
+    </h2>
+  </div>
+</CodeLayout>

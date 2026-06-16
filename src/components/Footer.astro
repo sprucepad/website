@@ -1,1 +1,81 @@
-<footer transition:persist="art-footer" transition:animate="slide"></footer>
+---
+import { cva, type VariantProps } from "class-variance-authority";
+import Link from "./ui/Link.astro";
+
+const footerStyles = cva("flex flex-col gap-4 p-4", {
+  variants: {
+    variant: {
+      art: "border-t-2",
+      code: "border-t-1",
+    },
+  },
+});
+
+type Props = VariantProps<typeof footerStyles>;
+
+const { variant } = Astro.props;
+---
+
+<footer
+  class={footerStyles({ variant })}
+  transition:persist="footer"
+  transition:animate="slide"
+>
+  <select id="language-select" class="w-fit">
+    <option value="pt" selected={Astro.currentLocale?.startsWith("pt")}
+      >Português</option
+    >
+    <option value="en" selected={Astro.currentLocale?.startsWith("en")}
+      >English</option
+    >
+  </select>
+
+  <div class="opacity-50">
+    <p>
+      Copyright &copy; 2026-{new Date().getFullYear()} sprucepad. Under three different
+      licenses:
+    </p>
+    <ul class="ml-4 list-disc">
+      <li>
+        Codebase: <Link href="https://opensource.org/licenses/mit"
+          >MIT License</Link
+        >
+      </li>
+      <li>
+        Content (assets, images, artwork, audio, text, etc.): <Link
+          href="https://github.com/sprucepad/website/tree/main/content/LICENSE.txt"
+          >All Rights Reserved</Link
+        >, unless stated otherwise
+      </li>
+      <li>
+        Fonts: <Link href="https://openfontlicense.org/documents/OFL.txt"
+          >SIL Open Font License (OFL) 1.1</Link
+        >
+      </li>
+    </ul>
+
+    <p>Credits!</p>
+    <ul class="ml-4 list-disc">
+      <li>
+        Peaberry (the font you see in headings), <Link
+          href="https://emhuo.itch.io/">by Emily Huo</Link
+        >
+      </li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const $languageSelect = document.getElementById(
+      "language-select",
+    ) as HTMLSelectElement;
+
+    $languageSelect.addEventListener("change", () => {
+      const url = new URL(location.href);
+      const pathname = url.pathname.split("/").slice(2).join("/");
+
+      location.href = `/${$languageSelect.value}/${pathname}`;
+    });
+  });
+</script>
