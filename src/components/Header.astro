@@ -154,9 +154,9 @@ const CODE_ITEMS: Items = [
 <script>
   document.addEventListener("astro:page-load", () => {
     const $header = document.getElementById("header") as HTMLDivElement;
-    const $button = $header.querySelector("button")!;
+    const $button = $header.querySelector("button");
 
-    $button.addEventListener("click", () =>
+    $button?.addEventListener("click", () =>
       $button.toggleAttribute("data-open"),
     );
   });
