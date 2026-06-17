@@ -1,0 +1,51 @@
+---
+import Typewriter from "@/components/Typewriter.svelte";
+import { buttonStyles } from "@/components/ui/Button.astro";
+import Link from "@/components/ui/Link.astro";
+import MixedLayout from "@/layouts/MixedLayout.astro";
+---
+
+<MixedLayout
+  title="sprucepad's website"
+  desc="My personal website, showing my projects and my art."
+>
+  <div
+    slot="art"
+    class="flex h-full flex-col items-center justify-center gap-4 p-4"
+  >
+    <h1 class="font-heading text-4xl font-black">Welcome to the website!</h1>
+    <h2 class="font-heading text-3xl font-black">
+      This side contains my creative works.
+    </h2>
+    <Link href="/art" class={buttonStyles({ variant: "art", size: "lg" })}
+      >The Creative Side</Link
+    >
+  </div>
+
+  <div
+    slot="code"
+    class="flex h-full flex-col items-center justify-center gap-4 p-4"
+  >
+    <h1 class="font-heading text-4xl font-black">Welcome to the website!</h1>
+    <h2 class="font-heading text-3xl font-black">
+      This side contains my technical works.
+    </h2>
+    <Link href="/code" class={buttonStyles({ variant: "code", size: "lg" })}
+      >The Technical Side</Link
+    >
+  </div>
+
+  <h1
+    class="mixed-text from-art-foreground to-code-foreground font-heading text-6xl"
+  >
+    Welcome to my website!
+  </h1>
+  <h2
+    class="mixed-text from-art-foreground to-code-foreground text-center font-heading text-3xl"
+  >
+    I am a <Typewriter
+      words={["game developer", "full-stack web developer", "pixel artist"]}
+      client:load
+    />, from Brazil.
+  </h2>
+</MixedLayout>
