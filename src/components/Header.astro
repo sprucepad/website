@@ -9,6 +9,7 @@ import Link from "./ui/Link.astro";
 import { cn } from "@/lib/utils";
 import { buttonStyles } from "./ui/Button.astro";
 import { cva, type VariantProps } from "class-variance-authority";
+import { createTranslate } from "@/lib/i18n";
 
 const headerStyles = cva(
   "fixed inset-2 z-50 flex h-16 items-center justify-between bg-transparent p-4 before:absolute before:inset-0 before:-z-50 before:bg-background/50 before:backdrop-blur-lg before:content-['']",
@@ -70,9 +71,8 @@ const table = {
     about: "About",
     contact: "Contact",
   },
-} as const;
-const t = (key: keyof (typeof table)[keyof typeof table]) =>
-  table[Astro.currentLocale as keyof typeof table][key]!;
+};
+const t = createTranslate(Astro.currentLocale, table);
 
 const ART_ITEMS: Items = [
   { label: t("art"), href: "/art/gallery" },
@@ -90,8 +90,8 @@ const CODE_ITEMS: Items = [
 ---
 
 <header
-  transition:persist="header"
-  transition:animate="slide"
+  transition:name="header"
+  transition:animate="fade"
   class={headerStyles({ variant })}
   id="header"
 >

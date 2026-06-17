@@ -4,6 +4,7 @@ import { buttonStyles } from "@/components/ui/Button.astro";
 import MouseSketches from "@/components/MouseSketches.astro";
 import AsciiArt from "@/components/AsciiArt.astro";
 import Link from "@/components/ui/Link.astro";
+import { createTranslate } from "@/lib/i18n";
 
 export const prerender = false;
 
@@ -18,9 +19,8 @@ const table = {
     desc: "This page doesn't exist!",
     button: "Home page",
   },
-} as const;
-const t = (key: keyof (typeof table)[keyof typeof table]) =>
-  table[Astro.currentLocale as keyof typeof table][key]!;
+};
+const t = createTranslate(Astro.currentLocale, table);
 ---
 
 <Layout title={t("title")} desc={t("desc")}>
