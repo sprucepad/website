@@ -1,23 +1,33 @@
 <script lang="ts">
-  import type { HTMLAttributes } from "svelte/elements";
+  import SearchIcon from "@lucide/svelte/icons/search";
+  import { cva, type VariantProps } from "class-variance-authority";
 
-  export interface SearchProps {
+  const inputStyles = cva(
+    "w-full p-2 pl-12 focus:outline-2 focus:outline-accent",
+    {
+      variants: {
+        variant: {
+          art: "rounded-full neobrutal",
+          code: "border-1",
+        },
+      },
+    },
+  );
+
+  interface Props extends VariantProps<typeof inputStyles> {
     filter(kw: string[], kv: [string, string][]): void;
     placeholder: string;
   }
 
-  interface Props
-    extends
-      Omit<HTMLAttributes<HTMLDivElement>, keyof SearchProps>,
-      SearchProps {}
-
-  let { filter, placeholder, ...rest }: Props = $props();
+  let { filter, placeholder, variant }: Props = $props();
 </script>
 
-<div {...rest}>
+<label class="relative block">
+  <SearchIcon class="absolute left-4 top-1/4" />
   <input
     type="search"
     {placeholder}
+    class={inputStyles({ variant })}
     oninput={(e) => {
       const words = (e.target as HTMLInputElement).value
         .trim()
@@ -39,4 +49,4 @@
       filter(kw, kv);
     }}
   />
-</div>
+</label>

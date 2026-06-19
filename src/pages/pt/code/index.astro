@@ -3,6 +3,20 @@ import AsciiArt from "@/components/AsciiArt.astro";
 import Socials from "@/components/Socials.astro";
 import Typewriter from "@/components/Typewriter.svelte";
 import CodeLayout from "@/layouts/CodeLayout.astro";
+import Cards from "@/components/Cards.svelte";
+import Link from "@/components/ui/Link.astro";
+import { card, topic } from "@/lib/mappers";
+import { getCollection } from "@/lib/custom-collection";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const locale = Astro.currentLocale!;
+
+const codeBlog = await getCollection("codePosts", {
+  imageKey: "image",
+  locale,
+});
+const projects = await getCollection("projects", { imageKey: "image", locale });
+const topics = await getCollection("topics");
 ---
 
 <CodeLayout title="sprucepad (código)" desc="O lado técnico de sprucepad.net!">
@@ -26,5 +40,45 @@ import CodeLayout from "@/layouts/CodeLayout.astro";
     </h2>
   </section>
 
-  <Socials class="m-4 mx-auto w-fit border-1 p-4" />
+  <Socials class="m-4 mx-auto w-fit border p-4" />
+
+  <section
+    class="flex h-[calc(100vh-10rem)] flex-col gap-4 bg-accent p-16 text-accent-foreground"
+  >
+    <h1 class="text-center font-heading text-4xl">Meu Blog</h1>
+
+    <div class="min-h-0 flex-1 mask-b-to-transparent">
+      <Cards
+        variant="code"
+        cards={codeBlog.map(card()).slice(0, 3)}
+        topics={topics.map(topic(locale))}
+        href={getRelativeLocaleUrl(locale, "/code/blog")}
+        placeholder="Pesquisar posts..."
+        empty="Nada aqui ainda!"
+        client:load
+      />
+    </div>
+
+    <p class="text-center"><Link href="/code/blog">Mais posts...</Link></p>
+  </section>
+
+  <section class="h-[calc(100vh - 10rem)] flex flex-col gap-4 p-16">
+    <h1 class="text-center font-heading text-4xl">Meus Projetos</h1>
+
+    <div class="min-h-0 flex-1 mask-b-to-transparent">
+      <Cards
+        variant="code"
+        cards={projects.map(card()).slice(0, 4)}
+        topics={topics.map(topic(locale))}
+        href={getRelativeLocaleUrl(locale, "/code/projects")}
+        empty="Nada aqui ainda!"
+        placeholder="Pesquisar nos projetos..."
+        client:load
+      />
+    </div>
+
+    <p class="text-center">
+      <Link href="/code/projects">Mais projetos...</Link>
+    </p>
+  </section>
 </CodeLayout>
