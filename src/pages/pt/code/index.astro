@@ -1,11 +1,12 @@
 ---
 import AsciiArt from "@/components/AsciiArt.astro";
+import Socials from "@/components/Socials.astro";
 import Typewriter from "@/components/Typewriter.svelte";
 import CodeLayout from "@/layouts/CodeLayout.astro";
 ---
 
 <CodeLayout title="sprucepad (código)" desc="O lado técnico de sprucepad.net!">
-  <div class="relative grid h-svh place-content-center gap-4 p-4">
+  <section class="relative grid h-[85svh] place-content-center gap-4 p-4">
     <div
       class="absolute inset-0 -z-50 grid place-content-center overflow-hidden"
     >
@@ -23,5 +24,7 @@ import CodeLayout from "@/layouts/CodeLayout.astro";
         client:load
       />, do Brasil.
     </h2>
-  </div>
+  </section>
+
+  <Socials class="m-4 mx-auto w-fit border-1 p-4" />
 </CodeLayout>

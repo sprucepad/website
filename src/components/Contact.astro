@@ -1,12 +1,5 @@
 ---
-import GitHubIcon from "@/icons/github.svg";
-import ItchIoIcon from "@/icons/itchio.svg";
-import YouTubeIcon from "@/icons/youtube.svg";
-import RedditIcon from "@/icons/reddit.svg";
-import BskyIcon from "@/icons/bsky.svg";
-import MailIcon from "@lucide/astro/icons/mail";
-
-import Link from "@/components/ui/Link.astro";
+import Socials from "./Socials.astro";
 import Button from "./ui/Button.astro";
 import Input from "./ui/Input.astro";
 import TextArea from "./ui/TextArea.astro";
@@ -43,37 +36,7 @@ const t = createTranslate(Astro.currentLocale, table);
 
 <section class="mx-auto flex max-w-prose flex-col gap-4 p-4 pt-32">
   <h1 class="text-center font-heading text-4xl font-black">{t("socials")}</h1>
-  <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-    <Link href="https://github.com/sprucepad" class="flex gap-2">
-      <GitHubIcon width={24} height={24} />
-      sprucepad
-    </Link>
-
-    <Link href="https://sprucepad.itch.io/" class="flex gap-2">
-      <ItchIoIcon width={24} height={24} />
-      sprucepad.itch.io
-    </Link>
-
-    <Link href="https://www.youtube.com/@sprucepad" class="flex gap-2">
-      <YouTubeIcon width={24} height={24} />
-      @sprucepad
-    </Link>
-
-    <Link href="https://www.reddit.com/user/sprucepad" class="flex gap-2">
-      <RedditIcon width={24} height={24} />
-      u/sprucepad
-    </Link>
-
-    <Link href="https://bsky.app/profile/sprucepad.net" class="flex gap-2">
-      <BskyIcon width={24} height={24} />
-      @sprucepad.net
-    </Link>
-
-    <Link href="mailto:sprucepadhq@gmail.com" class="flex gap-2">
-      <MailIcon />
-      sprucepadhq@gmail.com
-    </Link>
-  </div>
+  <Socials class="grid gap-4 sm:grid-cols-2 md:grid-cols-3" />
 
   <form action="mailto:sprucepadhq@gmail.com" class="flex flex-col gap-2">
     <h1 class="text-center font-heading text-4xl font-black">{t("heading")}</h1>

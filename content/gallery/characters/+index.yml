@@ -1,0 +1,24 @@
+title:
+  en: Characters
+  pt: Personagens
+images:
+  - img: ./calico-fox.png
+    alt:
+      en: A calico-colored fox.
+      pt: Uma raposa colorida em cores de chita.
+  - img: ./antler-fox.png
+    alt:
+      en: A fox with antlers walking through a forest.
+      pt: Uma raposa com chifres andando por uma floresta.
+  - img: ./masked.png
+    alt:
+      en: A humanoid fox with a digital mask.
+      pt: Uma raposa humanóide com uma máscara digital.
+  - img: ./space-fox.png
+    alt:
+      en: A fox in an astronaut suit in space.
+      pt: Uma raposa com roupa de astronauta no espaço.
+  - img: ./split-proto.png
+    alt:
+      en: A split-view protogen.
+      pt: Um protogen divido em dois lados.

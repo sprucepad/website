@@ -1,0 +1,48 @@
+---
+import GitHubIcon from "@/icons/github.svg";
+import ItchIoIcon from "@/icons/itchio.svg";
+import YouTubeIcon from "@/icons/youtube.svg";
+import RedditIcon from "@/icons/reddit.svg";
+import BskyIcon from "@/icons/bsky.svg";
+import MailIcon from "@lucide/astro/icons/mail";
+
+import Link from "@/components/ui/Link.astro";
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "@/lib/utils";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class={cn("flex flex-wrap gap-4", className)} {...rest}>
+  <Link href="https://github.com/sprucepad" class="flex gap-2">
+    <GitHubIcon width={24} height={24} />
+    sprucepad
+  </Link>
+
+  <Link href="https://sprucepad.itch.io/" class="flex gap-2">
+    <ItchIoIcon width={24} height={24} />
+    sprucepad.itch.io
+  </Link>
+
+  <Link href="https://www.youtube.com/@sprucepad" class="flex gap-2">
+    <YouTubeIcon width={24} height={24} />
+    @sprucepad
+  </Link>
+
+  <Link href="https://www.reddit.com/user/sprucepad" class="flex gap-2">
+    <RedditIcon width={24} height={24} />
+    u/sprucepad
+  </Link>
+
+  <Link href="https://bsky.app/profile/sprucepad.net" class="flex gap-2">
+    <BskyIcon width={24} height={24} />
+    @sprucepad.net
+  </Link>
+
+  <Link href="mailto:sprucepadhq@gmail.com" class="flex gap-2">
+    <MailIcon />
+    sprucepadhq@gmail.com
+  </Link>
+</div>

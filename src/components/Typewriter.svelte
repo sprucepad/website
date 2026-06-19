@@ -9,7 +9,7 @@
     wordDelay?: number;
   }
 
-  const {
+  let {
     words,
     charDelay = 50,
     deleteDelay = 100,

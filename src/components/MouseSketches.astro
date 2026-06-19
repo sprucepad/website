@@ -17,8 +17,8 @@ import PixelArt from "./ui/PixelArt.astro";
     ) as HTMLDivElement | null;
 
     window.addEventListener("mousemove", (e) => {
-      $sketches?.style.setProperty("--x", `${e.clientX}px`);
-      $sketches?.style.setProperty("--y", `${e.clientY}px`);
+      $sketches?.style.setProperty("--x", `${e.clientX + window.scrollX}px`);
+      $sketches?.style.setProperty("--y", `${e.clientY + window.scrollY}px`);
     });
   });
 </script>

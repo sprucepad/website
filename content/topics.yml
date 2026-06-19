@@ -1,30 +1,49 @@
 - id: multilingual
-  en: Multi-lingual
-  pt: Multi-linguagem
+  translations:
+    en: Multi-lingual
+    pt: Multi-linguagem
+
 - id: typescript
-  en: TypeScript
-  pt: TypeScript
+  translations:
+    en: TypeScript
+    pt: TypeScript
+
 - id: compiler
-  en: Compilers
-  pt: Compiladores
+  translations:
+    en: Compilers
+    pt: Compiladores
+
 - id: database
-  en: Databases
-  pt: Bancos de dados
+  translations:
+    en: Databases
+    pt: Bancos de dados
+
 - id: game
-  en: Games
-  pt: Jogos
+  translations:
+    en: Games
+    pt: Jogos
+
 - id: site
-  en: Websites
-  pt: Sites
+  translations:
+    en: Websites
+    pt: Sites
+
 - id: cli
-  en: CLI
-  pt: Terminal
+  translations:
+    en: CLI
+    pt: Terminal
+
 - id: app
-  en: Apps
-  pt: Apps
+  translations:
+    en: Apps
+    pt: Apps
+
 - id: astro
-  en: Astro
-  pt: Astro
+  translations:
+    en: Astro
+    pt: Astro
+
 - id: svelte
-  en: Svelte
-  pt: Svelte
+  translations:
+    en: Svelte
+    pt: Svelte
