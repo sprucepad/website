@@ -1,25 +1,55 @@
 ---
-import Button from "@/components/ui/Button.astro";
 import Layout from "@/layouts/Layout.astro";
-
-import { getRelativeLocaleUrl } from "astro:i18n";
-import t from "@/i18n";
+import { buttonStyles } from "@/components/ui/Button.astro";
+import MouseSketches from "@/components/MouseSketches.astro";
+import AsciiArt from "@/components/AsciiArt.astro";
 import Link from "@/components/ui/Link.astro";
-const locale = Astro.currentLocale ?? "pt";
+import { createTranslate } from "@/lib/i18n";
 
 export const prerender = false;
+
+const table = {
+  pt: {
+    title: "404 Não Encontrada",
+    desc: "Essa página não existe!",
+    button: "Página inicial",
+  },
+  en: {
+    title: "404 Not Found",
+    desc: "This page doesn't exist!",
+    button: "Home page",
+  },
+};
+const t = createTranslate(Astro.currentLocale, table);
 ---
 
-<Layout
-  title={t(locale, "notFound.title")}
-  desc={t(locale, "notFound.desc")}
-  class="flex flex-col items-center justify-center gap-4"
->
-  <h1 class="font-heading text-4xl font-black">
-    {t(locale, "notFound.title")}
-  </h1>
-  <p>{t(locale, "notFound.desc")}</p>
-  <Link class="no-underline" href={getRelativeLocaleUrl(locale, "/")}
-    ><Button>{t(locale, "notFound.button")}</Button></Link
+<Layout title={t("title")} desc={t("desc")}>
+  <main
+    class="grid h-full grid-cols-2"
+    transition:name="main"
+    transition:animate="slide"
   >
+    <div class="h-full w-full overflow-hidden bg-art-background">
+      <MouseSketches />
+    </div>
+    <div class="h-full w-full overflow-hidden bg-code-background">
+      <AsciiArt />
+    </div>
+
+    <div
+      class="absolute top-1/2 left-1/2 grid -translate-1/2 transform place-content-center gap-4"
+    >
+      <h1
+        class="mixed-text from-art-foreground to-code-foreground font-heading text-4xl font-black"
+      >
+        {t("desc")}
+      </h1>
+      <Link class={buttonStyles({ variant: "mixed" })} href="/"
+        ><span
+          class="mixed-text from-art-accent-foreground to-code-accent-foreground"
+          >{t("button")}</span
+        ></Link
+      >
+    </div>
+  </main>
 </Layout>

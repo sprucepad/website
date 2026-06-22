@@ -1,6 +1,6 @@
 ---
 title: Convoker
-desc: Um framework CLI.
+desc: Um framework CLI com tipagem segura.
 image: ../_images/convoker.jpg
 created: 2026-02-13
 updated: 2026-02-13
@@ -10,8 +10,6 @@ topics:
   - typescript
   - cli
 ---
-
-**Um framework CLI com tipagem segura.**
 
 ## Por quê?
 

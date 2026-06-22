@@ -1,0 +1,16 @@
+title:
+  en: Icons
+  pt: Ícones
+images:
+  - img: ./newt.png
+    alt:
+      en: A newt in a coffee cup.
+      pt: Um tritão num copo de café.
+  - img: ./dragon.png
+    alt:
+      en: A red dragon flying to the right.
+      pt: Um dragão vermelho voando para a direita.
+  - img: ./sparrow.png
+    alt:
+      en: A sparrow in front of an autumn tree.
+      pt: Um pardal em frente a uma árvore de outono.

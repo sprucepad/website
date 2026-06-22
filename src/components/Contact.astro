@@ -1,0 +1,65 @@
+---
+import Socials from "./Socials.astro";
+import Button from "./ui/Button.astro";
+import Input from "./ui/Input.astro";
+import TextArea from "./ui/TextArea.astro";
+import { createTranslate } from "@/lib/i18n";
+
+interface Props {
+  variant?: "art" | "code";
+}
+
+const { variant = "art" } = Astro.props;
+
+const table = {
+  pt: {
+    socials: "Me siga nas redes sociais!",
+    heading: "Me envie um email!",
+    subject: "Sujeito",
+    subjectPlaceholder: "Sobre o quê você quer me falar?",
+    body: "Corpo",
+    bodyPlaceholder: "O que você quer me falar?",
+    submit: "Ir para seu aplicativo de email",
+  },
+  en: {
+    socials: "Follow me on social media!",
+    heading: "Shoot me an e-mail!",
+    subject: "Subject",
+    subjectPlaceholder: "What do you want to talk to me about?",
+    body: "Body",
+    bodyPlaceholder: "What do you want to tell me?",
+    submit: "Go to your e-mail app",
+  },
+};
+const t = createTranslate(Astro.currentLocale, table);
+---
+
+<section class="mx-auto flex max-w-prose flex-col gap-4 p-4 pt-32">
+  <h1 class="text-center font-heading text-4xl font-black">{t("socials")}</h1>
+  <Socials class="grid gap-4 sm:grid-cols-2 md:grid-cols-3" />
+
+  <form action="mailto:sprucepadhq@gmail.com" class="flex flex-col gap-2">
+    <h1 class="text-center font-heading text-4xl font-black">{t("heading")}</h1>
+
+    <label for="contact-form-subject" class="flex flex-col"
+      >{t("subject")}</label
+    >
+    <Input
+      {variant}
+      name="subject"
+      id="contact-form-subject"
+      type="text"
+      placeholder={t("subjectPlaceholder")}
+    />
+
+    <label for="contact-form-body" class="flex flex-col">{t("body")}</label>
+    <TextArea
+      {variant}
+      name="body"
+      id="contact-form-body"
+      placeholder={t("bodyPlaceholder")}
+    />
+
+    <Button {variant} type="submit">{t("submit")}</Button>
+  </form>
+</section>

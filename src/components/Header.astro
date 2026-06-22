@@ -1,95 +1,163 @@
 ---
 import pfp from "@content/assets/pfp.png";
-import MenuIcon from "@/icons/menu.svg";
-import XIcon from "@/icons/x.svg";
+
+import MenuIcon from "@lucide/astro/icons/menu";
+import XIcon from "@lucide/astro/icons/x";
 
 import PixelArt from "./ui/PixelArt.astro";
-import { cn } from "@/lib/utils";
-
-import t from "@/i18n";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import Link from "./ui/Link.astro";
-const locale = Astro.currentLocale ?? "pt";
+import { cn } from "@/lib/utils";
+import { buttonStyles } from "./ui/Button.astro";
+import { cva, type VariantProps } from "class-variance-authority";
+import { createTranslate } from "@/lib/i18n";
 
-const items = [
+const headerStyles = cva(
+  "fixed inset-2 z-50 flex h-16 items-center justify-between bg-transparent p-4 before:absolute before:inset-0 before:-z-50 before:bg-background/50 before:backdrop-blur-lg before:content-['']",
   {
-    label: t(locale, "nav.home"),
-    href: "/",
+    variants: {
+      variant: {
+        art: "before:rounded-full before:neobrutal",
+        code: "before:border-1 before:border-foreground",
+      },
+    },
   },
+);
+
+const navStyles = cva(
+  "fixed top-20 right-2 translate-x-[calc(100%+1.5rem)] transform bg-background/50 p-4 backdrop-blur-lg transition-transform peer-data-open:translate-x-0 md:static md:translate-none md:bg-transparent md:p-0 md:backdrop-blur-none",
   {
-    label: t(locale, "nav.about"),
-    href: "/about",
+    variants: {
+      variant: {
+        art: "max-md:rounded-lg max-md:neobrutal",
+        code: "max-md:border-1 max-md:border-foreground",
+      },
+    },
   },
+);
+
+const linkStyles = cva(
+  "p-2 data-selected:bg-accent data-selected:text-accent-foreground",
   {
-    label: t(locale, "nav.projects"),
-    href: "/projects",
+    variants: {
+      variant: {
+        art: "data-selected:rounded-full data-selected:neobrutal",
+        code: "data-selected:border-1",
+      },
+    },
   },
-  {
-    label: t(locale, "nav.art"),
-    href: "/art",
+);
+
+type Props = VariantProps<typeof headerStyles>;
+type Items = { label: string; href: string }[];
+
+const { variant } = Astro.props;
+
+const table = {
+  pt: {
+    chooseASide: "Escolha um Lado",
+    art: "Arte",
+    artBlog: "Art Blog",
+    projects: "Projetos",
+    blog: "Blog",
+    about: "Sobre",
+    contact: "Contato",
   },
-  {
-    label: t(locale, "nav.posts"),
-    href: "/posts",
+  en: {
+    chooseASide: "Choose a Side",
+    art: "Art",
+    artBlog: "Art Blog",
+    projects: "Projects",
+    blog: "Blog",
+    about: "About",
+    contact: "Contact",
   },
-  {
-    label: t(locale, "nav.contact"),
-    href: "/contact",
-  },
+};
+const t = createTranslate(Astro.currentLocale, table);
+
+const ART_ITEMS: Items = [
+  { label: t("art"), href: "/art/gallery" },
+  { label: t("artBlog"), href: "/art/blog" },
+  { label: t("about"), href: "/art/about" },
+  { label: t("contact"), href: "/art/contact" },
+];
+
+const CODE_ITEMS: Items = [
+  { label: t("projects"), href: "/code/projects" },
+  { label: t("blog"), href: "/code/blog" },
+  { label: t("about"), href: "/code/about" },
+  { label: t("contact"), href: "/code/contact" },
 ];
 ---
 
 <header
-  class="bg-background fixed inset-0 z-50 flex h-fit w-full items-center justify-between border-b-2 p-2"
   transition:name="header"
+  transition:animate="fade"
+  class={headerStyles({ variant })}
+  id="header"
 >
   <Link
-    href="/"
-    class="font-heading flex items-center gap-2 text-xl font-black no-underline"
+    href={`/${variant}`}
+    class="flex items-center gap-2 font-heading text-2xl font-black"
   >
-    <PixelArt width={48} height={48} src={pfp} alt="Logo" />
+    <PixelArt src={pfp} alt="" width={48} height={48} />
     sprucepad
   </Link>
 
-  <input type="checkbox" class="peer hidden" id="header-toggle" />
-  <label
-    for="header-toggle"
-    class="cursor-pointer sm:hidden peer-checked:[&_.menu]:hidden peer-checked:[&_.x]:block"
-  >
-    <MenuIcon class="menu" />
-    <XIcon class="x hidden" />
-    <span class="sr-only">Menu</span>
-  </label>
+  <button type="button" class="peer group cursor-pointer md:hidden">
+    <MenuIcon class="group-data-open:hidden" />
+    <XIcon class="hidden group-data-open:block" />
+  </button>
 
-  <nav
-    class="bg-background fixed top-16 right-0 h-full translate-x-full transform border-l-2 p-4 transition-transform peer-checked:translate-x-0 sm:static sm:translate-x-0 sm:border-0 sm:p-0"
-  >
-    <menu class="flex flex-col gap-4 sm:flex-row">
+  <nav class={navStyles({ variant })}>
+    <ul class="flex flex-col gap-2 md:flex-row">
       {
-        items.map(({ href, label }) => {
-          const active =
-            getRelativeLocaleUrl(locale, href) ===
-            getRelativeLocaleUrl(locale, "/")
-              ? Astro.url.pathname === getRelativeLocaleUrl(locale, href)
-              : Astro.url.pathname.startsWith(
-                  getRelativeLocaleUrl(locale, href),
-                );
+        (variant === "art" ? ART_ITEMS : CODE_ITEMS).map((item) => {
+          const pathname = Astro.url.pathname.replace(
+            `/${Astro.currentLocale}`,
+            "",
+          );
           return (
-            <li>
+            <li class="text-end">
               <Link
-                class={cn(
-                  "p-2 no-underline",
-                  active &&
-                    "bg-accent neobrutal transition-shadow hover:shadow-none",
-                )}
-                {href}
+                href={item.href}
+                class={linkStyles({ variant })}
+                data-selected={
+                  (pathname === `/${variant}`
+                    ? pathname === item.href
+                    : pathname.startsWith(item.href)) || undefined
+                }
               >
-                {label}
+                {item.label}
               </Link>
             </li>
           );
         })
       }
-    </menu>
+
+      <div
+        class="mb-2 border-t border-foreground/50 md:mb-0 md:border-t-0 md:border-r"
+      >
+      </div>
+
+      <li>
+        <Link
+          class={cn(
+            buttonStyles({ variant: variant === "art" ? "code" : "art" }),
+            "border-foreground bg-orange-600",
+          )}>{t("chooseASide")}</Link
+        >
+      </li>
+    </ul>
   </nav>
 </header>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const $header = document.getElementById("header") as HTMLDivElement | null;
+    const $button = $header?.querySelector("button");
+
+    $button?.addEventListener("click", () =>
+      $button.toggleAttribute("data-open"),
+    );
+  });
+</script>

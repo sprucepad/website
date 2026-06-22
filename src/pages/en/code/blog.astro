@@ -1,0 +1,29 @@
+---
+import Cards from "@/components/Cards.svelte";
+import CodeLayout from "@/layouts/CodeLayout.astro";
+import { getCollection } from "@/lib/custom-collection";
+import { card, topic } from "@/lib/mappers";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const locale = Astro.currentLocale!;
+
+const cards = await getCollection("codePosts", { locale });
+const topics = await getCollection("topics");
+---
+
+<CodeLayout
+  title="blog | sprucepad"
+  desc="Índice de posts do blog de sprucepad."
+>
+  <section class="flex flex-col gap-4 p-4 pt-24">
+    <h1 class="font-heading text-4xl font-black">Blog</h1>
+    <Cards
+      cards={cards.map(card())}
+      topics={topics.map(topic(locale))}
+      href={getRelativeLocaleUrl(locale, "/code/blog")}
+      placeholder="Search in blog..."
+      empty="Nothing here yet!"
+      variant="code"
+    />
+  </section>
+</CodeLayout>

@@ -1,0 +1,105 @@
+---
+import pfp from "@content/assets/pfp.png";
+
+import { cn } from "@/lib/utils";
+import Layout, { type LayoutProps } from "./Layout.astro";
+import MouseSketches from "@/components/MouseSketches.astro";
+import AsciiArt from "@/components/AsciiArt.astro";
+import Footer from "@/components/Footer.astro";
+import PixelArt from "@/components/ui/PixelArt.astro";
+import Link from "@/components/ui/Link.astro";
+
+type Props = LayoutProps;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<Layout {...rest}>
+  <header
+    class="fixed -top-20 left-2 z-50 flex h-16 items-center gap-4 bg-art-background p-4 transition-[top] has-focus:top-2"
+    id="header"
+  >
+    <Link
+      href="/"
+      class="flex items-center gap-1 font-heading text-xl font-black"
+      tabindex={0}
+    >
+      <PixelArt src={pfp} width={48} height={48} alt="" />
+      sprucepad
+    </Link>
+
+    <nav>
+      <ul class="flex gap-2">
+        <li><Link href="/art">Art Side</Link></li>
+        <li><Link href="/code">Code Side</Link></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main
+    class="grid min-h-full grid-cols-2 grid-rows-1 place-content-center"
+    transition:name="main"
+    transition:animate="slide"
+  >
+    <div
+      class="art-side peer group absolute top-0 left-0 h-full w-1/2 bg-art-background transition-[width,z-index] hover:z-30 hover:w-[75%] data-active:z-30 data-active:w-[75%]"
+      id="art-side"
+    >
+      <div class="absolute inset-0">
+        <MouseSketches />
+      </div>
+      <div
+        class="invisible relative h-full opacity-0 transition-[opacity,visibility] group-hover:visible group-hover:opacity-100 group-data-active:visible group-data-active:opacity-100"
+      >
+        <slot name="art" />
+      </div>
+    </div>
+    <div
+      class="code-side peer group absolute top-0 right-0 h-full w-1/2 bg-code-background transition-[width,z-index] hover:not-peer-data-active:z-30 hover:not-peer-data-active:w-[75%] data-active:z-30 data-active:w-[75%]"
+      id="code-side"
+    >
+      <div class="absolute inset-0 grid place-content-center overflow-hidden">
+        <AsciiArt />
+      </div>
+      <div
+        class="invisible relative h-full opacity-0 transition-[opacity,visibility] group-hover:visible group-hover:opacity-100 group-data-active:visible group-data-active:opacity-100"
+      >
+        <slot name="code" />
+      </div>
+    </div>
+
+    <div
+      class={cn(
+        "pointer-events-none absolute inset-0 z-40 flex flex-col items-center justify-center gap-4 p-4 transition-[opacity,visibility] peer-hover:invisible peer-hover:opacity-0 peer-data-active:visible peer-data-active:opacity-0",
+        className,
+      )}
+      id="center"
+      {...rest}
+    >
+      <slot />
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const $artSide = document.getElementById(
+      "art-side",
+    ) as HTMLDivElement | null;
+    const $codeSide = document.getElementById(
+      "code-side",
+    ) as HTMLDivElement | null;
+
+    $artSide?.addEventListener("click", () => {
+      $codeSide?.removeAttribute("data-active");
+      $artSide?.toggleAttribute("data-active");
+    });
+
+    $codeSide?.addEventListener("click", () => {
+      $artSide?.removeAttribute("data-active");
+      $codeSide?.toggleAttribute("data-active");
+    });
+  });
+</script>

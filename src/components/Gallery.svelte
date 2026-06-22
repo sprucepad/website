@@ -10,20 +10,22 @@
   }
 
   interface Props {
+    variant?: "art" | "code";
     images: Image[];
     placeholder: string;
     empty: string;
   }
 
-  const { placeholder, empty, images: initImages }: Props = $props();
+  let { placeholder, empty, images: initImages, variant }: Props = $props();
   let images = $state((() => initImages)());
 </script>
 
 <div>
   <SearchBox
+    {variant}
     {placeholder}
-    onFilter={(kw, kv) => {
-      if (!kw.length && !kv.size) {
+    filter={(kw, kv) => {
+      if (!kw.length && !kv.length) {
         images = initImages;
         return;
       }

@@ -1,0 +1,12 @@
+title:
+  en: Mascots
+  pt: Mascotes
+images:
+  - img: ./mon.png
+    alt:
+      en: A fennec fox mascot, named Mon.
+      pt: Um mascote de raposa feneco, com o nome de Mon.
+  - img: ./lyra.png
+    alt:
+      en: A red panda mascot, named Lyra.
+      pt: Um mascote de panda vermelho, com o nome de Lyra.

@@ -1,0 +1,56 @@
+---
+import ArtLayout from "./ArtLayout.astro";
+import CodeLayout from "./CodeLayout.astro";
+import Prose from "@/components/Prose.astro";
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { createTranslate } from "@/lib/i18n";
+import { render } from "astro:content";
+
+interface Props {
+  title: string;
+  variant: "art" | "code";
+  card: CollectionEntry<"artPosts" | "codePosts" | "projects">;
+}
+
+const { title, variant, card } = Astro.props;
+const { Content } = await render(card);
+
+const Layout = variant === "art" ? ArtLayout : CodeLayout;
+
+const locale = Astro.currentLocale!;
+
+const table = {
+  pt: {
+    created: "Criado",
+    updated: "Atualizado",
+  },
+  en: {
+    created: "Created",
+    updated: "Updated",
+  },
+};
+const t = createTranslate(locale, table);
+---
+
+<Layout title={`${card.data.title} | ${title}`} desc={card.data.desc}>
+  <Prose>
+    <header class="not-prose flex flex-col gap-2">
+      {
+        card.data.image && (
+          <Image src={card.data.image} width={640} height={314} alt="" />
+        )
+      }
+      <h1 class="font-heading text-4xl font-black">{card.data.title}</h1>
+      <p>{card.data.desc}</p>
+    </header>
+    <Content />
+    <footer class="not-prose">
+      <p class="opacity-50">
+        {t("created")}: {card.data.created.toLocaleDateString([locale])}
+        &bull; {t("updated")}: {card.data.updated.toLocaleDateString([locale])}
+        &bull; {card.data.license}
+      </p>
+    </footer>
+  </Prose>
+</Layout>

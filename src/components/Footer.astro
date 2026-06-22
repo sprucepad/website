@@ -1,10 +1,34 @@
 ---
-import LanguageSelection from "./LanguageSelection.astro";
+import { cva, type VariantProps } from "class-variance-authority";
 import Link from "./ui/Link.astro";
+
+const footerStyles = cva("flex flex-col gap-4 p-4", {
+  variants: {
+    variant: {
+      art: "border-t-2",
+      code: "border-t-1",
+    },
+  },
+});
+
+type Props = VariantProps<typeof footerStyles>;
+
+const { variant } = Astro.props;
 ---
 
-<footer class="space-y-4 border-t-2 p-4" transition:persist>
-  <LanguageSelection />
+<footer
+  class={footerStyles({ variant })}
+  transition:name="footer"
+  transition:animate="slide"
+>
+  <select id="language-select" class="w-fit">
+    <option value="pt" selected={Astro.currentLocale?.startsWith("pt")}
+      >Português</option
+    >
+    <option value="en" selected={Astro.currentLocale?.startsWith("en")}
+      >English</option
+    >
+  </select>
 
   <div class="opacity-50">
     <p>
@@ -13,7 +37,8 @@ import Link from "./ui/Link.astro";
     </p>
     <ul class="ml-4 list-disc">
       <li>
-        Code: <Link href="https://opensource.org/licenses/mit">MIT License</Link
+        Codebase: <Link href="https://opensource.org/licenses/mit"
+          >MIT License</Link
         >
       </li>
       <li>
@@ -39,3 +64,18 @@ import Link from "./ui/Link.astro";
     </ul>
   </div>
 </footer>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const $languageSelect = document.getElementById(
+      "language-select",
+    ) as HTMLSelectElement | null;
+
+    $languageSelect?.addEventListener("change", () => {
+      const url = new URL(location.href);
+      const pathname = url.pathname.split("/").slice(2).join("/");
+
+      location.href = `/${$languageSelect.value}/${pathname}`;
+    });
+  });
+</script>

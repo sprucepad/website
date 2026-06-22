@@ -1,29 +1,16 @@
-import { file, glob } from "astro/loaders";
 import { defineCollection, reference } from "astro:content";
+import { glob, file } from "astro/loaders";
 import { z } from "astro/zod";
-
-const art = defineCollection({
-  loader: glob({ pattern: "**/*.{yml,yaml,json,toml}", base: "./content/art" }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.record(z.string(), z.string()),
-      images: z.array(
-        z.object({
-          img: image(),
-          alt: z.string(),
-          license: z.string().default("All Rights Reserved"),
-        }),
-      ),
-    }),
-});
 
 const topics = defineCollection({
   loader: file("./content/topics.yml"),
-  schema: z.record(z.string(), z.string()),
+  schema: z.object({
+    translations: z.record(z.string(), z.string()),
+  }),
 });
 
-const posts = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts" }),
+const codePosts = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts/code" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -33,6 +20,38 @@ const posts = defineCollection({
       created: z.date(),
       updated: z.date(),
       license: z.string().default("All Rights Reserved"),
+    }),
+});
+
+const artPosts = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts/art" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      desc: z.string(),
+      image: image().optional(),
+      topics: z.array(reference("topics")).default([]),
+      created: z.date(),
+      updated: z.date(),
+      license: z.string().default("All Rights Reserved"),
+    }),
+});
+
+const gallery = defineCollection({
+  loader: glob({
+    pattern: "**/*.{yml,yaml,json,toml}",
+    base: "./content/gallery",
+  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.record(z.string(), z.string()),
+      images: z.array(
+        z.object({
+          img: image(),
+          alt: z.record(z.string(), z.string()),
+          license: z.string().default("All Rights Reserved"),
+        }),
+      ),
     }),
 });
 
@@ -53,4 +72,4 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { art, topics, posts, projects };
+export const collections = { topics, codePosts, projects, artPosts, gallery };

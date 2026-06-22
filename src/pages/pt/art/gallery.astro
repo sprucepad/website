@@ -1,0 +1,21 @@
+---
+import ArtLayout from "@/layouts/ArtLayout.astro";
+import GalleryContent from "@/components/Gallery.svelte";
+import { getCollection } from "@/lib/custom-collection";
+import { album } from "@/lib/mappers";
+
+const albums = await getCollection("gallery");
+---
+
+<ArtLayout title="galeria | sprucepad" desc="Toda a arte feita por sprucepad.">
+  <section class="flex flex-col gap-4 p-4 pt-24">
+    <h1 class="font-heading text-4xl font-black">Galeria de arte</h1>
+    <GalleryContent
+      images={albums.flatMap(album(Astro.currentLocale!))}
+      placeholder="Pesquisar na galeria..."
+      empty="Nada aqui ainda!"
+      variant="art"
+      client:load
+    />
+  </section>
+</ArtLayout>

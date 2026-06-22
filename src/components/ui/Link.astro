@@ -5,7 +5,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 
 type Props = HTMLAttributes<"a">;
 
-const { class: className, rel, target, href, ...rest } = Astro.props;
+const { rel, target, href, ...rest } = Astro.props;
 
 const aTarget =
   target ?? (href?.toString().startsWith("https://") ? "_blank" : undefined);
@@ -20,10 +20,4 @@ const aHref =
     : href;
 ---
 
-<a
-  {...rest}
-  class={cn("underline", className)}
-  href={aHref}
-  target={aTarget}
-  rel={aRel}><slot /></a
->
+<a {...rest} href={aHref} target={aTarget} rel={aRel}><slot /></a>
