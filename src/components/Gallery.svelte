@@ -16,7 +16,7 @@
     empty: string;
   }
 
-  const { placeholder, empty, images: initImages, variant }: Props = $props();
+  let { placeholder, empty, images: initImages, variant }: Props = $props();
   let images = $state((() => initImages)());
 </script>
 

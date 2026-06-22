@@ -69,9 +69,9 @@ const { variant } = Astro.props;
   document.addEventListener("astro:page-load", () => {
     const $languageSelect = document.getElementById(
       "language-select",
-    ) as HTMLSelectElement;
+    ) as HTMLSelectElement | null;
 
-    $languageSelect.addEventListener("change", () => {
+    $languageSelect?.addEventListener("change", () => {
       const url = new URL(location.href);
       const pathname = url.pathname.split("/").slice(2).join("/");
 

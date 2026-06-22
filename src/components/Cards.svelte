@@ -21,11 +21,20 @@
   import { cva, type VariantProps } from "class-variance-authority";
   import SearchBox from "./SearchBox.svelte";
 
-  const cardStyles = cva("", {
+  const cardStyles = cva("max-w-sm bg-background p-4", {
     variants: {
       variant: {
-        art: "",
-        code: "",
+        art: "rounded-lg neobrutal",
+        code: "border",
+      },
+    },
+  });
+
+  const topicStyles = cva("bg-accent p-1", {
+    variants: {
+      variant: {
+        art: "rounded-lg neobrutal",
+        code: "border-1",
       },
     },
   });
@@ -109,7 +118,7 @@
     {#each cards as card (card.id)}
       <a
         href={`${href.endsWith("/") ? href : href + "/"}${card.id}`}
-        class="neobrutal bg-background max-w-sm p-4"
+        class={cardStyles({ variant })}
       >
         {#if card.image}
           <img
@@ -126,7 +135,7 @@
           {#each card.topics as topicId (topicId)}
             {@const topic = initTopics.find((topic) => topic.id === topicId)}
             {#if topic}
-              <div class="bg-accent neobrutal flex gap-1 p-1">
+              <div class={topicStyles({ variant })}>
                 {topic.name}
               </div>
             {/if}

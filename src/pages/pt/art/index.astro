@@ -48,14 +48,14 @@ const gallery = await getCollection("gallery");
         variant="art"
         cards={artBlog.map(card()).slice(0, 3)}
         topics={topics.map(topic(locale))}
-        href={getRelativeLocaleUrl(locale, "/posts")}
+        href={getRelativeLocaleUrl(locale, "/art/blog")}
         placeholder="Pesquisar posts..."
         empty="Nada aqui ainda!"
         client:load
       />
     </div>
 
-    <p class="text-center"><Link href="/posts">Mais posts...</Link></p>
+    <p class="text-center"><Link href="/art/blog">Mais posts...</Link></p>
   </section>
 
   <section class="h-[calc(100vh - 10rem)] flex flex-col gap-4 p-16">
@@ -71,6 +71,6 @@ const gallery = await getCollection("gallery");
       />
     </div>
 
-    <p class="text-center"><Link>Mais arte...</Link></p>
+    <p class="text-center"><Link href="/art/gallery">Mais arte...</Link></p>
   </section>
 </ArtLayout>

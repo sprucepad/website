@@ -1,0 +1,29 @@
+---
+import Cards from "@/components/Cards.svelte";
+import ArtLayout from "@/layouts/ArtLayout.astro";
+import { getCollection } from "@/lib/custom-collection";
+import { card, topic } from "@/lib/mappers";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const locale = Astro.currentLocale!;
+
+const cards = await getCollection("artPosts", { locale });
+const topics = await getCollection("topics");
+---
+
+<ArtLayout
+  title="art blog | sprucepad"
+  desc="Índice de posts do blog de arte de sprucepad."
+>
+  <section class="flex flex-col gap-4 p-4 pt-24">
+    <h1 class="font-heading text-4xl font-black">Blog</h1>
+    <Cards
+      cards={cards.map(card())}
+      topics={topics.map(topic(locale))}
+      href={getRelativeLocaleUrl(locale, "/code/blog")}
+      placeholder="Pesquisar nos posts..."
+      empty="Nada aqui ainda!"
+      variant="art"
+    />
+  </section>
+</ArtLayout>

@@ -2,6 +2,7 @@
   "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
   "tags": ["-lintignore"],
 
+  "entry": ["content/posts/**/*", "content/projects/**/*"],
   "ignoreDependencies": [
     // Used by eslint-plugin-astro
     "@typescript-eslint/parser",
