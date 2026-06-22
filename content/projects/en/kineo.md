@@ -1,6 +1,6 @@
 ---
 title: Kineo
-desc: An ORM/OGM for TypeScript.
+desc: An extensible ORM for TypeScript.
 image: ../_images/kineo.jpg
 created: 2026-01-30
 updated: 2026-02-12
@@ -11,8 +11,6 @@ topics:
   - compiler
   - database
 ---
-
-**An extensible, type-safe, and simple ORM for TypeScript.**
 
 ## Why?
 

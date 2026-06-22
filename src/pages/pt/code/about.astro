@@ -1,12 +1,11 @@
 ---
 import CodeLayout from "@/layouts/CodeLayout.astro";
 import AboutContent from "../_content/about.mdx";
+import Prose from "@/components/Prose.astro";
 ---
 
 <CodeLayout title="sobre mim | sprucepad" desc="Um pouco sobre mim.">
-  <article
-    class="mx-auto prose prose-sm p-4 pt-32 prose-invert md:prose-base lg:prose-lg prose-headings:font-heading"
-  >
+  <Prose>
     <AboutContent />
-  </article>
+  </Prose>
 </CodeLayout>

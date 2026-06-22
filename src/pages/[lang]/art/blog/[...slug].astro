@@ -1,0 +1,20 @@
+---
+import ProseLayout from "@/layouts/ProseLayout.astro";
+import { getCollection } from "@/lib/custom-collection";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("artPosts", { imageKey: "image" });
+  return posts.map((post) => {
+    const [lang, ...slug] = post.id.split("/");
+    return {
+      params: { lang, slug: slug.join("/") },
+      props: { post },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+---
+
+<ProseLayout title="art blog - sprucepad" card={post} variant="art" />
