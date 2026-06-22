@@ -13,7 +13,7 @@ const topics = await getCollection("topics");
 
 <ArtLayout
   title="art blog | sprucepad"
-  desc="Índice de posts do blog de arte de sprucepad."
+  desc="Post index of sprucepad's art blog."
 >
   <section class="flex flex-col gap-4 p-4 pt-24">
     <h1 class="font-heading text-4xl font-black">Art Blog</h1>
@@ -21,8 +21,8 @@ const topics = await getCollection("topics");
       cards={cards.map(card())}
       topics={topics.map(topic(locale))}
       href={getRelativeLocaleUrl(locale, "/art/blog")}
-      placeholder="Pesquisar nos posts..."
-      empty="Nada aqui ainda!"
+      placeholder="Search in posts..."
+      empty="Nothing here yet!"
       variant="art"
     />
   </section>

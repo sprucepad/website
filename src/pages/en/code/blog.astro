@@ -1,29 +1,29 @@
 ---
 import Cards from "@/components/Cards.svelte";
-import ArtLayout from "@/layouts/ArtLayout.astro";
+import CodeLayout from "@/layouts/CodeLayout.astro";
 import { getCollection } from "@/lib/custom-collection";
 import { card, topic } from "@/lib/mappers";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 const locale = Astro.currentLocale!;
 
-const cards = await getCollection("artPosts", { locale });
+const cards = await getCollection("codePosts", { locale });
 const topics = await getCollection("topics");
 ---
 
-<ArtLayout
-  title="art blog | sprucepad"
-  desc="Índice de posts do blog de arte de sprucepad."
+<CodeLayout
+  title="blog | sprucepad"
+  desc="Índice de posts do blog de sprucepad."
 >
   <section class="flex flex-col gap-4 p-4 pt-24">
-    <h1 class="font-heading text-4xl font-black">Art Blog</h1>
+    <h1 class="font-heading text-4xl font-black">Blog</h1>
     <Cards
       cards={cards.map(card())}
       topics={topics.map(topic(locale))}
-      href={getRelativeLocaleUrl(locale, "/art/blog")}
-      placeholder="Pesquisar nos posts..."
-      empty="Nada aqui ainda!"
-      variant="art"
+      href={getRelativeLocaleUrl(locale, "/code/blog")}
+      placeholder="Search in blog..."
+      empty="Nothing here yet!"
+      variant="code"
     />
   </section>
-</ArtLayout>
+</CodeLayout>
