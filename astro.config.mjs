@@ -20,12 +20,7 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-    resolve: {
-      alias: {
-        "@": "/src",
-        "@content": "/content",
-      },
-    },
+    resolve: { tsconfigPaths: true },
   },
 
   fonts: [
@@ -65,7 +60,7 @@ export default defineConfig({
   },
 
   markdown: {
-    shikiConfig: { theme: "horizon" },
+    shikiConfig: { theme: "tokyo-night" },
     processor: unified({
       rehypePlugins: [
         [rehypeExternalLinks, { target: "_blank", rel: "noopener noreferrer" }],
