@@ -5,8 +5,10 @@ import { getImage } from "astro:assets";
 import type { HTMLAttributes } from "astro/types";
 import { ClientRouter } from "astro:transitions";
 import { Font } from "astro:assets";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
 
-interface Props extends HTMLAttributes<"body"> {
+interface Props extends HTMLAttributes<"main"> {
   title: string;
   desc: string;
   banner?: ImageMetadata;
@@ -33,7 +35,7 @@ const image = new URL(optimizedBanner.src, Astro.site);
     <ClientRouter />
     <Font cssVariable="--font-peaberry" />
     <Font cssVariable="--font-dm-sans" />
-    <Font cssVariable="--font-dm-mono" />
+    <Font cssVariable="--font-jetbrains-mono" />
 
     {/* primary */}
     <title>{title}</title>
@@ -48,7 +50,9 @@ const image = new URL(optimizedBanner.src, Astro.site);
     <meta property="og:image" content={image} />
     <meta property="twitter:card" content="summary_large_image" />
   </head>
-  <body {...rest}>
-    <slot />
+  <body>
+    <Header />
+    <main {...rest}><slot /></main>
+    <Footer />
   </body>
 </html>

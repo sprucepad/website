@@ -1,49 +1,8 @@
-- id: multilingual
+- id: art
   translations:
-    en: Multi-lingual
-    pt: Multi-linguagem
-
-- id: typescript
+    pt: Arte
+    en: Art
+- id: code
   translations:
-    en: TypeScript
-    pt: TypeScript
-
-- id: compiler
-  translations:
-    en: Compilers
-    pt: Compiladores
-
-- id: database
-  translations:
-    en: Databases
-    pt: Bancos de dados
-
-- id: game
-  translations:
-    en: Games
-    pt: Jogos
-
-- id: site
-  translations:
-    en: Websites
-    pt: Sites
-
-- id: cli
-  translations:
-    en: CLI
-    pt: Terminal
-
-- id: app
-  translations:
-    en: Apps
-    pt: Apps
-
-- id: astro
-  translations:
-    en: Astro
-    pt: Astro
-
-- id: svelte
-  translations:
-    en: Svelte
-    pt: Svelte
+    pt: Código
+    en: Code

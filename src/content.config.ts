@@ -9,22 +9,8 @@ const topics = defineCollection({
   }),
 });
 
-const codePosts = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts/code" }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      desc: z.string(),
-      image: image().optional(),
-      topics: z.array(reference("topics")).default([]),
-      created: z.date(),
-      updated: z.date(),
-      license: z.string().default("All Rights Reserved"),
-    }),
-});
-
-const artPosts = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts/art" }),
+const posts = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -72,4 +58,4 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { topics, codePosts, projects, artPosts, gallery };
+export const collections = { topics, posts, projects, gallery };

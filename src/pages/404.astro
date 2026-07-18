@@ -1,8 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { buttonStyles } from "@/components/ui/Button.astro";
-import MouseSketches from "@/components/MouseSketches.astro";
-import AsciiArt from "@/components/AsciiArt.astro";
 import Link from "@/components/ui/Link.astro";
 import { createTranslate } from "@/lib/i18n";
 
@@ -23,33 +21,13 @@ const table = {
 const t = createTranslate(Astro.currentLocale, table);
 ---
 
-<Layout title={t("title")} desc={t("desc")}>
-  <main
-    class="grid h-full grid-cols-2"
-    transition:name="main"
-    transition:animate="slide"
-  >
-    <div class="h-full w-full overflow-hidden bg-art-background">
-      <MouseSketches />
-    </div>
-    <div class="h-full w-full overflow-hidden bg-code-background">
-      <AsciiArt />
-    </div>
-
-    <div
-      class="absolute top-1/2 left-1/2 grid -translate-1/2 transform place-content-center gap-4"
-    >
-      <h1
-        class="mixed-text from-art-foreground to-code-foreground font-heading text-4xl font-black"
-      >
-        {t("desc")}
-      </h1>
-      <Link class={buttonStyles({ variant: "mixed" })} href="/"
-        ><span
-          class="mixed-text from-art-accent-foreground to-code-accent-foreground"
-          >{t("button")}</span
-        ></Link
-      >
-    </div>
-  </main>
+<Layout
+  title={t("title")}
+  desc={t("desc")}
+  class="grid min-h-svh place-content-center gap-4 p-4"
+>
+  <h1 class="text-center font-heading text-4xl font-black">
+    {t("desc")}
+  </h1>
+  <Link class={buttonStyles()} href="/">{t("button")}</Link>
 </Layout>
