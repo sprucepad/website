@@ -1,0 +1,13 @@
+<script>
+  document.addEventListener("astro:page-load", () => {
+    document.documentElement.dataset.theme =
+      localStorage.getItem("theme") ?? "art";
+
+    window.addEventListener("message", (e) => {
+      if (e.data.type === "THEME_CHANGE") {
+        document.documentElement.dataset.theme = e.data.theme;
+        localStorage.setItem("theme", e.data.theme);
+      }
+    });
+  });
+</script>

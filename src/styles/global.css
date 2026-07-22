@@ -1,17 +1,40 @@
 @import "tailwindcss";
 
+@custom-variant art (&:is([data-theme="art"] *));
+@custom-variant code (&:is([data-theme="code"] *));
+
 @theme inline {
   --font-sans: var(--font-dm-sans);
   --font-mono: var(--font-jetbrains-mono);
   --font-heading: var(--font-peaberry);
 
-  --color-background: #eeeeee;
-  --color-foreground: #111111;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+}
+
+[data-theme="art"] {
+  --background: #eeeeee;
+  --foreground: #111111;
+  --accent: #487f58;
+  --accent-foreground: #eeeeee;
+}
+
+[data-theme="code"] {
+  --background: #111111;
+  --foreground: #eeeeee;
+  --accent: #27452f;
+  --accent-foreground: #eeeeee;
 }
 
 @layer base {
   html,
   body {
-    @apply bg-background text-foreground h-full;
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 }
