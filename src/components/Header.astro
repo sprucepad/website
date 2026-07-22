@@ -1,1 +1,141 @@
-<header transition:name="header" transition:animate="fade">TODO</header>
+---
+import { createTranslate } from "@/lib/i18n";
+import Link from "./ui/Link.astro";
+import PixelArt from "./ui/PixelArt.astro";
+import pfp from "@content/assets/pfp.png";
+import MenuIcon from "@lucide/astro/icons/menu";
+import XIcon from "@lucide/astro/icons/x";
+
+const locale = Astro.currentLocale!;
+
+const table = {
+  pt: {
+    art: "Arte",
+    code: "Código",
+
+    about: "Sobre",
+    blog: "Blog",
+    gallery: "Galeria",
+    projects: "Projetos",
+    contact: "Contato",
+  },
+  en: {
+    art: "Art",
+    code: "Code",
+
+    about: "About",
+    blog: "Blog",
+    gallery: "Gallery",
+    projects: "Projects",
+    contact: "Contact",
+  },
+};
+const t = createTranslate(locale, table);
+
+const items = [
+  { label: t("about"), href: "/about" },
+  { label: t("blog"), href: "/blog" },
+  { label: t("gallery"), href: "/art" },
+  { label: t("projects"), href: "/projects" },
+  { label: t("contact"), href: "/contact" },
+];
+---
+
+<header
+  transition:name="header"
+  transition:animate="fade"
+  id="header"
+  class="fixed top-2 left-2 z-50 grid h-16 w-[calc(100%-1rem)] place-content-center"
+>
+  <div
+    class="relative grid w-xl max-w-[90vw] grid-cols-3 place-content-center bg-background p-2 art:rounded-lg art:border-2 art:shadow-neobrutal code:border"
+  >
+    <Link
+      href="/"
+      class="flex items-center gap-1 font-heading text-2xl font-black"
+    >
+      <PixelArt src={pfp} width={48} height={48} alt="" />
+      <span class="hidden sm:block">sprucepad</span>
+    </Link>
+
+    <div
+      id="tabs"
+      transition:persist="tabs"
+      class="relative mx-auto flex w-fit gap-1 rounded-full bg-foreground p-1 text-background"
+    >
+      <button
+        class="art cursor-pointer rounded-full p-1 transition-colors data-selected:bg-background data-selected:text-foreground"
+        data-selected
+      >
+        {t("art")}
+      </button>
+      <button
+        class="code cursor-pointer rounded-full p-1 transition-colors data-selected:bg-background data-selected:text-foreground"
+      >
+        {t("code")}
+      </button>
+    </div>
+
+    <button class="toggle group peer ml-auto cursor-pointer">
+      <MenuIcon class="group-data-open:hidden" />
+      <XIcon class="hidden group-data-open:block" />
+    </button>
+
+    <nav
+      class="absolute top-20 w-full translate-y-[-100svh] transform bg-background p-2 transition-transform peer-data-open:translate-y-0 art:rounded-lg art:border-2 art:shadow-neobrutal code:border"
+    >
+      <ul>
+        {
+          items.map((item) => {
+            const unlocalizedPathname =
+              "/" + Astro.url.pathname.split("/").slice(2).join("/");
+            const selected = unlocalizedPathname.startsWith(item.href);
+
+            return (
+              <li>
+                <Link
+                  href={item.href}
+                  class="block border-foreground p-2 text-end transition-colors hover:bg-accent hover:text-accent-foreground data-selected:bg-accent data-selected:text-accent-foreground art:rounded-full data-selected:art:border-2 data-selected:code:border"
+                  data-selected={selected ? "true" : undefined}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  let theme = localStorage.getItem("theme") ?? "art";
+
+  const $tabs = document.getElementById("tabs");
+  const $artButton = $tabs?.querySelector<HTMLButtonElement>(".art");
+  const $codeButton = $tabs?.querySelector<HTMLButtonElement>(".code");
+
+  if (theme === "code") {
+    $artButton?.toggleAttribute("data-selected");
+    $codeButton?.toggleAttribute("data-selected");
+  }
+
+  $tabs?.addEventListener("click", () => {
+    $artButton?.toggleAttribute("data-selected");
+    $codeButton?.toggleAttribute("data-selected");
+
+    theme = theme === "art" ? "code" : "art";
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("theme", theme);
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    const $header = document.getElementById("header");
+    const $toggleButton = $header?.querySelector<HTMLButtonElement>(".toggle");
+
+    $toggleButton?.addEventListener("click", () => {
+      $toggleButton.toggleAttribute("data-open");
+    });
+  });
+</script>

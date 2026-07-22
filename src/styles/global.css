@@ -12,6 +12,8 @@
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
+  --shadow-neobrutal: 0.5rem 0.5rem 0 var(--foreground);
 }
 
 [data-theme="art"] {
