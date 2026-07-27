@@ -1,1 +1,81 @@
-<footer transition:name="footer" transition:animate="slide">TODO</footer>
+---
+import { createTranslate } from "@/lib/i18n";
+import Link from "@/components/ui/Link.astro";
+
+const locale = Astro.currentLocale!;
+
+const table = {
+  pt: {
+    licenses: "Sob três licenças diferentes:",
+    mit: "Código: MIT License",
+    ofl: "Fontes: SIL Open Font License 1.1",
+    allRightsReserved:
+      "Conteúdo (artigos, arte, ilustrações, áudio, etc.): Todos os direitos reservados",
+  },
+  en: {
+    licenses: "Under three different licenses:",
+    mit: "Code: MIT License",
+    ofl: "Fonts: SIL Open Font License 1.1",
+    allRightsReserved:
+      "Content (articles, art, illustrations, audio, etc.): All rights reserved",
+  },
+};
+const t = createTranslate(locale, table);
+---
+
+<footer
+  class="mx-auto w-fit space-y-4 p-4 opacity-50"
+  transition:name="footer"
+  transition:animate="slide"
+>
+  <select id="languageSwitcher" class="mx-auto block">
+    <option value="pt" selected={locale === "pt"}>Português</option>
+    <option value="en" selected={locale === "en"}>English</option>
+  </select>
+
+  <p class="text-center">
+    Copyright &copy; 2025-{new Date().getFullYear()} sprucepad. {t("licenses")}
+  </p>
+
+  <ul class="list-disc px-4">
+    <li>
+      <Link
+        class="hover:underline"
+        href="https://github.com/sprucepad/website/blob/main/LICENSE"
+      >
+        {t("mit")}
+      </Link>
+    </li>
+    <li>
+      <Link
+        class="hover:underline"
+        href="https://github.com/sprucepad/website/blob/main/content/fonts/OFL.md"
+      >
+        {t("ofl")}
+      </Link>
+    </li>
+    <li>
+      <Link
+        class="hover:underline"
+        href="https://github.com/sprucepad/website/blob/main/content/LICENSE.txt"
+      >
+        {t("allRightsReserved")}
+      </Link>
+    </li>
+  </ul>
+</footer>
+
+<script>
+  import { navigate } from "astro:transitions/client";
+
+  document.addEventListener("astro:page-load", () => {
+    const $languageSwitcher = document.getElementById("languageSwitcher");
+
+    $languageSwitcher?.addEventListener("change", () => {
+      const currentPathname = location.pathname.split("/").slice(2).join("/");
+      navigate(
+        `/${($languageSwitcher as HTMLSelectElement).value}/${currentPathname}`,
+      );
+    });
+  });
+</script>

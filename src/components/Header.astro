@@ -41,6 +41,8 @@ const items = [
 ];
 ---
 
+{/* TODO make header dockable and hideable */}
+
 <header
   transition:name="header"
   transition:animate="fade"
@@ -61,16 +63,16 @@ const items = [
     <div
       id="tabs"
       transition:persist="tabs"
-      class="relative mx-auto flex w-fit gap-1 rounded-full bg-foreground p-1 text-background"
+      class="relative m-auto flex h-fit w-fit gap-1 rounded-full bg-foreground p-1 text-background"
     >
       <button
-        class="art cursor-pointer rounded-full p-1 transition-colors data-selected:bg-background data-selected:text-foreground"
+        class="art cursor-pointer rounded-full p-1 text-sm transition-colors data-selected:bg-background data-selected:text-foreground"
         data-selected
       >
         {t("art")}
       </button>
       <button
-        class="code cursor-pointer rounded-full p-1 transition-colors data-selected:bg-background data-selected:text-foreground"
+        class="code cursor-pointer rounded-full p-1 text-sm transition-colors data-selected:bg-background data-selected:text-foreground"
       >
         {t("code")}
       </button>

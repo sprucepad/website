@@ -18,9 +18,9 @@ This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 https://openfontlicense.org
 
-### [DM Mono](https://fonts.google.com/specimen/DM+Mono)
+### [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono)
 
-Copyright 2020 The DM Mono Project Authors (https://www.github.com/googlefonts/dm-mono)
+Copyright 2020 The JetBrains Mono Project Authors (https://github.com/JetBrains/JetBrainsMono)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
