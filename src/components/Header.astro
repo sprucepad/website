@@ -62,7 +62,6 @@ const items = [
 
     <div
       id="tabs"
-      transition:persist="tabs"
       class="relative m-auto flex h-fit w-fit gap-1 rounded-full bg-foreground p-1 text-background"
     >
       <button
@@ -112,32 +111,31 @@ const items = [
 </header>
 
 <script>
-  let theme = localStorage.getItem("theme") ?? "art";
-
-  const $tabs = document.getElementById("tabs");
-  const $artButton = $tabs?.querySelector<HTMLButtonElement>(".art");
-  const $codeButton = $tabs?.querySelector<HTMLButtonElement>(".code");
-
-  if (theme === "code") {
-    $artButton?.toggleAttribute("data-selected");
-    $codeButton?.toggleAttribute("data-selected");
-  }
-
-  $tabs?.addEventListener("click", () => {
-    $artButton?.toggleAttribute("data-selected");
-    $codeButton?.toggleAttribute("data-selected");
-
-    theme = theme === "art" ? "code" : "art";
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem("theme", theme);
-  });
-
   document.addEventListener("astro:page-load", () => {
+    let theme = localStorage.getItem("theme") ?? "art";
     const $header = document.getElementById("header");
     const $toggleButton = $header?.querySelector<HTMLButtonElement>(".toggle");
 
     $toggleButton?.addEventListener("click", () => {
       $toggleButton.toggleAttribute("data-open");
+    });
+
+    const $tabs = document.getElementById("tabs");
+    const $artButton = $tabs?.querySelector<HTMLButtonElement>(".art");
+    const $codeButton = $tabs?.querySelector<HTMLButtonElement>(".code");
+
+    if (theme === "code") {
+      $artButton?.toggleAttribute("data-selected");
+      $codeButton?.toggleAttribute("data-selected");
+    }
+
+    $tabs?.addEventListener("click", () => {
+      $artButton?.toggleAttribute("data-selected");
+      $codeButton?.toggleAttribute("data-selected");
+
+      theme = theme === "art" ? "code" : "art";
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem("theme", theme);
     });
   });
 </script>

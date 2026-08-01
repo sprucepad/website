@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @custom-variant art (&:is([data-theme="art"] *));
 @custom-variant code (&:is([data-theme="code"] *));
