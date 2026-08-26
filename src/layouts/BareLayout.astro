@@ -1,6 +1,8 @@
 ---
 import "@/styles/global.css";
 import defaultBanner from "@content/assets/banner.png";
+import favicon from "@content/assets/favicon.png";
+
 import { getImage } from "astro:assets";
 import type { HTMLAttributes } from "astro/types";
 import { ClientRouter } from "astro:transitions";
@@ -28,7 +30,7 @@ const image = new URL(optimizedBanner.src, Astro.site);
 <html lang="en" transition:persist="root" transition:animate="none">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href={favicon.src} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
