@@ -1,141 +1,144 @@
 ---
-import { createTranslate } from "@/lib/i18n";
-import Link from "./ui/Link.astro";
-import PixelArt from "./ui/PixelArt.astro";
 import pfp from "@content/assets/pfp.png";
+import { cva, type VariantProps } from "class-variance-authority";
+import InfoIcon from "@lucide/astro/icons/info";
+import ContactIcon from "@lucide/astro/icons/contact";
+import RSSIcon from "@lucide/astro/icons/rss";
+import BrushIcon from "@lucide/astro/icons/brush";
+import HammerIcon from "@lucide/astro/icons/hammer";
+import MoonIcon from "@lucide/astro/icons/moon";
+import SunIcon from "@lucide/astro/icons/sun";
 import MenuIcon from "@lucide/astro/icons/menu";
 import XIcon from "@lucide/astro/icons/x";
 
-const locale = Astro.currentLocale!;
+import Link from "./ui/Link.astro";
+import PixelArt from "./ui/PixelArt.astro";
+import { createTranslate } from "@/lib/i18n";
 
 const table = {
   pt: {
-    art: "Arte",
-    code: "Código",
-
     about: "Sobre",
-    blog: "Blog",
-    gallery: "Galeria",
-    projects: "Projetos",
     contact: "Contato",
+    blog: "Blog",
+    art: "Arte",
+    projects: "Projetos",
   },
   en: {
-    art: "Art",
-    code: "Code",
-
     about: "About",
-    blog: "Blog",
-    gallery: "Gallery",
-    projects: "Projects",
     contact: "Contact",
+    blog: "Blog",
+    art: "Art",
+    projects: "Projects",
   },
 };
-const t = createTranslate(locale, table);
+const t = createTranslate(Astro.currentLocale, table);
 
-const items = [
-  { label: t("about"), href: "/about" },
-  { label: t("blog"), href: "/blog" },
-  { label: t("gallery"), href: "/art" },
-  { label: t("projects"), href: "/projects" },
-  { label: t("contact"), href: "/contact" },
+const headerVariants = cva(
+  "group inset-2 z-50 flex grid h-fit w-[calc(100%-1rem)] grid-cols-2 place-content-center p-2 px-4 before:absolute before:inset-0 before:-z-50 before:rounded-lg before:bg-header before:backdrop-blur-lg before:content-[''] md:grid-cols-3",
+  {
+    variants: {
+      variant: {
+        fixed: "fixed",
+        sticky: "sticky",
+      },
+    },
+    defaultVariants: {
+      variant: "fixed",
+    },
+  },
+);
+
+type Props = VariantProps<typeof headerVariants>;
+const { variant } = Astro.props;
+
+const links = [
+  { label: t("about"), href: "/", Icon: InfoIcon },
+  { label: t("contact"), href: "/contact", Icon: ContactIcon },
+  { label: t("blog"), href: "/blog", Icon: RSSIcon },
+  { label: t("art"), href: "/art", Icon: BrushIcon },
+  { label: t("projects"), href: "/projects", Icon: HammerIcon },
 ];
 ---
 
-{/* TODO make header dockable and hideable */}
-
 <header
+  class={headerVariants({ variant })}
+  id="header"
   transition:name="header"
   transition:animate="fade"
-  id="header"
-  class="fixed top-2 left-2 z-50 grid h-16 w-[calc(100%-1rem)] place-content-center"
 >
-  <div
-    class="relative grid w-xl max-w-[90vw] grid-cols-3 place-content-center bg-background p-2 art:rounded-lg art:border-2 art:shadow-neobrutal code:border"
-  >
+  <div>
     <Link
       href="/"
-      class="flex items-center gap-1 font-heading text-2xl font-black"
+      class="flex w-fit items-center font-heading text-2xl font-black"
     >
       <PixelArt src={pfp} width={48} height={48} alt="" />
-      <span class="hidden sm:block">sprucepad</span>
+      sprucepad
     </Link>
+  </div>
 
-    <div
-      id="tabs"
-      class="relative m-auto flex h-fit w-fit gap-1 rounded-full bg-foreground p-1 text-background"
-    >
-      <button
-        class="art cursor-pointer rounded-full p-1 text-sm transition-colors data-selected:bg-background data-selected:text-foreground"
-        data-selected
-      >
-        {t("art")}
-      </button>
-      <button
-        class="code cursor-pointer rounded-full p-1 text-sm transition-colors data-selected:bg-background data-selected:text-foreground"
-      >
-        {t("code")}
-      </button>
-    </div>
+  <nav
+    class="fixed top-20 right-2 flex translate-x-full transform items-center rounded-lg bg-header p-2 backdrop-blur-lg transition-transform group-data-open:translate-x-0 md:static md:translate-x-0 md:bg-transparent md:p-0 md:backdrop-blur-none"
+    transition:animate="fade"
+  >
+    <ul class="flex flex-col md:flex-row">
+      {
+        links.map((link) => {
+          const pathname = Astro.url.pathname.replace(
+            `${Astro.currentLocale}/`,
+            "",
+          );
+          const isSelected =
+            link.href === "/"
+              ? pathname === link.href
+              : pathname.startsWith(link.href);
+          return (
+            <li
+              class="block w-full rounded-lg p-2 hover:underline data-selected:bg-accent data-selected:text-accent-foreground"
+              data-selected={isSelected ? true : undefined}
+            >
+              <Link href={link.href} class="flex w-full gap-1">
+                <link.Icon /> {link.label}
+              </Link>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </nav>
 
-    <button class="toggle group peer ml-auto cursor-pointer">
+  <div class="flex items-center justify-end gap-2">
+    <div id="headerToggle" class="md:hidden">
       <MenuIcon class="group-data-open:hidden" />
       <XIcon class="hidden group-data-open:block" />
-    </button>
-
-    <nav
-      class="absolute top-20 w-full translate-y-[-100svh] transform bg-background p-2 transition-transform peer-data-open:translate-y-0 art:rounded-lg art:border-2 art:shadow-neobrutal code:border"
-    >
-      <ul>
-        {
-          items.map((item) => {
-            const unlocalizedPathname =
-              "/" + Astro.url.pathname.split("/").slice(2).join("/");
-            const selected = unlocalizedPathname.startsWith(item.href);
-
-            return (
-              <li>
-                <Link
-                  href={item.href}
-                  class="block border-foreground p-2 text-end transition-colors hover:bg-accent hover:text-accent-foreground data-selected:bg-accent data-selected:text-accent-foreground art:rounded-full data-selected:art:border-2 data-selected:code:border"
-                  data-selected={selected ? "true" : undefined}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </nav>
+    </div>
+    <div id="theme" class="cursor-pointer">
+      <MoonIcon class="dark:hidden" />
+      <SunIcon class="hidden dark:block" />
+    </div>
   </div>
 </header>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
-    let theme = localStorage.getItem("theme") ?? "art";
-    const $header = document.getElementById("header");
-    const $toggleButton = $header?.querySelector<HTMLButtonElement>(".toggle");
+  let theme =
+    localStorage.getItem("theme") ??
+    (window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light");
 
-    $toggleButton?.addEventListener("click", () => {
-      $toggleButton.toggleAttribute("data-open");
+  document.addEventListener("astro:page-load", () => {
+    document.documentElement.dataset.theme = theme;
+
+    const $theme = document.getElementById("theme");
+    $theme?.addEventListener("click", () => {
+      theme = theme === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", theme);
+      document.documentElement.dataset.theme = theme;
     });
 
-    const $tabs = document.getElementById("tabs");
-    const $artButton = $tabs?.querySelector<HTMLButtonElement>(".art");
-    const $codeButton = $tabs?.querySelector<HTMLButtonElement>(".code");
-
-    if (theme === "code") {
-      $artButton?.toggleAttribute("data-selected");
-      $codeButton?.toggleAttribute("data-selected");
-    }
-
-    $tabs?.addEventListener("click", () => {
-      $artButton?.toggleAttribute("data-selected");
-      $codeButton?.toggleAttribute("data-selected");
-
-      theme = theme === "art" ? "code" : "art";
-      document.documentElement.dataset.theme = theme;
-      localStorage.setItem("theme", theme);
+    const $header = document.getElementById("header");
+    const $headerToggle = document.getElementById("headerToggle");
+    $headerToggle?.addEventListener("click", () => {
+      $header?.toggleAttribute("data-open");
     });
   });
 </script>

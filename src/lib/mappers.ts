@@ -15,9 +15,7 @@ export function album(
     }));
 }
 
-export function card(): (
-  a: CollectionEntry<"artPosts" | "codePosts" | "projects">,
-) => Card {
+export function card(): (a: CollectionEntry<"posts" | "projects">) => Card {
   return (c) => ({
     id: c.id,
     title: c.data.title,

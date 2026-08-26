@@ -1,11 +1,22 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import BareLayout from "@/layouts/BareLayout.astro";
+import { Content } from "./_about.md";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
 ---
 
-<Layout
+<BareLayout
   title="site do sprucepad"
   desc="Meu site pessoal, mostrando meus projetos e minha arte."
-  class="grid min-h-svh place-content-center p-4"
 >
-  <h1 class="font-heading text-4xl font-black">Olá, Mundo!</h1>
-</Layout>
+  <main transition:name="main" transition:animate="slide">
+    <Header variant="sticky" />
+    <article
+      class="mx-auto prose prose-zinc dark:prose-invert prose-headings:font-heading"
+    >
+      <Content />
+    </article>
+  </main>
+
+  <Footer includeCopyrightNotice={false} />
+</BareLayout>

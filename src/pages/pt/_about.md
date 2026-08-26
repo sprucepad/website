@@ -1,9 +1,3 @@
----
-layout: "@/layouts/MarkdownLayout.astro"
-title: sobre mim | sprucepad
-desc: Um pouco sobre mim.
----
-
 # Sobre Mim
 
 Hello! Eu sou Forrest, um programador e artista vindo do Brasil. Eu crio vários tipos de coisas, de desenhos pixelados, a aplicativos, a compiladores.

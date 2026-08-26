@@ -1,26 +1,24 @@
 ---
 import { createTranslate } from "@/lib/i18n";
-import Link from "@/components/ui/Link.astro";
+import Link from "./ui/Link.astro";
 
 const locale = Astro.currentLocale!;
 
 const table = {
   pt: {
-    licenses: "Sob três licenças diferentes:",
-    mit: "Código: MIT License",
-    ofl: "Fontes: SIL Open Font License 1.1",
-    allRightsReserved:
-      "Conteúdo (artigos, arte, ilustrações, áudio, etc.): Todos os direitos reservados",
+    licenses: "Verifique as licenças.",
   },
   en: {
-    licenses: "Under three different licenses:",
-    mit: "Code: MIT License",
-    ofl: "Fonts: SIL Open Font License 1.1",
-    allRightsReserved:
-      "Content (articles, art, illustrations, audio, etc.): All rights reserved",
+    licenses: "Check licensing.",
   },
 };
 const t = createTranslate(locale, table);
+
+interface Props {
+  includeCopyrightNotice?: boolean;
+}
+
+const { includeCopyrightNotice = true } = Astro.props;
 ---
 
 <footer
@@ -33,36 +31,16 @@ const t = createTranslate(locale, table);
     <option value="en" selected={locale === "en"}>English</option>
   </select>
 
-  <p class="text-center">
-    Copyright &copy; 2025-{new Date().getFullYear()} sprucepad. {t("licenses")}
-  </p>
-
-  <ul class="list-disc px-4">
-    <li>
-      <Link
-        class="hover:underline"
-        href="https://github.com/sprucepad/website/blob/main/LICENSE"
-      >
-        {t("mit")}
-      </Link>
-    </li>
-    <li>
-      <Link
-        class="hover:underline"
-        href="https://github.com/sprucepad/website/blob/main/content/fonts/OFL.md"
-      >
-        {t("ofl")}
-      </Link>
-    </li>
-    <li>
-      <Link
-        class="hover:underline"
-        href="https://github.com/sprucepad/website/blob/main/content/LICENSE.txt"
-      >
-        {t("allRightsReserved")}
-      </Link>
-    </li>
-  </ul>
+  {
+    includeCopyrightNotice && (
+      <p class="text-center">
+        Copyright &copy; 2025-{new Date().getFullYear()} sprucepad.{" "}
+        <Link class="underline" href="/licensing">
+          {t("licenses")}
+        </Link>
+      </p>
+    )
+  }
 </footer>
 
 <script>
