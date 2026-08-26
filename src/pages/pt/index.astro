@@ -1,8 +1,14 @@
 ---
+import trio from "@content/assets/trio.png";
+import trioBanner from "@content/assets/trio.banner.png";
+import pfp from "@content/assets/pfp.png";
+import MouseIcon from "@lucide/astro/icons/mouse";
+
 import BareLayout from "@/layouts/BareLayout.astro";
 import { Content } from "./_about.md";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import PixelArt from "@/components/ui/PixelArt.astro";
 ---
 
 <BareLayout
@@ -10,6 +16,39 @@ import Footer from "@/components/Footer.astro";
   desc="Meu site pessoal, mostrando meus projetos e minha arte."
 >
   <main transition:name="main" transition:animate="slide">
+    <section
+      class="flex h-svh flex-col-reverse bg-white p-4 text-black lg:flex-row"
+    >
+      <div class="flex flex-1 justify-center">
+        <PixelArt
+          src={trio}
+          alt="Três personagens animais fazendo poses."
+          class="hidden h-full w-fit object-contain lg:block"
+        />
+        <PixelArt
+          src={trioBanner}
+          loading="lazy"
+          alt="Três personagens animais fazendo poses."
+          class="block h-full w-fit object-contain lg:hidden"
+        />
+      </div>
+      <div
+        class="flex flex-1 flex-col items-center justify-center gap-4 lg:items-start"
+      >
+        <h1
+          class="flex flex-wrap items-center font-heading text-6xl font-black"
+        >
+          <PixelArt src={pfp} alt="" class="mx-auto" />
+          sprucepad
+        </h1>
+        <p class="font-heading text-4xl font-black">Coisas do Forrest</p>
+
+        <p class="flex animate-bounce gap-1 opacity-50">
+          <MouseIcon /> Deslize para baixo!
+        </p>
+      </div>
+    </section>
+
     <Header variant="sticky" />
     <article
       class="mx-auto prose prose-zinc dark:prose-invert prose-headings:font-heading"

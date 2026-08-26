@@ -34,12 +34,12 @@ const table = {
 const t = createTranslate(Astro.currentLocale, table);
 
 const headerVariants = cva(
-  "group inset-2 z-50 flex grid h-fit w-[calc(100%-1rem)] grid-cols-2 place-content-center p-2 px-4 before:absolute before:inset-0 before:-z-50 before:rounded-lg before:bg-header before:backdrop-blur-lg before:content-[''] md:grid-cols-3",
+  "group top-2 left-2 z-50 flex grid h-fit w-[calc(100%-1rem)] grid-cols-2 place-content-center p-2 px-4 before:absolute before:inset-0 before:-z-50 before:rounded-lg before:bg-background/75 before:backdrop-blur-lg before:content-[''] md:grid-cols-3",
   {
     variants: {
       variant: {
         fixed: "fixed",
-        sticky: "sticky",
+        sticky: "sticky mb-4",
       },
     },
     defaultVariants: {
@@ -77,7 +77,7 @@ const links = [
   </div>
 
   <nav
-    class="fixed top-20 right-2 flex translate-x-full transform items-center rounded-lg bg-header p-2 backdrop-blur-lg transition-transform group-data-open:translate-x-0 md:static md:translate-x-0 md:bg-transparent md:p-0 md:backdrop-blur-none"
+    class="fixed top-20 right-2 flex translate-x-[calc(100%+1rem)] transform items-center rounded-lg bg-background/75 p-2 backdrop-blur-lg transition-transform group-data-open:translate-x-0 md:static md:translate-x-0 md:bg-transparent md:p-0 md:backdrop-blur-none"
     transition:animate="fade"
   >
     <ul class="flex flex-col md:flex-row">

@@ -3,16 +3,22 @@ import type { HTMLAttributes } from "astro/types";
 import BareLayout, { type LayoutProps } from "./BareLayout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import { cn } from "@/lib/utils";
 
 interface Props
   extends LayoutProps, Omit<HTMLAttributes<"main">, keyof LayoutProps> {}
 
-const { title, desc, banner, ...rest } = Astro.props;
+const { title, desc, banner, class: className, ...rest } = Astro.props;
 ---
 
 <BareLayout title={title} desc={desc} banner={banner}>
   <Header />
-  <main {...rest}>
+  <main
+    transition:name="main"
+    transition:animate="slide"
+    class={cn("p-4", className)}
+    {...rest}
+  >
     <slot />
   </main>
   <Footer />

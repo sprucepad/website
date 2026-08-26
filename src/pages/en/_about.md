@@ -1,9 +1,3 @@
----
-layout: "@/layouts/MarkdownLayout.astro"
-title: about me | sprucepad
-desc: A little about me.
----
-
 # About Me
 
 Olá! I'm Forrest, a programmer and artist coming from Brazil. I create all types of things, from pixel drawings, to applications, to compilers.

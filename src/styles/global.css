@@ -15,8 +15,6 @@
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
 
-  --color-header: var(--header);
-
   --shadow-neobrutal: 0.3rem 0.3rem 0 var(--foreground);
   --shadow-neobrutal-sm: 0.1rem 0.1rem 0 var(--foreground);
 }
@@ -28,8 +26,6 @@
   --accent-foreground: #111111;
   --secondary: #487f58;
   --secondary-foreground: #eeeeee;
-
-  --header: #ffffff80;
 }
 
 [data-theme="dark"] {
@@ -39,8 +35,6 @@
   --accent-foreground: #111111;
   --secondary: #487f58;
   --secondary-foreground: #eeeeee;
-
-  --header: #00000080;
 }
 
 @layer base {
@@ -52,4 +46,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@utility pixel-art {
+  image-rendering: pixelated;
 }
