@@ -34,6 +34,7 @@ const gallery = defineCollection({
       images: z.array(
         z.object({
           img: image(),
+          isCover: z.boolean().default(false),
           alt: z.record(z.string(), z.string()),
           license: z.string().default("All Rights Reserved"),
         }),

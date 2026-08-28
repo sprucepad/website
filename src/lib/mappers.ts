@@ -1,39 +1,59 @@
-import type { Image } from "@/components/Gallery.svelte";
-import type { CollectionEntry } from "./custom-collection";
-import type { Card, Topic } from "@/components/Cards.svelte";
+import type { Album } from "@/components/Gallery.svelte";
+import { getEntry, type CollectionEntry } from "astro:content";
+import type { Card } from "@/components/Cards.svelte";
+import { getImage } from "astro:assets";
+
+export interface ProcessedImage {
+  src: string;
+  width?: number;
+  height?: number;
+}
+
+export interface ProcessedWithAlt {
+  img: ProcessedImage;
+  alt: string;
+}
 
 export function album(
   locale: string,
-): (a: CollectionEntry<"gallery">) => Image[] {
-  return (a) =>
-    a.data.images.map((i) => ({
-      album: a.data.title[locale],
-      albumId: a.id,
-      src: i.img.src,
-      alt: i.alt[locale],
-      license: i.license,
-    }));
+): (a: CollectionEntry<"gallery">) => Promise<Album> {
+  return async (a) => ({
+    title: a.data.title[locale],
+    cover: a.data.images.findIndex((image) => image.isCover),
+    images: await Promise.all(
+      a.data.images.map(async (image): Promise<ProcessedWithAlt> => ({
+        alt: image.alt[locale],
+        img: await processImage(image.img),
+      })),
+    ),
+  });
 }
 
-export function card(): (a: CollectionEntry<"posts" | "projects">) => Card {
-  return (c) => ({
+export function card(
+  locale: string,
+): (a: CollectionEntry<"posts" | "projects">) => Promise<Card> {
+  return async (c) => ({
     id: c.id,
     title: c.data.title,
     desc: c.data.desc,
-    topics: c.data.topics.map((t) => t.id),
-    image: c.image
-      ? {
-          src: c.image.src,
-          width: c.image.options.width!,
-          height: c.image.options.height!,
-        }
-      : null,
+    topics: await Promise.all(
+      c.data.topics.map(async (t) => {
+        const topic = await getEntry(t.collection, t.id)!;
+        return {
+          id: topic.id,
+          name: topic.data.translations[locale],
+        };
+      }),
+    ),
+    image: c.data.image ? await processImage(c.data.image) : null,
   });
 }
 
-export function topic(locale: string): (t: CollectionEntry<"topics">) => Topic {
-  return (t) => ({
-    id: t.id,
-    name: t.data.translations[locale],
-  });
+async function processImage(image: ImageMetadata): Promise<ProcessedImage> {
+  const result = await getImage({ src: image });
+  return {
+    src: result.src,
+    width: result.options.width,
+    height: result.options.height,
+  };
 }

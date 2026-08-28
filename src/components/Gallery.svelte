@@ -1,19 +1,15 @@
-<script lang="ts">
-  export interface Image {
-    album: string;
-    albumId: string;
-    src: string;
-    alt: string;
-    license: string;
+<script module lang="ts">
+  import type { ProcessedWithAlt } from "@/lib/mappers";
+
+  export interface Album {
+    title: string;
+    cover: number;
+    images: ProcessedWithAlt[];
   }
 
   interface Props {
-    images: Image[];
-    placeholder: string;
-    empty: string;
+    albums: Album[];
   }
-
-  let _props: Props = $props();
 </script>
 
 <div>TODO</div>

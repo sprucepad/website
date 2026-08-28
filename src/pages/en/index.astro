@@ -9,6 +9,34 @@ import { Content } from "./_about.md";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import PixelArt from "@/components/ui/PixelArt.astro";
+import { getCollection } from "astro:content";
+import { album } from "@/lib/mappers";
+import Album from "@/components/Album.svelte";
+import { card } from "@/lib/mappers";
+import Cards from "@/components/Cards.svelte";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Link from "@/components/ui/Link.astro";
+import CopyrightNotice from "@/components/CopyrightNotice.astro";
+
+const locale = Astro.currentLocale!;
+
+const albumMapper = album(locale);
+const sketchbook = await getCollection(
+  "gallery",
+  ({ id }) => id === "sketchbook",
+).then(async (col) => {
+  const albums = await Promise.all(col.map(albumMapper));
+  const pad = albums[0]!;
+  return { ...pad, images: pad.images.slice(0, 3) };
+});
+
+const cardMapper = card(locale);
+const posts = await getCollection("posts").then((col) =>
+  Promise.all(col.map(cardMapper)),
+);
+const projects = await getCollection("projects").then((col) =>
+  Promise.all(col.map(cardMapper)),
+);
 ---
 
 <BareLayout
@@ -47,14 +75,65 @@ import PixelArt from "@/components/ui/PixelArt.astro";
           <MouseIcon /> Scroll down!
         </p>
       </div>
+
+      <div class="absolute right-4 bottom-4 p-4">
+        <CopyrightNotice />
+      </div>
     </section>
 
     <Header variant="sticky" />
     <article
-      class="mx-auto prose prose-zinc dark:prose-invert prose-headings:font-heading"
+      class="mx-auto prose p-4 prose-zinc dark:prose-invert prose-headings:font-heading"
     >
       <Content />
     </article>
+
+    <section class="space-y-4 p-16">
+      <h1 class="font-heading text-4xl font-black">Sketches</h1>
+
+      <div>
+        <Album
+          album={sketchbook}
+          empty="This isn't everything!"
+          placeholder="Search sketches..."
+          client:load
+        />
+      </div>
+
+      <Link class="underline" href="/gallery/sketchbook">More sketches...</Link>
+    </section>
+
+    <section class="space-y-4 p-16">
+      <h1 class="font-heading text-4xl font-black">Posts</h1>
+
+      <div>
+        <Cards
+          cards={posts.slice(0, 3)}
+          href={getRelativeLocaleUrl(locale, "/posts")}
+          empty="This isn't everything!"
+          placeholder="Search posts..."
+          client:load
+        />
+      </div>
+
+      <Link class="underline" href="/posts">More posts...</Link>
+    </section>
+
+    <section class="space-y-4 p-16">
+      <h1 class="font-heading text-4xl font-black">Projetos</h1>
+
+      <div>
+        <Cards
+          cards={projects.slice(0, 3)}
+          href={getRelativeLocaleUrl(locale, "/projects")}
+          empty="This isn't everything!"
+          placeholder="Pesquisar projetos..."
+          client:load
+        />
+      </div>
+
+      <Link class="underline" href="/projects">More projects...</Link>
+    </section>
   </main>
 
   <Footer includeCopyrightNotice={false} />

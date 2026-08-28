@@ -1,4 +1,6 @@
-<script lang="ts">
+<script module lang="ts">
+  import type { ProcessedImage } from "@/lib/mappers";
+
   export interface Topic {
     id: string;
     name: string;
@@ -8,22 +10,19 @@
     id: string;
     title: string;
     desc: string;
-    topics: string[];
-    image: {
-      src: string;
-      width: number;
-      height: number;
-    } | null;
+    topics: Topic[];
+    image: ProcessedImage | null;
   }
 
   interface Props {
     cards: Card[];
-    topics: Topic[];
     href: string;
     placeholder: string;
     empty: string;
   }
+</script>
 
+<script lang="ts">
   let _props: Props = $props();
 </script>
 

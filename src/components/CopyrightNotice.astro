@@ -1,0 +1,19 @@
+---
+import Link from "@/components/ui/Link.astro";
+import { createTranslate } from "@/lib/i18n";
+
+const table = {
+  en: {
+    licensing: "Check licensing.",
+  },
+  pt: {
+    licensing: "Verifique o licenciamento.",
+  },
+};
+const t = createTranslate(Astro.currentLocale!, table);
+---
+
+<p class="text-center opacity-50">
+  Copyright &copy; 2025-{new Date().getFullYear()} sprucepad.{" "}
+  <Link class="underline" href="/licensing">{t("licensing")}</Link>
+</p>
