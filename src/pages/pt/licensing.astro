@@ -1,0 +1,71 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Link from "@/components/ui/Link.astro";
+---
+
+<Layout
+  title="licenciamento | sprucepad"
+  desc="Lista de licenças do site do sprucepad."
+  class="mx-auto max-w-prose space-y-8"
+>
+  <section class="space-y-4">
+    <h1 class="font-heading text-4xl font-black">
+      Todos os direitos reservados
+    </h1>
+    <p>
+      <strong
+        ><em
+          >Se aplica ao conteúdo do site, sendo posts, artigos, arte,
+          ilustrações, ou qualquer conteúdo criativo, salvo indicação ao
+          contrário.</em
+        ></strong
+      >
+    </p>
+
+    <ul class="list-disc px-8">
+      <li>Nada pode ser usado sem permissão ou sem atribuição.</li>
+      <li>
+        Nada pode ser usado para treinar modelos de inteligência artificial sem
+        permissão.
+      </li>
+    </ul>
+
+    <Link
+      href="https://raw.githubusercontent.com/sprucepad/website/refs/heads/main/content/LICENSE.txt"
+      class="underline"
+    >
+      Ver texto da licença
+    </Link>
+  </section>
+
+  <section class="space-y-4">
+    <h1 class="font-heading text-4xl font-black">Licença MIT</h1>
+    <p>
+      <strong
+        ><em
+          >Se aplica apenas ao código do site, ou tudo fora da pasta <code
+            >content/</code
+          > no repositório do site.</em
+        ></strong
+      >
+    </p>
+
+    <ul class="list-disc px-8">
+      <li>
+        Pode ser para uso comercial, pessoal, modificações ou uso privado.
+      </li>
+      <li>
+        Uma cópia da licença e um aviso de direitos autorais devem ser
+        incluídos.
+      </li>
+      <li>Sem garantia, e sem responsabilidade.</li>
+    </ul>
+
+    <Link
+      href="https://raw.githubusercontent.com/sprucepad/website/refs/heads/main/LICENSE"
+      class="underline"
+    >
+      Ver texto da licença
+    </Link>
+  </section>
+</Layout>

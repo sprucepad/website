@@ -1,0 +1,62 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Link from "@/components/ui/Link.astro";
+---
+
+<Layout
+  title="licensing | sprucepad"
+  desc="List of licenses from sprucepad's website."
+  class="mx-auto max-w-prose space-y-8"
+>
+  <section class="space-y-4">
+    <h1 class="font-heading text-4xl font-black">All rights reserved</h1>
+    <p>
+      <strong
+        ><em
+          >Applies to all website content, being posts, articles, arte,
+          illustrations, or any creative content, unless stated otherwise.</em
+        ></strong
+      >
+    </p>
+
+    <ul class="list-disc px-8">
+      <li>Nothing can be used without permission or proper attribution.</li>
+    </ul>
+
+    <Link
+      href="https://raw.githubusercontent.com/sprucepad/website/refs/heads/main/content/LICENSE.txt"
+      class="underline"
+    >
+      See license text
+    </Link>
+  </section>
+
+  <section class="space-y-4">
+    <h1 class="font-heading text-4xl font-black">MIT License</h1>
+    <p>
+      <strong
+        ><em
+          >Applies only to the code of the website, or everything not under the <code
+            >content/</code
+          > directory in the website's repository.</em
+        ></strong
+      >
+    </p>
+
+    <ul class="list-disc px-8">
+      <li>
+        Can be used for commercial, personal or private purposes, and can be
+        modified freely.
+      </li>
+      <li>A copy of the license and a copyright notice must be included.</li>
+      <li>No warranty, and no liability.</li>
+    </ul>
+
+    <Link
+      href="https://raw.githubusercontent.com/sprucepad/website/refs/heads/main/LICENSE"
+      class="underline"
+    >
+      See license text
+    </Link>
+  </section>
+</Layout>

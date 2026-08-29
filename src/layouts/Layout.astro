@@ -16,7 +16,7 @@ const { title, desc, banner, class: className, ...rest } = Astro.props;
   <main
     transition:name="main"
     transition:animate="slide"
-    class={cn("p-4", className)}
+    class={cn("p-4 pt-32", className)}
     {...rest}
   >
     <slot />
