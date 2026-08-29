@@ -12,4 +12,8 @@
   }
 </script>
 
+<script lang="ts">
+  let _props: Props = $props();
+</script>
+
 <div>TODO</div>

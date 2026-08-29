@@ -27,7 +27,7 @@ const optimizedBanner = await getImage({
 const image = new URL(optimizedBanner.src, Astro.site);
 ---
 
-<html lang="en" transition:persist="root" transition:animate="none">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href={favicon.src} />

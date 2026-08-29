@@ -46,6 +46,7 @@
     "prettier-plugin-svelte": "^4.1.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "rehype-external-links": "^3.0.0",
+    "svelte-eslint-parser": "^1.8.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.68.0"
   }

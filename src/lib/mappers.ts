@@ -23,7 +23,7 @@ export function album(
     images: await Promise.all(
       a.data.images.map(async (image): Promise<ProcessedWithAlt> => ({
         alt: image.alt[locale],
-        img: await processImage(image.img),
+        img: image.img,
       })),
     ),
   });
