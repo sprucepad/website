@@ -1,0 +1,8 @@
+title:
+  en: Sketchbook
+  pt: Caderno de esboços
+coverImages:
+  - id: covers/trio-cover
+    conditions: "(width >= 64rem)"
+  - id: covers/trio-banner-cover
+    conditions: "(width < 64rem)"

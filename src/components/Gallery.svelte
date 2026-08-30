@@ -3,7 +3,7 @@
 
   export interface Album {
     title: string;
-    cover: number;
+    covers: ProcessedWithAlt[];
     images: ProcessedWithAlt[];
   }
 

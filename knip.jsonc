@@ -2,15 +2,5 @@
   "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
   "tags": ["-lintignore"],
 
-  "entry": [
-    "content/posts/**/*",
-    "content/projects/**/*",
-    // Only used in Markdown files
-    "src/layouts/MarkdownLayout.astro",
-  ],
-  "ignoreDependencies": [
-    // Used by eslint-plugin-astro
-    "@typescript-eslint/parser",
-    "eslint-plugin-jsx-a11y",
-  ],
+  "entry": ["content/posts/**/*", "content/projects/**/*"],
 }

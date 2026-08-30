@@ -9,6 +9,21 @@ const topics = defineCollection({
   }),
 });
 
+const images = defineCollection({
+  loader: glob({
+    pattern: "**/*.{yml,yaml,json,toml}",
+    base: "./content/images",
+  }),
+  schema: ({ image }) =>
+    z.object({
+      file: image(),
+      altTexts: z.record(z.string(), z.string()),
+      albums: z.array(reference("albums")).default([]),
+      license: z.string().default("All Rights Reserved"),
+      optimize: z.boolean().default(true),
+    }),
+});
+
 const posts = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts" }),
   schema: ({ image }) =>
@@ -23,23 +38,20 @@ const posts = defineCollection({
     }),
 });
 
-const gallery = defineCollection({
+const albums = defineCollection({
   loader: glob({
     pattern: "**/*.{yml,yaml,json,toml}",
-    base: "./content/gallery",
+    base: "./content/albums",
   }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.record(z.string(), z.string()),
-      images: z.array(
-        z.object({
-          img: image(),
-          isCover: z.boolean().default(false),
-          alt: z.record(z.string(), z.string()),
-          license: z.string().default("All Rights Reserved"),
-        }),
-      ),
-    }),
+  schema: z.object({
+    title: z.record(z.string(), z.string()),
+    coverImages: z.array(
+      z.object({
+        id: reference("images"),
+        conditions: z.string().optional(),
+      }),
+    ),
+  }),
 });
 
 const projects = defineCollection({
@@ -59,4 +71,4 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { topics, posts, projects, gallery };
+export const collections = { topics, posts, projects, albums, images };

@@ -9,10 +9,10 @@ import { Content } from "./_about.md";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import PixelArt from "@/components/ui/PixelArt.astro";
-import { getCollection } from "astro:content";
-import { album } from "@/lib/mappers";
+import { getCollection, getEntry } from "astro:content";
+import { createAlbumMapper } from "@/lib/mappers";
 import Album from "@/components/Album.svelte";
-import { card } from "@/lib/mappers";
+import { createCardMapper } from "@/lib/mappers";
 import Cards from "@/components/Cards.svelte";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Link from "@/components/ui/Link.astro";
@@ -20,17 +20,10 @@ import CopyrightNotice from "@/components/CopyrightNotice.astro";
 
 const locale = Astro.currentLocale!;
 
-const albumMapper = album(locale);
-const sketchbook = await getCollection(
-  "gallery",
-  ({ id }) => id === "sketchbook",
-).then(async (col) => {
-  const albums = await Promise.all(col.map(albumMapper));
-  const pad = albums[0]!;
-  return { ...pad, images: pad.images.slice(0, 3) };
-});
+const albumMapper = createAlbumMapper(locale, 3);
+const sketchbook = await getEntry("albums", "sketchbook")!.then(albumMapper);
 
-const cardMapper = card(locale);
+const cardMapper = createCardMapper(locale);
 const posts = await getCollection("posts").then((col) =>
   Promise.all(col.map(cardMapper)),
 );
@@ -100,7 +93,9 @@ const projects = await getCollection("projects").then((col) =>
         />
       </div>
 
-      <Link class="underline" href="/gallery/sketchbook">More sketches...</Link>
+      <Link class="underline" href="/gallery/albums/sketchbook"
+        >More sketches...</Link
+      >
     </section>
 
     <section class="space-y-4 p-16">
