@@ -1,8 +1,8 @@
 title:
   en: Sketchbook
   pt: Caderno de esboços
+desc:
+  en: A sketchpad, where I draw anything.
+  pt: Um caderno de esboços, onde eu desenho qualquer coisa.
 coverImages:
-  - id: covers/trio-cover
-    conditions: "(width >= 64rem)"
-  - id: covers/trio-banner-cover
-    conditions: "(width < 64rem)"
+  - covers/trio-cover

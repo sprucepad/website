@@ -20,7 +20,10 @@ const images = defineCollection({
       altTexts: z.record(z.string(), z.string()),
       albums: z.array(reference("albums")).default([]),
       license: z.string().default("All Rights Reserved"),
-      optimize: z.boolean().default(true),
+      optimize: z.boolean().default(false),
+
+      createdAt: z.date().default(new Date(0)),
+      updatedAt: z.date().default(new Date(0)),
     }),
 });
 
@@ -32,8 +35,8 @@ const posts = defineCollection({
       desc: z.string(),
       image: image().optional(),
       topics: z.array(reference("topics")).default([]),
-      created: z.date(),
-      updated: z.date(),
+      createdAt: z.date(),
+      updatedAt: z.date(),
       license: z.string().default("All Rights Reserved"),
     }),
 });
@@ -45,12 +48,8 @@ const albums = defineCollection({
   }),
   schema: z.object({
     title: z.record(z.string(), z.string()),
-    coverImages: z.array(
-      z.object({
-        id: reference("images"),
-        conditions: z.string().optional(),
-      }),
-    ),
+    desc: z.record(z.string(), z.string()),
+    coverImages: z.array(reference("images")),
   }),
 });
 
@@ -62,8 +61,8 @@ const projects = defineCollection({
       desc: z.string(),
       image: image().optional(),
       topics: z.array(reference("topics")).default([]),
-      created: z.date(),
-      updated: z.date(),
+      createdAt: z.date(),
+      updatedAt: z.date(),
 
       license: z.string().default("All Rights Reserved"),
       github: z.string().optional(),

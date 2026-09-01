@@ -1,10 +1,11 @@
 <script module lang="ts">
-  import type { ProcessedWithAlt } from "@/lib/mappers";
+  import type { ProcessedWithData } from "@/lib/mappers";
 
   export interface Album {
     title: string;
-    covers: ProcessedWithAlt[];
-    images: ProcessedWithAlt[];
+    desc: string;
+    covers: ProcessedWithData[];
+    images: ProcessedWithData[];
   }
 
   interface Props {
