@@ -14,6 +14,7 @@ export interface ProcessedWithAlt {
   alt: string;
 }
 
+/** @lintignore TODO */
 export function createImageMapper(
   locale: string,
 ): (a: CollectionEntry<"images">) => Promise<ProcessedWithAlt> {

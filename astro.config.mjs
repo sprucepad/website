@@ -35,11 +35,13 @@ export default defineConfig({
       name: "DM Sans",
       cssVariable: "--font-dm-sans",
       provider: fontProviders.google(),
+      weights: ["400", "600", "900"],
     },
     {
       name: "JetBrains Mono",
       cssVariable: "--font-jetbrains-mono",
       provider: fontProviders.google(),
+      weights: ["400", "600", "900"],
     },
     {
       name: "Peaberry",
