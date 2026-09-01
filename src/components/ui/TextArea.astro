@@ -1,0 +1,32 @@
+---
+import { cn } from "@/lib/utils";
+import type { HTMLTag, Polymorphic } from "astro/types";
+import { cva, type VariantProps } from "class-variance-authority";
+
+const textareaStyles = cva(
+  "h-32 w-full transform p-2 transition-[box-shadow,translate] hover:translate-y-0.25",
+  {
+    variants: {
+      variant: {
+        standard:
+          "foxus:shadow-none rounded-lg border-2 border-foreground shadow-neobrutal hover:shadow-neobrutal-sm",
+      },
+    },
+    defaultVariants: {
+      variant: "standard",
+    },
+  },
+);
+
+type Props<T extends HTMLTag = "textarea"> = Polymorphic<{ as: T }> &
+  VariantProps<typeof textareaStyles>;
+
+const {
+  as: Tag = "textarea",
+  class: className,
+  variant,
+  ...rest
+} = Astro.props;
+---
+
+<Tag class={cn(textareaStyles({ variant }), className)} {...rest}><slot /></Tag>

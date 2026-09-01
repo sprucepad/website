@@ -4,12 +4,12 @@ import type { HTMLTag, Polymorphic } from "astro/types";
 import { cva, type VariantProps } from "class-variance-authority";
 
 export const buttonStyles = cva(
-  "w-full transform bg-accent p-2 text-center font-heading font-black text-accent-foreground uppercase transition-[box-shadow,translate] hover:translate-y-0.25 active:translate-y-0.5",
+  "w-full transform cursor-pointer p-2 text-center font-heading font-black uppercase transition-[box-shadow,translate] hover:translate-y-0.25 active:translate-y-0.5",
   {
     variants: {
       variant: {
         standard:
-          "rounded-lg border-2 border-foreground shadow-neobrutal hover:shadow-neobrutal-sm active:shadow-none",
+          "rounded-lg border-2 border-foreground bg-accent text-accent-foreground shadow-neobrutal hover:shadow-neobrutal-sm active:shadow-none",
       },
       size: {
         sm: "",
@@ -22,7 +22,7 @@ export const buttonStyles = cva(
   },
 );
 
-type Props<T extends HTMLTag> = Polymorphic<{ as: T }> &
+type Props<T extends HTMLTag = "button"> = Polymorphic<{ as: T }> &
   VariantProps<typeof buttonStyles>;
 
 const {
