@@ -20,12 +20,17 @@
       else {
         images = album.images.filter((image) => {
           for (const keyword of kw) {
-            if (image.alt.includes(keyword)) return true;
+            if (image.alt.toLowerCase().includes(keyword)) return true;
           }
 
           for (const [key, value] of kv) {
-            if (key === "license" && image.license.includes(value)) return true;
-            if (key === "alt" && image.alt.includes(value)) return true;
+            if (
+              key === "license" &&
+              image.license.toLowerCase().includes(value)
+            )
+              return true;
+            if (key === "alt" && image.alt.toLowerCase().includes(value))
+              return true;
           }
         });
       }

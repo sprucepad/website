@@ -37,6 +37,7 @@ export function createAlbumMapper(
     );
 
     return {
+      id: a.id,
       title: a.data.title[locale],
       desc: a.data.desc[locale],
       covers: await Promise.all(

@@ -50,6 +50,8 @@ const albums = defineCollection({
     title: z.record(z.string(), z.string()),
     desc: z.record(z.string(), z.string()),
     coverImages: z.array(reference("images")),
+    createdAt: z.date(),
+    updatedAt: z.date(),
   }),
 });
 
