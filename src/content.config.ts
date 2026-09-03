@@ -37,6 +37,8 @@ const posts = defineCollection({
       topics: z.array(reference("topics")).default([]),
       createdAt: z.date(),
       updatedAt: z.date(),
+
+      devlogFor: reference("projects"),
       license: z.string().default("All Rights Reserved"),
     }),
 });
@@ -66,7 +68,8 @@ const projects = defineCollection({
       createdAt: z.date(),
       updatedAt: z.date(),
 
-      license: z.string().default("All Rights Reserved"),
+      projectLicense: z.string().default("MIT"),
+      articleLicense: z.string().default("All Rights Reserved"),
       github: z.string().optional(),
       itchio: z.string().optional(),
     }),

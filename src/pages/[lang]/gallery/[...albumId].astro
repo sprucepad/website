@@ -3,7 +3,7 @@ import Album from "@/components/Album.svelte";
 import PixelArt from "@/components/ui/PixelArt.astro";
 import Layout from "@/layouts/Layout.astro";
 import { createTranslate } from "@/lib/i18n";
-import { createAlbumMapper } from "@/lib/mappers";
+import { createAlbumMapper } from "@/lib/collections";
 import type { GetStaticPaths } from "astro";
 import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
@@ -27,16 +27,20 @@ const coverImage = await getEntry("images", album.data.coverImages[0].id)!;
 const table = {
   en: {
     desc: `album page for ${album.data.title[locale]}`,
+    placeholder: "Search in album...",
+    empty: "Nothing here yet!",
   },
   pt: {
     desc: `página de álbum para ${album.data.title[locale]}`,
+    placeholder: "Pesquisar no álbum...",
+    empty: "Nada aqui ainda!",
   },
 };
 const t = createTranslate(locale, table);
 ---
 
 <Layout
-  title={processedAlbum.title}
+  title={`${processedAlbum.title} | sprucepad`}
   desc={t("desc")}
   class="flex min-h-full flex-col gap-4 pt-20 md:flex-row"
 >
@@ -56,8 +60,8 @@ const t = createTranslate(locale, table);
   <div class="max-h-[85svh] flex-1 overflow-scroll rounded-lg border-2">
     <Album
       album={processedAlbum}
-      placeholder="Pesquisar no álbum..."
-      empty="Nada aqui ainda!"
+      placeholder={t("placeholder")}
+      empty={t("empty")}
       client:load
     />
   </div>

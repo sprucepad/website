@@ -1,5 +1,5 @@
 <script module lang="ts">
-  import type { ProcessedImage } from "@/lib/mappers";
+  import type { ProcessedImage } from "@/lib/collections";
 
   export interface Topic {
     id: string;

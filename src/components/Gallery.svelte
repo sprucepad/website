@@ -1,5 +1,5 @@
 <script module lang="ts">
-  import type { ProcessedWithData } from "@/lib/mappers";
+  import type { ProcessedWithData } from "@/lib/collections";
   import SearchBox from "./SearchBox.svelte";
 
   export interface Album {

@@ -10,13 +10,14 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import PixelArt from "@/components/ui/PixelArt.astro";
 import { getCollection, getEntry } from "astro:content";
-import { createAlbumMapper, sort } from "@/lib/mappers";
+import { createAlbumMapper, sort } from "@/lib/collections";
 import Album from "@/components/Album.svelte";
-import { createCardMapper } from "@/lib/mappers";
+import { createCardMapper } from "@/lib/collections";
 import Cards from "@/components/Cards.svelte";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Link from "@/components/ui/Link.astro";
 import CopyrightNotice from "@/components/CopyrightNotice.astro";
+import Article from "@/components/ui/Article.astro";
 
 const locale = Astro.currentLocale!;
 
@@ -75,11 +76,10 @@ const projects = await getCollection("projects")
     </section>
 
     <Header variant="sticky" />
-    <article
-      class="mx-auto prose p-4 prose-zinc dark:prose-invert prose-headings:font-heading"
-    >
+
+    <Article>
       <Content />
-    </article>
+    </Article>
 
     <section class="space-y-4 p-16">
       <h1 class="font-heading text-4xl font-black">Sketches</h1>

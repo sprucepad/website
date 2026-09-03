@@ -79,6 +79,15 @@ export function createCardMapper(
   });
 }
 
+async function processImage(image: ImageMetadata): Promise<ProcessedImage> {
+  const result = await getImage({ src: image });
+  return {
+    src: result.src,
+    width: result.options.width,
+    height: result.options.height,
+  };
+}
+
 export function sort<T extends { data: { createdAt: Date; updatedAt: Date } }>(
   array: T[],
   by: "createdAt" | "updatedAt" = "createdAt",
@@ -92,11 +101,13 @@ export function sort<T extends { data: { createdAt: Date; updatedAt: Date } }>(
       );
 }
 
-async function processImage(image: ImageMetadata): Promise<ProcessedImage> {
-  const result = await getImage({ src: image });
-  return {
-    src: result.src,
-    width: result.options.width,
-    height: result.options.height,
-  };
+export function createDevlogFilter(
+  project: CollectionEntry<"projects">,
+): (a: CollectionEntry<"posts">) => boolean {
+  return (a) => unlocalize(a.data.devlogFor.id).id === project.id;
+}
+
+export function unlocalize(id: string) {
+  const [lang, ...rest] = id.split("/");
+  return { lang, id: rest.join("/") };
 }

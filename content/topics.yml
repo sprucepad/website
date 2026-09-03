@@ -1,3 +1,4 @@
+# Post topics
 - id: art
   translations:
     pt: Arte
@@ -6,3 +7,17 @@
   translations:
     pt: Código
     en: Code
+- id: devlog
+  translations:
+    pt: Devlogs
+    en: Devlogs
+
+# Project topics
+- id: typescript
+  translations:
+    pt: TypeScript
+    en: TypeScript
+- id: framework
+  translations:
+    pt: Framework
+    en: Framework
