@@ -18,7 +18,7 @@ _Now, in Java, I make libraries, as I started making apps in Rust and TypeScript
 
 #### C#
 
-My search for how to make bigger games led me to discovering Unity, my first game engine. I made [little](https://github.com/shiftfox/lumina) [games](<(https://github.com/shiftfox/twenty-rockets)>) _(the latter was even before I learned Git, but I created a repo for it recently)_ much more easily.
+My search for how to make bigger games led me to discovering Unity, my first game engine. I made [little](https://github.com/shiftfox/lumina) [games](https://github.com/shiftfox/twenty-rockets) _(the latter was even before I learned Git, but I created a repo for it recently)_ much more easily.
 
 _Now I don't really use C# that much, but I plan to use it again for larger Godot games or use Unity again. This is where I started making pixel art._
 
