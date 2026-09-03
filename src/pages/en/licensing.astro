@@ -1,0 +1,66 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Link from "@/components/ui/Link.astro";
+---
+
+<Layout
+  title="licensing | sprucepad"
+  desc="List of licenses from sprucepad's website."
+  class="mx-auto max-w-prose space-y-8"
+>
+  <section class="space-y-4">
+    <h1 class="font-heading text-4xl font-black">All rights reserved</h1>
+    <p>
+      <strong
+        ><em
+          >Applies to all website content, being posts, articles, arte,
+          illustrations, or any creative content, unless stated otherwise.</em
+        ></strong
+      >
+    </p>
+
+    <ul class="list-disc px-8">
+      <li>
+        Attribution for quotes is <strong>required</strong>, unless you have
+        permission.
+      </li>
+      <li>Artifical intelligence training is not allowed.</li>
+      <li>
+        You can ask for permission at <Link
+          class="underline"
+          href="mailto:sprucepadhq@gmail.com">sprucepadhq@gmail.com</Link
+        >.
+      </li>
+    </ul>
+
+    <Link
+      href="https://raw.githubusercontent.com/sprucepad/website/refs/heads/main/content/LICENSE.md"
+      class="underline"
+    >
+      See license text
+    </Link>
+  </section>
+
+  <section class="space-y-4">
+    <h1 class="font-heading text-4xl font-black">MIT License</h1>
+    <p>
+      <strong><em>Applies only to the code of the website.</em></strong>
+    </p>
+
+    <ul class="list-disc px-8">
+      <li>
+        Can be used for commercial, personal or private purposes, and can be
+        modified freely.
+      </li>
+      <li>A copy of the license and a copyright notice must be included.</li>
+      <li>No warranty, and no liability.</li>
+    </ul>
+
+    <Link
+      href="https://raw.githubusercontent.com/sprucepad/website/refs/heads/main/licenses/MIT.txt"
+      class="underline"
+    >
+      See license text
+    </Link>
+  </section>
+</Layout>

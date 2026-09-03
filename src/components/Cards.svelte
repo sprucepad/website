@@ -1,4 +1,7 @@
 <script module lang="ts">
+  import type { ProcessedImage } from "@/lib/collections";
+  import SearchBox from "./SearchBox.svelte";
+
   export interface Topic {
     id: string;
     name: string;
@@ -8,139 +11,71 @@
     id: string;
     title: string;
     desc: string;
-    topics: string[];
-    image: {
-      src: string;
-      width: number;
-      height: number;
-    } | null;
-  }
-</script>
-
-<script lang="ts">
-  import { cva, type VariantProps } from "class-variance-authority";
-  import SearchBox from "./SearchBox.svelte";
-
-  const cardStyles = cva("max-w-sm bg-background p-4", {
-    variants: {
-      variant: {
-        art: "rounded-lg neobrutal",
-        code: "border",
-      },
-    },
-  });
-
-  const topicStyles = cva("bg-accent p-1", {
-    variants: {
-      variant: {
-        art: "rounded-lg neobrutal",
-        code: "border-1",
-      },
-    },
-  });
-
-  interface Props extends VariantProps<typeof cardStyles> {
-    cards: Card[];
     topics: Topic[];
+    image: ProcessedImage | null;
+  }
+
+  interface Props {
+    cards: Card[];
     href: string;
     placeholder: string;
     empty: string;
   }
-
-  let {
-    cards: initCards,
-    topics: initTopics,
-    href,
-    empty,
-    placeholder,
-    variant,
-  }: Props = $props();
-  let cards = $state((() => initCards)());
 </script>
 
-<div class="space-y-4">
+<script lang="ts">
+  let { cards: initCards, href, placeholder, empty }: Props = $props();
+  let cards = $derived(initCards);
+</script>
+
+<div>
   <SearchBox
-    {variant}
     {placeholder}
-    filter={(kw, kv) => {
-      if (!kw.length && !kv.length) {
-        cards = initCards;
-        return;
-      }
+    filter={(kv, kw) => {
+      if (!kv.size && !kw.size) return (cards = initCards);
 
       cards = initCards.filter((card) => {
-        const topics = initTopics.filter((t) =>
-          card.topics.some((topic) => topic === t.id),
-        );
         for (const keyword of kw) {
           if (
             card.title.toLowerCase().includes(keyword) ||
-            card.desc.toLowerCase().includes(keyword) ||
-            topics.some(
-              (topic) =>
-                topic.name.toLowerCase().includes(keyword) ||
-                topic.id.toLowerCase().includes(keyword),
-            )
-          ) {
+            card.desc.toLowerCase().includes(keyword)
+          )
             return true;
-          }
         }
 
-        for (const [key, values] of kv) {
-          for (const value of values) {
-            switch (key) {
-              case "topic":
-                if (
-                  topics.some(
-                    (topic) =>
-                      topic.name.toLowerCase().includes(value) ||
-                      topic.id.toLowerCase().includes(value),
-                  )
-                )
-                  return true;
-                break;
-              case "id":
-                if (card.id.toLowerCase().includes(value)) return true;
-                break;
-              case "title":
-                if (card.title.toLowerCase().includes(value)) return true;
-                break;
-              case "desc":
-                if (card.desc.toLowerCase().includes(value)) return true;
-            }
-          }
+        for (const [key, value] of kv) {
+          if (
+            key === "topic" &&
+            card.topics.some((topic) =>
+              topic.name.toLowerCase().includes(value),
+            )
+          )
+            return true;
+          if (key === "title" && card.desc.toLowerCase().includes(value))
+            return true;
+          if (key === "desc" && card.desc.toLowerCase().includes(value))
+            return true;
+          if (key === "id" && card.id.toLowerCase().includes(value))
+            return true;
         }
       });
     }}
   />
 
-  <div class="flex flex-wrap gap-4">
+  <div class="mt-8 flex flex-wrap gap-4">
     {#each cards as card (card.id)}
-      <a
-        href={`${href.endsWith("/") ? href : href + "/"}${card.id}`}
-        class={cardStyles({ variant })}
-      >
+      <a href={`${href}${card.id}`} class="max-w-80 space-y-4">
         {#if card.image}
           <img
             src={card.image.src}
-            width={card.image.width}
-            height={card.image.height}
+            width={320}
+            height={156}
+            class="rounded-lg"
             alt=""
           />
         {/if}
-        <p class="font-heading text-2xl font-black">{card.title}</p>
-        <p class="mb-4">{card.desc}</p>
-
-        <div class="flex items-start gap-2">
-          {#each card.topics as topicId (topicId)}
-            {@const topic = initTopics.find((topic) => topic.id === topicId)}
-            {#if topic}
-              <div class={topicStyles({ variant })}>
-                {topic.name}
-              </div>
-            {/if}
-          {/each}
-        </div>
+        <h1 class="font-heading text-2xl font-black">{card.title}</h1>
+        <p>{card.desc}</p>
       </a>
     {:else}
       <p>{empty}</p>

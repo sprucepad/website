@@ -1,92 +1,52 @@
 ---
 title: Kineo
-desc: An extensible ORM for TypeScript.
-image: ../_images/kineo.jpg
-created: 2026-01-30
-updated: 2026-02-12
-github: sprucepad/kineo
-
+desc: An abstracted ORM focused on TypeScript.
 topics:
   - typescript
-  - compiler
   - database
+image: ../pt/kineo.jpg
+createdAt: 2025-07-28
+updatedAt: 2026-09-03
+github: sprucepad/kineo
 ---
 
-## Why?
+Kineo was created mostly as an experiment. At first, I wanted an OGM (Object-_Graph_ Mapper) -- something specific to Neo4j, and eventually tried expanding beyond that, leading to dropping Cypher entirely, as I no longer needed it -- SQL could do what I wanted, possibly even easier.
 
-Kineo exists because I couldn’t find an OGM (ORM for graph databases) for TypeScript that provides an experience on the level of Prisma/Drizzle. The ones I found either didn’t handle relationships very well, didn’t have native TypeScript support, or were hard to use.
-
-## Example
+Currently, you define a schema, and then a client, then queries/mutations:
 
 ```ts
-// 1. Define a schema.
-const schema = defineSchema({
-  // 2. Define models.
-  user: model("User", {
-    // 3. Define properties.
-    id: field.string().id(),
-    posts: relation.to("post").array().default([]),
-  }),
-  post: model("Post", {
-    id: field.string().id(),
-    author: relation.to("user").required(),
-  }),
-});
+// src/schema.ts
+import { model } from "kineo/schema";
 
-// 4. Create a client.
-const db = kineo(neo4jAdapter({ driver }), schema);
+export const user = model((s) => ({
+  id: s.int().id(),
+  username: s.string().unique(),
+  email: s.string().unique(),
+  password: s.string(),
+}))
+  .relate((s) => ({
+    posts: s.relation(post).many(),
+  }))
+  .index("username", "email");
 
-// 5. Use the database.
-await db.user.findFirst({
-  where: { id: "abc" },
-  select: {
-    id: true,
-    post: {
-      id: true,
-      author: true,
+// ...
+
+// src/client.ts
+import postgres from "kineo/adapters/postgres";
+import * as schema from "./schema";
+
+export const db = kineo(postgres(process.env.DB_URL!), schema);
+
+await db.users.delete({
+  where: {
+    username: {
+      startsWith: "ann",
+      not: { endsWith: "e" },
     },
   },
 });
 ```
 
-## Architecture
+Kineo then handles migrations and query compilation for you. Queries are written in a [Prisma](https://www.prisma.io/)-like syntax, as that's what I was most inspired by while making this project.
 
-- The **adapter** is what manages your database, transforming an intermediate representation into your database’s query language and executing it.
-- The **schema** is the definition of everything in your database. It is the source of all types.
-- The **client** is what transforms your schema into something usable by the adapter.
-
-The schema is defined using a DSL and builders, and calls are made using objects. I chose this API for familiarity for Prisma and Drizzle users.
-
-## Challenges
-
-I ran into two TypeScript limitations while building this project.
-
-1. I tried to make relationship definitions type-safe with this API:
-
-   ```ts
-   defineSchema((s) => {
-     user: s.model("User", {
-       id: s.string().id(),
-       posts: s.relation(s.post, "id"),
-     });
-   });
-   ```
-
-   However, TypeScript doesn’t handle circular references well (`s` depends on the function’s return type, and the function takes `s` as a parameter), making this practically impossible to implement with the column name string being auto-completed and validated.
-
-   At the same time, it’s still possible to use this API with the column name as just a plain string, without validation, but that leads to very hard-to-discover problems.
-
-2. I wanted users to be able to extend the base model. That’s not possible using classes, since the model is generic.
-
-   ```ts
-   export interface MyAdapter extends Adapter<typeof GraphModel> {
-     //                                              ^ loses generics, the model in the client becomes unchecked
-   }
-   ```
-
-3. I wanted the client to be a class. That’s impossible because classes cannot have an index signature, or `[K in keyof T]`.
-
-## Lessons
-
-- API design is much harder than implementation.
-- TypeScript is great for applications, but much harder to use for libraries.
+It's currently stagnant, but I might pick it back up in the future!

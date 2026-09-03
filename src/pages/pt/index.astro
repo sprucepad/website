@@ -1,55 +1,132 @@
 ---
-import Typewriter from "@/components/Typewriter.svelte";
-import { buttonStyles } from "@/components/ui/Button.astro";
+import trio from "@content/assets/trio.png";
+import trioBanner from "@content/assets/trio.banner.png";
+import pfp from "@content/assets/pfp.png";
+import MouseIcon from "@lucide/astro/icons/mouse";
+
+import BareLayout from "@/layouts/BareLayout.astro";
+import { Content } from "./_about.md";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import PixelArt from "@/components/ui/PixelArt.astro";
+import { getCollection } from "astro:content";
+import { createAlbumMapper, createLocaleFilter, sort } from "@/lib/collections";
+import Album from "@/components/Album.svelte";
+import { createCardMapper } from "@/lib/collections";
+import Cards from "@/components/Cards.svelte";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import Link from "@/components/ui/Link.astro";
-import MixedLayout from "@/layouts/MixedLayout.astro";
+import CopyrightNotice from "@/components/CopyrightNotice.astro";
+import { getEntry } from "astro:content";
+import Article from "@/components/ui/Article.astro";
+
+const locale = Astro.currentLocale!;
+
+const albumMapper = createAlbumMapper(locale, 3);
+const sketchbook = await getEntry("albums", "sketchbook")!.then(albumMapper);
+
+const cardMapper = createCardMapper(locale);
+const posts = await getCollection("posts", createLocaleFilter(locale))
+  .then((a) => sort(a))
+  .then((col) => Promise.all(col.map(cardMapper)));
+const projects = await getCollection("projects", createLocaleFilter(locale))
+  .then((a) => sort(a))
+  .then((col) => Promise.all(col.map(cardMapper)));
 ---
 
-<MixedLayout
+<BareLayout
   title="site do sprucepad"
   desc="Meu site pessoal, mostrando meus projetos e minha arte."
 >
-  <div
-    slot="art"
-    class="flex h-full flex-col items-center justify-center gap-4 p-4"
-  >
-    <h1 class="font-heading text-4xl font-black">Bem-vindo(a) ao site!</h1>
-    <h2 class="font-heading text-3xl font-black">
-      Esse lado contém meus trabalhos criativos.
-    </h2>
-    <Link href="/art" class={buttonStyles({ variant: "art", size: "lg" })}
-      >O Lado Criativo</Link
+  <main transition:name="main" transition:animate="slide">
+    <section
+      class="relative flex h-svh flex-col-reverse bg-white p-4 text-black lg:flex-row"
     >
-  </div>
+      <div class="flex flex-1 justify-center">
+        <PixelArt
+          src={trio}
+          alt="Três personagens animais fazendo poses."
+          class="hidden h-full w-fit object-contain lg:block"
+        />
+        <PixelArt
+          src={trioBanner}
+          loading="lazy"
+          alt="Três personagens animais fazendo poses."
+          class="block h-full w-fit object-contain lg:hidden"
+        />
+      </div>
+      <div
+        class="flex flex-1 flex-col items-center justify-center gap-4 lg:items-start"
+      >
+        <h1
+          class="flex flex-wrap items-center font-heading text-6xl font-black"
+        >
+          <PixelArt src={pfp} alt="" class="mx-auto" />
+          sprucepad
+        </h1>
+        <p class="font-heading text-4xl font-black">Coisas do Forrest</p>
 
-  <div
-    slot="code"
-    class="flex h-full flex-col items-center justify-center gap-4 p-4"
-  >
-    <h1 class="font-heading text-4xl font-black">Bem-vindo(a) ao site!</h1>
-    <h2 class="font-heading text-3xl font-black">
-      Esse lado contém meus trabalhos técnicos.
-    </h2>
-    <Link href="/code" class={buttonStyles({ variant: "code", size: "lg" })}
-      >O Lado Técnico</Link
-    >
-  </div>
+        <p class="flex animate-bounce gap-1 opacity-50">
+          <MouseIcon /> Deslize para baixo!
+        </p>
+      </div>
 
-  <h1
-    class="mixed-text from-art-foreground to-code-foreground font-heading text-6xl"
-  >
-    Bem-vindo(a) ao meu site!
-  </h1>
-  <h2
-    class="mixed-text from-art-foreground to-code-foreground text-center font-heading text-3xl"
-  >
-    Eu sou um <Typewriter
-      words={[
-        "desenvolvedor de jogos",
-        "desenvolvedor web full-stack",
-        "artista de pixel",
-      ]}
-      client:load
-    />, do Brasil.
-  </h2>
-</MixedLayout>
+      <div class="absolute right-4 bottom-4 p-4">
+        <CopyrightNotice />
+      </div>
+    </section>
+
+    <Header variant="sticky" />
+
+    <Article>
+      <Content />
+    </Article>
+
+    <section class="space-y-4 p-16">
+      <h1 class="font-heading text-4xl font-black">Esboços</h1>
+
+      <Album
+        album={sketchbook}
+        empty="Nada aqui ainda!"
+        placeholder="Pesquisar esboços..."
+        client:load
+      />
+
+      <Link class="underline" href="/gallery/sketchbook">Mais esboços...</Link>
+    </section>
+
+    <section class="space-y-4 p-16">
+      <h1 class="font-heading text-4xl font-black">Posts</h1>
+
+      <div>
+        <Cards
+          cards={posts.slice(0, 3)}
+          href={getRelativeLocaleUrl(locale, "/blog")}
+          empty="Isso não é tudo!"
+          placeholder="Pesquisar posts..."
+          client:load
+        />
+      </div>
+
+      <Link class="underline" href="/blog">Mais posts...</Link>
+    </section>
+
+    <section class="space-y-4 p-16">
+      <h1 class="font-heading text-4xl font-black">Projetos</h1>
+
+      <div>
+        <Cards
+          cards={projects.slice(0, 3)}
+          href={getRelativeLocaleUrl(locale, "/projects")}
+          empty="Isso não é tudo!"
+          placeholder="Pesquisar projetos..."
+          client:load
+        />
+      </div>
+
+      <Link class="underline" href="/projects">Mais projetos...</Link>
+    </section>
+  </main>
+
+  <Footer includeCopyrightNotice={false} />
+</BareLayout>

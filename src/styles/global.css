@@ -1,68 +1,40 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@custom-variant dark (&:is([data-theme="dark"] *));
+
 @theme inline {
-  --font-heading: var(--font-peaberry);
   --font-sans: var(--font-dm-sans);
-  --font-mono: var(--font-dm-mono);
-
-  --color-art-background: var(--art-background);
-  --color-art-foreground: var(--art-foreground);
-  --color-art-accent: var(--art-accent);
-  --color-art-accent-foreground: var(--art-accent-foreground);
-
-  --color-code-background: var(--code-background);
-  --color-code-foreground: var(--code-foreground);
-  --color-code-accent: var(--code-accent);
-  --color-code-accent-foreground: var(--code-accent-foreground);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-heading: var(--font-peaberry);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
 
-  --shadow-neobrutal: 0.25rem 0.25rem 0 var(--foreground);
-  --shadow-mixed-neobrutal: 0 0.25rem 0 var(--art-foreground);
+  --shadow-neobrutal: 0.3rem 0.3rem 0 var(--foreground);
+  --shadow-neobrutal-sm: 0.1rem 0.1rem 0 var(--foreground);
 }
 
 :root {
-  --art-background: #eeeeee;
-  --art-foreground: #111111;
-  --art-accent: #487f58;
-  --art-accent-foreground: #eeeeee;
-
-  --code-background: #111111;
-  --code-foreground: #eeeeee;
-  --code-accent: #27452f;
-  --code-accent-foreground: #eeeeee;
+  --background: #eeeeee;
+  --foreground: #111111;
+  --accent: #c9ade9;
+  --accent-foreground: #111111;
+  --secondary: #487f58;
+  --secondary-foreground: #eeeeee;
 }
 
-.art-side {
-  --background: var(--art-background);
-  --foreground: var(--art-foreground);
-  --accent: var(--art-accent);
-  --accent-foreground: var(--art-accent-foreground);
-  @apply bg-background text-foreground;
-}
-
-.code-side {
-  --background: var(--code-background);
-  --foreground: var(--code-foreground);
-  --accent: var(--code-accent);
-  --accent-foreground: var(--code-accent-foreground);
-  @apply bg-background text-foreground;
-}
-
-@utility neobrutal {
-  @apply border-2 border-foreground shadow-neobrutal;
-}
-
-@utility mixed-text {
-  @apply bg-linear-to-r from-50% to-50% bg-clip-text text-transparent;
-}
-
-@utility pixel-art {
-  image-rendering: pixelated;
+[data-theme="dark"] {
+  --background: #111111;
+  --foreground: #eeeeee;
+  --accent: #c9ade9;
+  --accent-foreground: #111111;
+  --secondary: #487f58;
+  --secondary-foreground: #eeeeee;
 }
 
 @layer base {
@@ -70,4 +42,22 @@
   body {
     @apply h-full;
   }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* dark mode code theme */
+  [data-theme="dark"] .astro-code,
+  [data-theme="dark"] .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+
+@utility pixel-art {
+  image-rendering: pixelated;
 }

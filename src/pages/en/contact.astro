@@ -1,0 +1,41 @@
+---
+import Socials from "@/components/Socials.astro";
+import Button from "@/components/ui/Button.astro";
+import Input from "@/components/ui/Input.astro";
+import TextArea from "@/components/ui/TextArea.astro";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+  title="contact | sprucepad"
+  desc="How to contact sprucepad."
+  class="mx-auto max-w-prose space-y-16"
+>
+  <section class="space-y-4">
+    <h1 class="font-heading text-4xl font-black">Follow me on social media!</h1>
+    <Socials />
+  </section>
+
+  <form action="mailto:sprucepadhq@gmail.com" class="flex flex-col gap-4">
+    <h1 class="text-center font-heading text-4xl font-black">
+      Shoot me an email!
+    </h1>
+
+    <label for="contact-form-subject" class="flex flex-col">Subject</label>
+    <Input
+      name="subject"
+      id="contact-form-subject"
+      type="text"
+      placeholder="About what do you want to tell me?"
+    />
+
+    <label for="contact-form-body" class="flex flex-col">Body</label>
+    <TextArea
+      name="body"
+      id="contact-form-body"
+      placeholder="What do you want to tell me?"
+    />
+
+    <Button type="submit">Send through your email app</Button>
+  </form>
+</Layout>

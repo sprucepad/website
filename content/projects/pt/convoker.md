@@ -1,48 +1,38 @@
 ---
 title: Convoker
-desc: Um framework CLI com tipagem segura.
-image: ../_images/convoker.jpg
-created: 2026-02-13
-updated: 2026-02-13
-github: sprucepad/convoker
-
+desc: Uma coleção de bibliotecas para fazer aplicativos de CLI (terminal) em JavaScript.
 topics:
   - typescript
-  - cli
+  - framework
+image: ./convoker.jpg
+createdAt: 2025-09-29
+updatedAt: 2026-09-03
+github: sprucepad/convoker
 ---
 
-## Por quê?
+Convoker foi criado em maior parte por diversão, mas também pois eu achei um vácuo de frameworks seguros para CLIs em TypeScript, que eram incorporáveis o suficiente para criar outras coisas por cima. Ele foi criado para outro dos meus projetos, [Kineo](/pt/projects/kineo).
 
-Percebi a falta de frameworks CLI simples em TypeScript que fossem type-safe e pudessem ser incorporados em outras bibliotecas. Então eu criei o Convoker e estou expandindo-o para outras linguagens também.
-
-## Exemplo
+Ele segue o padrão familiar de middlewares de coisas como Express ou Hono, mas aplicado para CLIs, por cima de um esquema seguro para argumentos de CLI.
 
 ```ts
-// 1. Crie um programa raiz.
-const program = new Command("calc")
-  .version("1.0.0")
-  .desc("Uma calculadora")
-  // 2. Defina middlewares.
-  .use((_, next) => next());
+import { Command, i } from "convoker";
 
-// 3. Defina subcomandos.
-program.subCommand("add", (c) =>
-  c
-    .input({
-      nums: i.argument("number").list(),
-    })
-    .desc("Somar números")
-    // 4. Defina ações que recebem a entrada que você definiu.
-    .action(({ nums }) => {
-      let sum: number;
-      for (const num of nums) {
-        sum += num;
-      }
+const program = new Command("my-app")
+  .input({
+    names: i.positional("string").list(),
+    message: i.option("string", "--message", "-m").optional(),
+  })
+  .action(({ names, message = "Hello" }) => {
+    //       ^ string[]
+    //              ^ string | undefined
+    for (const name of names) {
+      console.log(`${message}, ${name}!`);
+    }
+  });
 
-      log.info(`${nums.join(" + ")} = ${sum}`);
-    }),
-);
-
-// 5. Execute seus comandos.
-program.run();
+await program.run(["John", "Amy", "--message", "Hi"]);
+// > Hi, John!
+// > Hi, Amy!
 ```
+
+Ele suporta vários esquemas de processamento de argumentos, prompts de usuário, registro de logs, e temas ANSI.

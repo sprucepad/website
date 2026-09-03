@@ -1,0 +1,136 @@
+---
+import GitHubIcon from "@/icons/github.svg";
+import ItchIoIcon from "@/icons/itchio.svg";
+import Cards from "@/components/Cards.svelte";
+import Article from "@/components/ui/Article.astro";
+import Layout from "@/layouts/Layout.astro";
+import { sort } from "@/lib/collections";
+import {
+  createCardMapper,
+  createDevlogFilter,
+  unlocalize,
+} from "@/lib/collections";
+import { createTranslate } from "@/lib/i18n";
+import type { GetStaticPaths } from "astro";
+import { Image } from "astro:assets";
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Link from "@/components/ui/Link.astro";
+
+export const getStaticPaths = (async () => {
+  const projects = await getCollection("projects");
+  return projects.map((project) => {
+    const { lang, id } = unlocalize(project.id);
+    return {
+      params: { lang, projectId: id },
+      props: { project },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { lang: locale } = Astro.params;
+const { project } = Astro.props;
+
+const { Content } = await render(project);
+
+const table = {
+  en: {
+    title: "projects",
+    projectLicense: "Project license",
+    articleLicense: "Article license",
+    created: "Created",
+    updated: "Updated",
+    emptyDevlogs: "No devlogs for this project!",
+    searchDevlogs: "Search devlogs...",
+  },
+  pt: {
+    title: "projetos",
+    projectLicense: "Licença do projeto",
+    articleLicense: "Licença do artigo",
+    created: "Criado",
+    updated: "Atualizado",
+    emptyDevlogs: "Nenhum devlog para esse projeto!",
+    searchDevlogs: "Pesquisar devlogs...",
+  },
+};
+const t = createTranslate(locale, table);
+
+const cardMapper = createCardMapper(locale);
+const devlogs = await Promise.all(
+  await getCollection("posts", createDevlogFilter(project))
+    .then((d) => sort(d))
+    .then((d) => d.map(cardMapper)),
+);
+---
+
+<Layout
+  title={`${project.data.title} | ${t("title")} - sprucepad`}
+  desc={project.data.desc}
+  banner={project.data.image}
+  class="flex flex-col md:flex-row"
+>
+  <div class="md:flex-1">
+    <Article>
+      <div slot="header" class="space-y-4 text-foreground">
+        {
+          project.data.image && (
+            <Image src={project.data.image} alt="" class="rounded-lg" />
+          )
+        }
+        <h1 class="font-heading text-4xl font-black">{project.data.title}</h1>
+        <p>{project.data.desc}</p>
+
+        <div class="flex gap-2">
+          {
+            project.data.github && (
+              <Link
+                href={`https://github.com/${project.data.github}`}
+                class="flex items-center gap-2 underline"
+              >
+                <GitHubIcon width={24} height={24} />
+                {project.data.github}
+              </Link>
+            )
+          }
+          {
+            project.data.itchio && (
+              <Link
+                href={`https://sprucepad.itch.io/${project.data.itchio}`}
+                class="flex items-center gap-2 underline"
+              >
+                <ItchIoIcon width={24} height={24} />
+                {project.data.itchio}
+              </Link>
+            )
+          }
+        </div>
+      </div>
+
+      <Content />
+
+      <ul slot="footer" class="ml-4 list-disc text-foreground">
+        <li>
+          {t("projectLicense")}: {project.data.projectLicense}
+        </li>
+        <li>{t("articleLicense")}: {project.data.articleLicense}</li>
+        <li>
+          {t("created")}: {project.data.createdAt.toLocaleDateString(locale)}
+        </li>
+        <li>
+          {t("updated")}: {project.data.updatedAt.toLocaleDateString(locale)}
+        </li>
+      </ul>
+    </Article>
+  </div>
+
+  <div class="md:flex-1">
+    <Cards
+      cards={devlogs}
+      empty={t("emptyDevlogs")}
+      placeholder={t("searchDevlogs")}
+      href={getRelativeLocaleUrl(locale, "/blog")}
+      client:load
+    />
+  </div>
+</Layout>

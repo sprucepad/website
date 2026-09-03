@@ -1,0 +1,32 @@
+---
+import Cards from "@/components/Cards.svelte";
+import Layout from "@/layouts/Layout.astro";
+import { createCardMapper, createLocaleFilter, sort } from "@/lib/collections";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const locale = Astro.currentLocale!;
+
+const cardMapper = createCardMapper(locale);
+const blog = await Promise.all(
+  await getCollection("posts", createLocaleFilter(locale))
+    .then((p) => sort(p))
+    .then((p) => p.map(cardMapper)),
+);
+---
+
+<Layout
+  title="blog | sprucepad"
+  desc="sprucepad's blog posts."
+  class="space-y-4"
+>
+  <h1 class="font-heading text-4xl font-black">Blog</h1>
+
+  <Cards
+    cards={blog}
+    empty="No posts yet!"
+    placeholder="Search posts..."
+    href={getRelativeLocaleUrl(locale, "/blog")}
+    client:load
+  />
+</Layout>

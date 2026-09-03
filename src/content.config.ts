@@ -9,50 +9,52 @@ const topics = defineCollection({
   }),
 });
 
-const codePosts = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts/code" }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      desc: z.string(),
-      image: image().optional(),
-      topics: z.array(reference("topics")).default([]),
-      created: z.date(),
-      updated: z.date(),
-      license: z.string().default("All Rights Reserved"),
-    }),
-});
-
-const artPosts = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts/art" }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      desc: z.string(),
-      image: image().optional(),
-      topics: z.array(reference("topics")).default([]),
-      created: z.date(),
-      updated: z.date(),
-      license: z.string().default("All Rights Reserved"),
-    }),
-});
-
-const gallery = defineCollection({
+const images = defineCollection({
   loader: glob({
     pattern: "**/*.{yml,yaml,json,toml}",
-    base: "./content/gallery",
+    base: "./content/images",
   }),
   schema: ({ image }) =>
     z.object({
-      title: z.record(z.string(), z.string()),
-      images: z.array(
-        z.object({
-          img: image(),
-          alt: z.record(z.string(), z.string()),
-          license: z.string().default("All Rights Reserved"),
-        }),
-      ),
+      file: image(),
+      altTexts: z.record(z.string(), z.string()),
+      albums: z.array(reference("albums")).default([]),
+      license: z.string().default("All Rights Reserved"),
+      optimize: z.boolean().default(false),
+
+      createdAt: z.date().default(new Date(0)),
+      updatedAt: z.date().default(new Date(0)),
     }),
+});
+
+const posts = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/blog" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      desc: z.string(),
+      image: image().optional(),
+      topics: z.array(reference("topics")).default([]),
+      createdAt: z.date(),
+      updatedAt: z.date(),
+
+      devlogFor: reference("projects").optional(),
+      license: z.string().default("All Rights Reserved"),
+    }),
+});
+
+const albums = defineCollection({
+  loader: glob({
+    pattern: "**/*.{yml,yaml,json,toml}",
+    base: "./content/albums",
+  }),
+  schema: z.object({
+    title: z.record(z.string(), z.string()),
+    desc: z.record(z.string(), z.string()),
+    coverImages: z.array(reference("images")),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+  }),
 });
 
 const projects = defineCollection({
@@ -63,13 +65,14 @@ const projects = defineCollection({
       desc: z.string(),
       image: image().optional(),
       topics: z.array(reference("topics")).default([]),
-      created: z.date(),
-      updated: z.date(),
+      createdAt: z.date(),
+      updatedAt: z.date(),
 
-      license: z.string().default("All Rights Reserved"),
+      projectLicense: z.string().default("MIT"),
+      articleLicense: z.string().default("All Rights Reserved"),
       github: z.string().optional(),
       itchio: z.string().optional(),
     }),
 });
 
-export const collections = { topics, codePosts, projects, artPosts, gallery };
+export const collections = { topics, posts, projects, albums, images };

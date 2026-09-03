@@ -1,21 +1,15 @@
 ---
+import MailIcon from "@lucide/astro/icons/mail";
+import BskyIcon from "@/icons/bsky.svg";
 import GitHubIcon from "@/icons/github.svg";
 import ItchIoIcon from "@/icons/itchio.svg";
-import YouTubeIcon from "@/icons/youtube.svg";
 import RedditIcon from "@/icons/reddit.svg";
-import BskyIcon from "@/icons/bsky.svg";
-import MailIcon from "@lucide/astro/icons/mail";
+import YouTubeIcon from "@/icons/youtube.svg";
 
-import Link from "@/components/ui/Link.astro";
-import type { HTMLAttributes } from "astro/types";
-import { cn } from "@/lib/utils";
-
-type Props = HTMLAttributes<"div">;
-
-const { class: className, ...rest } = Astro.props;
+import Link from "./ui/Link.astro";
 ---
 
-<div class={cn("flex flex-wrap gap-4", className)} {...rest}>
+<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
   <Link href="https://github.com/sprucepad" class="flex gap-2">
     <GitHubIcon width={24} height={24} />
     sprucepad

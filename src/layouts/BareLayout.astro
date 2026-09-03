@@ -1,0 +1,57 @@
+---
+import "@/styles/global.css";
+import defaultBanner from "@content/assets/banner.png";
+import favicon from "@content/assets/favicon.png";
+
+import { getImage } from "astro:assets";
+import type { HTMLAttributes } from "astro/types";
+import { ClientRouter } from "astro:transitions";
+import { Font } from "astro:assets";
+
+export interface LayoutProps {
+  title: string;
+  desc: string;
+  banner?: ImageMetadata;
+}
+
+interface Props
+  extends LayoutProps, Omit<HTMLAttributes<"body">, keyof LayoutProps> {}
+
+const { title, desc, banner = defaultBanner, ...rest } = Astro.props;
+const optimizedBanner = await getImage({
+  src: banner,
+  width: 1280,
+  height: 628,
+});
+const image = new URL(optimizedBanner.src, Astro.site);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <ClientRouter />
+    <Font cssVariable="--font-peaberry" />
+    <Font cssVariable="--font-dm-sans" />
+    <Font cssVariable="--font-jetbrains-mono" />
+
+    {/* primary */}
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={desc} />
+
+    {/* social */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.site} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:image" content={image} />
+    <meta property="twitter:card" content="summary_large_image" />
+  </head>
+  <body {...rest}>
+    <slot />
+  </body>
+</html>

@@ -1,72 +1,72 @@
-<script lang="ts">
+<script module lang="ts">
+  import type { ProcessedWithData } from "@/lib/collections";
   import SearchBox from "./SearchBox.svelte";
 
-  export interface Image {
-    album: string;
-    albumId: string;
-    src: string;
-    alt: string;
-    license: string;
+  export interface Album {
+    id: string;
+    title: string;
+    desc: string;
+    covers: ProcessedWithData[];
+    images: ProcessedWithData[];
   }
 
   interface Props {
-    variant?: "art" | "code";
-    images: Image[];
+    albums: Album[];
     placeholder: string;
     empty: string;
+    href: string;
   }
+</script>
 
-  let { placeholder, empty, images: initImages, variant }: Props = $props();
-  let images = $state((() => initImages)());
+<script lang="ts">
+  let { albums: initAlbums, placeholder, empty, href }: Props = $props();
+  let albums = $derived(initAlbums);
 </script>
 
 <div>
   <SearchBox
-    {variant}
     {placeholder}
-    filter={(kw, kv) => {
-      if (!kw.length && !kv.length) {
-        images = initImages;
-        return;
-      }
+    filter={(kv, kw) => {
+      if (!kv.size && !kw.size) return (albums = initAlbums);
 
-      images = initImages.filter((image) => {
+      albums = initAlbums.filter((album) => {
         for (const keyword of kw) {
-          if (image.alt.toLowerCase().includes(keyword)) {
+          if (
+            album.title.toLowerCase().includes(keyword) ||
+            album.desc.toLowerCase().includes(keyword)
+          )
             return true;
-          }
         }
-
-        for (const [key, values] of kv) {
-          for (const value of values) {
-            switch (key) {
-              case "album":
-                if (
-                  image.album.toLowerCase().includes(value) ||
-                  image.albumId.toLowerCase().includes(value)
-                )
-                  return true;
-                break;
-              case "license":
-                if (image.license.toLowerCase().includes(value)) return true;
-                break;
-            }
-          }
+        for (const [key, value] of kv) {
+          if (key === "desc" && album.desc.toLowerCase().includes(value))
+            return true;
+          if (key === "title" && album.title.toLowerCase().includes(value))
+            return true;
+          if (
+            key === "image" &&
+            album.images.some((image) =>
+              image.alt.toLowerCase().includes(value),
+            )
+          )
+            return true;
         }
       });
     }}
   />
 
-  <div class="columns-1 p-4 sm:columns-2 md:columns-3 lg:columns-4">
-    {#each images as image (image.src)}
-      <div class="group relative w-fit">
-        <img class="pixel-art min-w-64" src={image.src} alt={image.alt} />
-        <p
-          class="absolute bottom-0 w-full bg-black/50 p-2 text-white opacity-0 transition-opacity group-hover:opacity-100"
-        >
-          {image.album} - {image.license}
-        </p>
-      </div>
+  <div class="mt-8 columns-1 sm:columns-2 md:columns-3">
+    {#each albums as album (album.title)}
+      <a href={`${href}${album.id}`} class="relative mb-4 block text-white">
+        <img
+          src={album.covers[0].file.src}
+          alt={album.covers[0].alt}
+          class="absolute -z-50 h-full w-full object-cover blur-lg brightness-50"
+        />
+        <h1 class="text-center font-heading text-3xl font-black">
+          {album.title}
+        </h1>
+        <p class="text-center">{album.desc}</p>
+      </a>
     {:else}
       <p>{empty}</p>
     {/each}

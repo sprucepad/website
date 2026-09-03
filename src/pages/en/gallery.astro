@@ -1,0 +1,32 @@
+---
+import Gallery from "@/components/Gallery.svelte";
+import Layout from "@/layouts/Layout.astro";
+import { createAlbumMapper, sort } from "@/lib/collections";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const locale = Astro.currentLocale!;
+
+const albumMapper = createAlbumMapper(locale);
+const albums = await Promise.all(
+  await getCollection("albums")
+    .then((a) => sort(a))
+    .then((a) => a.map(albumMapper)),
+);
+---
+
+<Layout
+  title="gallery | sprucepad"
+  desc="All of sprucepad's drawing albums."
+  class="space-y-4"
+>
+  <h1 class="font-heading text-4xl font-black">Gallery</h1>
+
+  <Gallery
+    {albums}
+    href={getRelativeLocaleUrl(locale, "/gallery")}
+    placeholder="Search in albums..."
+    empty="Nothing here yet!"
+    client:load
+  />
+</Layout>

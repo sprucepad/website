@@ -1,0 +1,70 @@
+---
+import Album from "@/components/Album.svelte";
+import PixelArt from "@/components/ui/PixelArt.astro";
+import Layout from "@/layouts/Layout.astro";
+import { createTranslate } from "@/lib/i18n";
+import { createAlbumMapper } from "@/lib/collections";
+import type { GetStaticPaths } from "astro";
+import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const albums = await getCollection("albums");
+  return ["pt", "en"].flatMap((lang) =>
+    albums.map((album) => ({
+      params: { lang, albumId: album.id },
+      props: { album },
+    })),
+  );
+}) satisfies GetStaticPaths;
+
+const { lang: locale } = Astro.params;
+const { album } = Astro.props;
+
+const processedAlbum = await createAlbumMapper(locale)(album);
+const coverImage = await getEntry("images", album.data.coverImages[0].id)!;
+
+const table = {
+  en: {
+    title: "albums",
+    desc: `album page for ${album.data.title[locale]}`,
+    placeholder: "Search in album...",
+    empty: "Nothing here yet!",
+  },
+  pt: {
+    title: "álbums",
+    desc: `página de álbum para ${album.data.title[locale]}`,
+    placeholder: "Pesquisar no álbum...",
+    empty: "Nada aqui ainda!",
+  },
+};
+const t = createTranslate(locale, table);
+---
+
+<Layout
+  title={`${processedAlbum.title} | ${t("title")} - sprucepad`}
+  desc={t("desc")}
+  class="flex min-h-full flex-col gap-4 pt-20 md:flex-row"
+>
+  <div class="flex h-110 flex-row gap-4 md:h-svh md:w-md md:flex-col">
+    <div class="flex flex-1 items-center justify-center md:max-h-[70%]">
+      <PixelArt
+        src={coverImage.data.file}
+        alt=""
+        class="h-fit max-h-full w-full object-contain"
+      />
+    </div>
+    <div class="grid flex-1 place-content-center md:flex-0">
+      <h1 class="font-heading text-4xl font-black">{processedAlbum.title}</h1>
+      <p>{processedAlbum.desc}</p>
+    </div>
+  </div>
+  <div class="max-h-[85svh] flex-1 overflow-scroll px-4">
+    <Album
+      album={processedAlbum}
+      placeholder={t("placeholder")}
+      empty={t("empty")}
+      client:load
+    />
+  </div>
+</Layout>

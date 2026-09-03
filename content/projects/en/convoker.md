@@ -1,48 +1,38 @@
 ---
 title: Convoker
-desc: A type-safe CLI framework.
-image: ../_images/convoker.jpg
-created: 2026-02-13
-updated: 2026-02-13
-github: sprucepad/convoker
-
+desc: A set of libraries for making CLI applications in JavaScript runtimes.
 topics:
   - typescript
-  - cli
+  - framework
+image: ../pt/convoker.jpg
+createdAt: 2025-09-29
+updatedAt: 2026-09-03
+github: sprucepad/convoker
 ---
 
-## Why?
+Convoker was created mostly for fun, but also because I noticed a lack of type-safe CLI frameworks for TypeScript, that were embeddable enough to build something else on top of it. It was created for another one of my projects, [Kineo](/en/projects/kineo).
 
-I noticed a lack of simple TypeScript CLI frameworks, that are type-safe and could be embedded in other libraries. So I built Convoker. Currently, it's JS/TS-only, but I do plan on changing that in the near future.
-
-## Example
+It follows the familiar middleware pattern of things like Express or Hono, but applied for CLIs instead, along with type-safe schema definition for CLI arguments.
 
 ```ts
-// 1. Create a root program.
-const program = new Command("calc")
-  .version("1.0.0")
-  .desc("A calculator")
-  // 2. Define middleware.
-  .use((_, next) => next());
+import { Command, i } from "convoker";
 
-// 3. Define sub commands.
-program.subCommand("add", (c) =>
-  c
-    .input({
-      nums: i.argument("number").list(),
-    })
-    .desc("Add numbers")
-    // 4. Define actions, that take in the input you define.
-    .action(({ nums }) => {
-      let sum: number;
-      for (const num of nums) {
-        sum += num;
-      }
+const program = new Command("my-app")
+  .input({
+    names: i.positional("string").list(),
+    message: i.option("string", "--message", "-m").optional(),
+  })
+  .action(({ names, message = "Hello" }) => {
+    //       ^ string[]
+    //              ^ string | undefined
+    for (const name of names) {
+      console.log(`${message}, ${name}!`);
+    }
+  });
 
-      log.info(`${nums.join(" + ")} = ${sum}`);
-    }),
-);
-
-// 5. Run your commands.
-program.run();
+await program.run(["John", "Amy", "--message", "Hi"]);
+// > Hi, John!
+// > Hi, Amy!
 ```
+
+It supports several argument parsing schemes, user prompts, logging and ANSI theming.

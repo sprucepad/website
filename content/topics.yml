@@ -1,49 +1,31 @@
-- id: multilingual
+# Post topics
+- id: art
   translations:
-    en: Multi-lingual
-    pt: Multi-linguagem
+    pt: Arte
+    en: Art
+- id: code
+  translations:
+    pt: Código
+    en: Code
+- id: devlog
+  translations:
+    pt: Devlogs
+    en: Devlogs
 
+# Project topics
 - id: typescript
   translations:
-    en: TypeScript
     pt: TypeScript
-
-- id: compiler
+    en: TypeScript
+- id: framework
   translations:
-    en: Compilers
-    pt: Compiladores
-
+    pt: Framework
+    en: Framework
+- id: website
+  translations:
+    pt: Site
+    en: Website
 - id: database
   translations:
-    en: Databases
     pt: Bancos de dados
-
-- id: game
-  translations:
-    en: Games
-    pt: Jogos
-
-- id: site
-  translations:
-    en: Websites
-    pt: Sites
-
-- id: cli
-  translations:
-    en: CLI
-    pt: Terminal
-
-- id: app
-  translations:
-    en: Apps
-    pt: Apps
-
-- id: astro
-  translations:
-    en: Astro
-    pt: Astro
-
-- id: svelte
-  translations:
-    en: Svelte
-    pt: Svelte
+    en: Databases
