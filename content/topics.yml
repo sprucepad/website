@@ -21,3 +21,7 @@
   translations:
     pt: Framework
     en: Framework
+- id: website
+  translations:
+    pt: Site
+    en: Website

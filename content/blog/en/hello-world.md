@@ -7,7 +7,7 @@ topics:
   - code
 createdAt: 2026-09-03
 updatedAt: 2026-09-03
-devlogFor: en/convoker
+devlogFor: en/website
 ---
 
 TODO

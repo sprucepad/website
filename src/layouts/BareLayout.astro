@@ -16,7 +16,6 @@ export interface LayoutProps {
 
 interface Props
   extends LayoutProps, Omit<HTMLAttributes<"body">, keyof LayoutProps> {}
-export type { Props as LayoutPropsWithBodyProps };
 
 const { title, desc, banner = defaultBanner, ...rest } = Astro.props;
 const optimizedBanner = await getImage({

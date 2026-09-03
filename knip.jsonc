@@ -2,5 +2,5 @@
   "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
   "tags": ["-lintignore"],
 
-  "entry": ["content/posts/**/*", "content/projects/**/*"],
+  "entry": ["content/blog/**/*", "content/projects/**/*"],
 }

@@ -118,7 +118,6 @@ export function unlocalize(id: string) {
 }
 
 export function createDevlogFilter(
-  locale: string,
   project: CollectionEntry<"projects">,
 ): (a: CollectionEntry<"posts">) => boolean {
   return (a) => !!a.data.devlogFor && a.data.devlogFor.id === project.id;

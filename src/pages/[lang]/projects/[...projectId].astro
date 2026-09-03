@@ -55,7 +55,7 @@ const t = createTranslate(locale, table);
 
 const cardMapper = createCardMapper(locale);
 const devlogs = await Promise.all(
-  await getCollection("posts", createDevlogFilter(locale, project))
+  await getCollection("posts", createDevlogFilter(project))
     .then((d) => sort(d))
     .then((d) => d.map(cardMapper)),
 );
