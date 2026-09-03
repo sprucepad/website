@@ -60,6 +60,12 @@ export default defineConfig({
   ],
 
   markdown: {
+    shikiConfig: {
+      themes: {
+        dark: "horizon",
+        light: "horizon-bright",
+      },
+    },
     processor: unified({
       rehypePlugins: [
         [rehypeExternalLinks, { target: "_blank", rel: "noopener noreferrer" }],

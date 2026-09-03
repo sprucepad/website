@@ -1,4 +1,6 @@
 ---
+import GitHubIcon from "@/icons/github.svg";
+import ItchIoIcon from "@/icons/itchio.svg";
 import Cards from "@/components/Cards.svelte";
 import Article from "@/components/ui/Article.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -14,6 +16,7 @@ import { Image } from "astro:assets";
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import Link from "@/components/ui/Link.astro";
 
 export const getStaticPaths = (async () => {
   const projects = await getCollection("projects");
@@ -69,7 +72,7 @@ const devlogs = await Promise.all(
 >
   <div class="md:flex-1">
     <Article>
-      <div slot="header" class="space-y-4">
+      <div slot="header" class="space-y-4 text-foreground">
         {
           project.data.image && (
             <Image src={project.data.image} alt="" class="rounded-lg" />
@@ -77,11 +80,36 @@ const devlogs = await Promise.all(
         }
         <h1 class="font-heading text-4xl font-black">{project.data.title}</h1>
         <p>{project.data.desc}</p>
+
+        <div class="flex gap-2">
+          {
+            project.data.github && (
+              <Link
+                href={`https://github.com/${project.data.github}`}
+                class="flex items-center gap-2 underline"
+              >
+                <GitHubIcon width={24} height={24} />
+                {project.data.github}
+              </Link>
+            )
+          }
+          {
+            project.data.itchio && (
+              <Link
+                href={`https://sprucepad.itch.io/${project.data.itchio}`}
+                class="flex items-center gap-2 underline"
+              >
+                <ItchIoIcon width={24} height={24} />
+                {project.data.itchio}
+              </Link>
+            )
+          }
+        </div>
       </div>
 
       <Content />
 
-      <ul slot="footer" class="ml-4 list-disc">
+      <ul slot="footer" class="ml-4 list-disc text-foreground">
         <li>
           {t("projectLicense")}: {project.data.projectLicense}
         </li>

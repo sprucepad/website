@@ -7,6 +7,8 @@ import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import Link from "@/components/ui/Link.astro";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("posts");
@@ -28,17 +30,22 @@ const table = {
     license: "Licença",
     created: "Created",
     updated: "Updated",
+    devlogFor: "Linked project",
   },
   pt: {
     title: "blog",
     license: "Licença",
     created: "Criado",
     updated: "Atualizado",
+    devlogFor: "Projeto anexado",
   },
 };
 const t = createTranslate(locale, table);
 
 const { Content } = await render(post);
+const project =
+  post.data.devlogFor &&
+  (await getEntry(post.data.devlogFor.collection, post.data.devlogFor.id));
 ---
 
 <Layout
@@ -47,7 +54,7 @@ const { Content } = await render(post);
   banner={post.data.image}
 >
   <Article>
-    <div slot="header" class="space-y-4">
+    <div slot="header" class="space-y-4 text-foreground">
       {
         post.data.image && (
           <Image src={post.data.image} alt="" class="rounded-lg" />
@@ -55,11 +62,21 @@ const { Content } = await render(post);
       }
       <h1 class="font-heading text-4xl font-black">{post.data.title}</h1>
       <p>{post.data.desc}</p>
+
+      {
+        project && (
+          <p class="underline">
+            <Link href={`/projects/${unlocalize(project.id).id}`}>
+              {t("devlogFor")}: {project.data.title}
+            </Link>
+          </p>
+        )
+      }
     </div>
 
     <Content />
 
-    <ul slot="footer" class="ml-4 list-disc">
+    <ul slot="footer" class="ml-4 list-disc text-foreground">
       <li>
         {t("license")}: {post.data.license}
       </li>

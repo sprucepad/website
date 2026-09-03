@@ -25,3 +25,7 @@
   translations:
     pt: Site
     en: Website
+- id: database
+  translations:
+    pt: Bancos de dados
+    en: Databases
