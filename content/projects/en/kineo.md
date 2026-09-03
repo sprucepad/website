@@ -35,16 +35,16 @@ export const user = model((s) => ({
 import postgres from "kineo/adapters/postgres";
 import * as schema from "./schema";
 
-export const db = kineo(postgres(process.env.DB_URL!), schema)
+export const db = kineo(postgres(process.env.DB_URL!), schema);
 
 await db.users.delete({
   where: {
     username: {
       startsWith: "ann",
-      not: { endsWith: "e" }
-    }
-  }
-})
+      not: { endsWith: "e" },
+    },
+  },
+});
 ```
 
 Kineo then handles migrations and query compilation for you. Queries are written in a [Prisma](https://www.prisma.io/)-like syntax, as that's what I was most inspired by while making this project.
