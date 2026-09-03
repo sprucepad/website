@@ -1,0 +1,32 @@
+---
+import Cards from "@/components/Cards.svelte";
+import Layout from "@/layouts/Layout.astro";
+import { createCardMapper, createLocaleFilter, sort } from "@/lib/collections";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const locale = Astro.currentLocale!;
+
+const cardMapper = createCardMapper(locale);
+const projects = await Promise.all(
+  await getCollection("projects", createLocaleFilter(locale))
+    .then((p) => sort(p))
+    .then((p) => p.map(cardMapper)),
+);
+---
+
+<Layout
+  title="projetos | sprucepad"
+  desc="Todos os projetos que sprucepad criou ou ajuda na construção."
+  class="space-y-4"
+>
+  <h1 class="font-heading text-4xl font-black">Projetos</h1>
+
+  <Cards
+    cards={projects}
+    empty="Nenhum projeto ainda!"
+    placeholder="Pesquisar projetos..."
+    href={getRelativeLocaleUrl(locale, "/projects")}
+    client:load
+  />
+</Layout>

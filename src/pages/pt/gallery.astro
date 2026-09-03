@@ -6,10 +6,12 @@ import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 const locale = Astro.currentLocale!;
+
+const albumMapper = createAlbumMapper(locale);
 const albums = await Promise.all(
   await getCollection("albums")
     .then((a) => sort(a))
-    .then((a) => a.map(createAlbumMapper(locale))),
+    .then((a) => a.map(albumMapper)),
 );
 ---
 

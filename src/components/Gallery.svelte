@@ -20,43 +20,43 @@
 
 <script lang="ts">
   let { albums: initAlbums, placeholder, empty, href }: Props = $props();
-  let albums = $state((() => initAlbums)());
+  let albums = $derived(initAlbums);
 </script>
 
 <div>
   <SearchBox
     {placeholder}
     filter={(kv, kw) => {
-      if (!kv.size && !kw.size) albums = initAlbums;
-      else
-        albums = initAlbums.filter((album) => {
-          for (const keyword of kw) {
-            if (
-              album.title.toLowerCase().includes(keyword) ||
-              album.desc.toLowerCase().includes(keyword)
+      if (!kv.size && !kw.size) return (albums = initAlbums);
+
+      albums = initAlbums.filter((album) => {
+        for (const keyword of kw) {
+          if (
+            album.title.toLowerCase().includes(keyword) ||
+            album.desc.toLowerCase().includes(keyword)
+          )
+            return true;
+        }
+        for (const [key, value] of kv) {
+          if (key === "desc" && album.desc.toLowerCase().includes(value))
+            return true;
+          if (key === "title" && album.title.toLowerCase().includes(value))
+            return true;
+          if (
+            key === "image" &&
+            album.images.some((image) =>
+              image.alt.toLowerCase().includes(value),
             )
-              return true;
-          }
-          for (const [key, value] of kv) {
-            if (key === "desc" && album.desc.toLowerCase().includes(value))
-              return true;
-            if (key === "title" && album.title.toLowerCase().includes(value))
-              return true;
-            if (
-              key === "image" &&
-              album.images.some((image) =>
-                image.alt.toLowerCase().includes(value),
-              )
-            )
-              return true;
-          }
-        });
+          )
+            return true;
+        }
+      });
     }}
   />
 
   <div class="mt-8 columns-1 sm:columns-2 md:columns-3">
     {#each albums as album (album.title)}
-      <a href={`${href}${album.id}`} class="relative mb-4 block">
+      <a href={`${href}${album.id}`} class="relative mb-4 block text-white">
         <img
           src={album.covers[0].file.src}
           alt={album.covers[0].alt}

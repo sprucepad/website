@@ -10,7 +10,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import PixelArt from "@/components/ui/PixelArt.astro";
 import { getCollection } from "astro:content";
-import { createAlbumMapper, sort } from "@/lib/collections";
+import { createAlbumMapper, createLocaleFilter, sort } from "@/lib/collections";
 import Album from "@/components/Album.svelte";
 import { createCardMapper } from "@/lib/collections";
 import Cards from "@/components/Cards.svelte";
@@ -26,10 +26,10 @@ const albumMapper = createAlbumMapper(locale, 3);
 const sketchbook = await getEntry("albums", "sketchbook")!.then(albumMapper);
 
 const cardMapper = createCardMapper(locale);
-const posts = await getCollection("posts")
+const posts = await getCollection("posts", createLocaleFilter(locale))
   .then((a) => sort(a))
   .then((col) => Promise.all(col.map(cardMapper)));
-const projects = await getCollection("projects")
+const projects = await getCollection("projects", createLocaleFilter(locale))
   .then((a) => sort(a))
   .then((col) => Promise.all(col.map(cardMapper)));
 ---
@@ -101,14 +101,14 @@ const projects = await getCollection("projects")
       <div>
         <Cards
           cards={posts.slice(0, 3)}
-          href={getRelativeLocaleUrl(locale, "/posts")}
+          href={getRelativeLocaleUrl(locale, "/blog")}
           empty="Isso não é tudo!"
           placeholder="Pesquisar posts..."
           client:load
         />
       </div>
 
-      <Link class="underline" href="/posts">Mais posts...</Link>
+      <Link class="underline" href="/blog">Mais posts...</Link>
     </section>
 
     <section class="space-y-4 p-16">

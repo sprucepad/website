@@ -1,5 +1,10 @@
 import type { Album } from "@/components/Gallery.svelte";
-import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import {
+  getCollection,
+  getEntry,
+  type CollectionEntry,
+  type DataEntryMap,
+} from "astro:content";
 import type { Card } from "@/components/Cards.svelte";
 import { getImage } from "astro:assets";
 
@@ -63,7 +68,7 @@ export function createCardMapper(
   locale: string,
 ): (a: CollectionEntry<"posts" | "projects">) => Promise<Card> {
   return async (c) => ({
-    id: c.id,
+    id: unlocalize(c.id).id,
     title: c.data.title,
     desc: c.data.desc,
     topics: await Promise.all(
@@ -101,13 +106,20 @@ export function sort<T extends { data: { createdAt: Date; updatedAt: Date } }>(
       );
 }
 
-export function createDevlogFilter(
-  project: CollectionEntry<"projects">,
-): (a: CollectionEntry<"posts">) => boolean {
-  return (a) => unlocalize(a.data.devlogFor.id).id === project.id;
+export function createLocaleFilter(
+  locale: string,
+): (a: CollectionEntry<keyof DataEntryMap>) => boolean {
+  return (a) => unlocalize(a.id).lang === locale;
 }
 
 export function unlocalize(id: string) {
   const [lang, ...rest] = id.split("/");
   return { lang, id: rest.join("/") };
+}
+
+export function createDevlogFilter(
+  locale: string,
+  project: CollectionEntry<"projects">,
+): (a: CollectionEntry<"posts">) => boolean {
+  return (a) => !!a.data.devlogFor && a.data.devlogFor.id === project.id;
 }

@@ -100,14 +100,14 @@ const projects = await getCollection("projects")
       <div>
         <Cards
           cards={posts.slice(0, 3)}
-          href={getRelativeLocaleUrl(locale, "/posts")}
+          href={getRelativeLocaleUrl(locale, "/blog")}
           empty="This isn't everything!"
           placeholder="Search posts..."
           client:load
         />
       </div>
 
-      <Link class="underline" href="/posts">More posts...</Link>
+      <Link class="underline" href="/blog">More posts...</Link>
     </section>
 
     <section class="space-y-4 p-16">

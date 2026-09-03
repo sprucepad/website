@@ -9,35 +9,31 @@
   }
 
   let { placeholder, empty, album }: Props = $props();
-  let images = $state((() => album.images)());
+  let images = $derived(album.images);
 </script>
 
 <div class="@container">
   <SearchBox
     {placeholder}
     filter={(kv, kw) => {
-      if (!kv.size && !kw.size) images = album.images;
-      else {
-        images = album.images.filter((image) => {
-          for (const keyword of kw) {
-            if (image.alt.toLowerCase().includes(keyword)) return true;
-          }
+      if (!kv.size && !kw.size) return (images = album.images);
 
-          for (const [key, value] of kv) {
-            if (
-              key === "license" &&
-              image.license.toLowerCase().includes(value)
-            )
-              return true;
-            if (key === "alt" && image.alt.toLowerCase().includes(value))
-              return true;
-          }
-        });
-      }
+      images = album.images.filter((image) => {
+        for (const keyword of kw) {
+          if (image.alt.toLowerCase().includes(keyword)) return true;
+        }
+
+        for (const [key, value] of kv) {
+          if (key === "license" && image.license.toLowerCase().includes(value))
+            return true;
+          if (key === "alt" && image.alt.toLowerCase().includes(value))
+            return true;
+        }
+      });
     }}
   />
 
-  <div class="columns-1 gap-4 pt-8 @sm:columns-2 @md:columns-3">
+  <div class="mt-8 columns-1 gap-4 @sm:columns-2 @md:columns-3">
     {#each images as image (image.file.src)}
       <div
         class="group relative mb-4 rounded-lg bg-white bg-[radial-gradient(#e5e7eb_20%,transparent_20%),radial-gradient(#e5e7eb_20%,transparent_20%)] bg-size-[20px_20px] bg-position-[0_0,10px_10px]"

@@ -28,7 +28,7 @@ const images = defineCollection({
 });
 
 const posts = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/posts" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/blog" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -38,7 +38,7 @@ const posts = defineCollection({
       createdAt: z.date(),
       updatedAt: z.date(),
 
-      devlogFor: reference("projects"),
+      devlogFor: reference("projects").optional(),
       license: z.string().default("All Rights Reserved"),
     }),
 });

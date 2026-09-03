@@ -26,11 +26,13 @@ const coverImage = await getEntry("images", album.data.coverImages[0].id)!;
 
 const table = {
   en: {
+    title: "albums",
     desc: `album page for ${album.data.title[locale]}`,
     placeholder: "Search in album...",
     empty: "Nothing here yet!",
   },
   pt: {
+    title: "álbums",
     desc: `página de álbum para ${album.data.title[locale]}`,
     placeholder: "Pesquisar no álbum...",
     empty: "Nada aqui ainda!",
@@ -40,7 +42,7 @@ const t = createTranslate(locale, table);
 ---
 
 <Layout
-  title={`${processedAlbum.title} | sprucepad`}
+  title={`${processedAlbum.title} | ${t("title")} - sprucepad`}
   desc={t("desc")}
   class="flex min-h-full flex-col gap-4 pt-20 md:flex-row"
 >
@@ -57,7 +59,7 @@ const t = createTranslate(locale, table);
       <p>{processedAlbum.desc}</p>
     </div>
   </div>
-  <div class="max-h-[85svh] flex-1 overflow-scroll rounded-lg border-2">
+  <div class="max-h-[85svh] flex-1 overflow-scroll px-4">
     <Album
       album={processedAlbum}
       placeholder={t("placeholder")}

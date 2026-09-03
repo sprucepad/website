@@ -33,6 +33,7 @@ const { Content } = await render(project);
 
 const table = {
   en: {
+    title: "projects",
     projectLicense: "Project license",
     articleLicense: "Article license",
     created: "Created",
@@ -41,6 +42,7 @@ const table = {
     searchDevlogs: "Search devlogs...",
   },
   pt: {
+    title: "projetos",
     projectLicense: "Licença do projeto",
     articleLicense: "Licença do artigo",
     created: "Criado",
@@ -53,14 +55,14 @@ const t = createTranslate(locale, table);
 
 const cardMapper = createCardMapper(locale);
 const devlogs = await Promise.all(
-  await getCollection("posts", createDevlogFilter(project))
+  await getCollection("posts", createDevlogFilter(locale, project))
     .then((d) => sort(d))
     .then((d) => d.map(cardMapper)),
 );
 ---
 
 <Layout
-  title={`${project.data.title} | sprucepad`}
+  title={`${project.data.title} | ${t("title")} - sprucepad`}
   desc={project.data.desc}
   banner={project.data.image}
   class="flex flex-col md:flex-row"
@@ -99,7 +101,7 @@ const devlogs = await Promise.all(
       cards={devlogs}
       empty={t("emptyDevlogs")}
       placeholder={t("searchDevlogs")}
-      href={getRelativeLocaleUrl(locale, "/posts")}
+      href={getRelativeLocaleUrl(locale, "/blog")}
       client:load
     />
   </div>
